@@ -16,6 +16,7 @@ const config: Config = {
       screens: {
         tablet: { max: "768px" },
         celular: { max: "520px" },
+        celularpequeno: { max: "410px" },
       },
     },
   },

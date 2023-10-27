@@ -30,14 +30,14 @@ export default function Header({ navLinks }: NavLinkProps) {
   return (
     <header className="flex flex-col items-center w-full">
       <div className="flex items-center flex-row-reverse relative w-full h-[2.125rem] bg-[#3877c9] py-0 px-[2.125rem] tablet:flex-row tablet:justify-around tablet:px-0 tablet:py-4">
-        <p className="m-auto text-[0.8rem] text-white tablet:m-0 celular:text-[0.65rem]">
+        <p className="m-auto text-[0.8rem] text-white tablet:m-0 celular:text-[0.65rem] celularpequeno:text-[0.5rem]">
           A melhor franquia de smartphones do
           <span className="ml-1 text-[#FAFF00]">Brasil</span>
         </p>
 
         <a
           href="#"
-          className="absolute text-[0.9rem] font-semibold text-white tablet:relative celular:text-[0.75rem]"
+          className="absolute text-[0.9rem] font-semibold text-white tablet:relative celular:text-[0.75rem] celularpequeno:text-[0.5rem]"
         >
           SEJA UM REVENDEDOR
         </a>
