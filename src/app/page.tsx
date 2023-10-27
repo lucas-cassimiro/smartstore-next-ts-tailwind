@@ -20,7 +20,14 @@ export default function Home() {
         Novidades
       </span>
       <NewsCarousel />
-    
+      <span
+        className="flex justify-center text-[2.1875rem] font-normal my-4"
+        style={jejugothic.style}
+      >
+        Black Friday
+      </span>
+      <Image src={Blackfriday} alt="Banner Black Friday" priority={true} />
+      <Image src={Whatsapp} alt="Banner WhatsApp" priority={true} />
     </>
   );
 }
