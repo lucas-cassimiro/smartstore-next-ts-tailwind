@@ -27,7 +27,7 @@ export default function Header({ navLinks }: NavLinkProps) {
       <div>
         <p>
           A melhor franquia de smartphones do
-          <span>Brasil</span>
+          <span className="ml-1 text-[#FAFF00]">Brasil</span>
         </p>
 
         <a href="#">SEJA UM REVENDEDOR</a>
@@ -41,9 +41,7 @@ export default function Header({ navLinks }: NavLinkProps) {
         </h1>
 
         <Link href="/carrinho">
-          <div>
-            {/* <Image src={IconCart} alt="Ícone de carrinho" /> */}
-          </div>
+          <div>{/* <Image src={IconCart} alt="Ícone de carrinho" /> */}</div>
         </Link>
       </div>
 
