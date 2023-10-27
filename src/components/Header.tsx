@@ -30,12 +30,12 @@ export default function Header({ navLinks }: NavLinkProps) {
   return (
     <header className="flex flex-col items-center w-full">
       <div className="flex items-center flex-row-reverse relative w-full h-[2.125rem] bg-[#3877c9] py-0 px-[2.125rem]">
-        <p className="m-auto text-[0.8rem]">
+        <p className="m-auto text-[0.8rem] text-white">
           A melhor franquia de smartphones do
           <span className="ml-1 text-[#FAFF00]">Brasil</span>
         </p>
 
-        <a href="#" className="absolute text-[0.9rem] font-semibold">
+        <a href="#" className="absolute text-[0.9rem] font-semibold text-white">
           SEJA UM REVENDEDOR
         </a>
       </div>
@@ -46,7 +46,7 @@ export default function Header({ navLinks }: NavLinkProps) {
           <Link
             href="/"
             style={lobster.style}
-            className={`flex justify-center stroke-[#074291] ${lobster.className} text-[2.5rem] ml-14`}
+            className={`flex justify-center stroke-[#074291] ${lobster.className} text-[2.5rem] ml-14 text-white`}
           >
             Smart Store
           </Link>
@@ -56,13 +56,13 @@ export default function Header({ navLinks }: NavLinkProps) {
           <Link href="/carrinho" className="relative flex items-center">
             <div className="flex flex-col items-center">
               <Image src={IconCart} alt="Ícone de carrinho" />
-              <span>Cart</span>
+              <span className="text-white">Cart</span>
             </div>
           </Link>
           <Link href="/login" className="relative flex items-center">
             <div className="flex flex-col items-center">
               <Image src={IconLogin} alt="Ícone de login" />
-              <span>Login</span>
+              <span className="text-white">Login</span>
             </div>
           </Link>
         </div>

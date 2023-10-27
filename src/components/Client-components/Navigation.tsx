@@ -12,7 +12,7 @@ export default function Navigation({ navLinks }: NavigationProps) {
   const pathname = usePathname();
 
   return (
-    <nav className="w-full bg-[#313131] border-t-[0.0625rem]">
+    <nav className="w-full bg-[#313131] border-t-[0.0625rem] border-black">
       <ul className="flex justify-evenly h-12 items-center text-[1.1rem]">
         {navLinks.map((link) => {
           const isActive = pathname.endsWith(link.href);

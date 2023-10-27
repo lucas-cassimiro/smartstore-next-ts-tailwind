@@ -16,7 +16,9 @@ export default function Location() {
     <div className="flex items-center gap-2 absolute">
       <Image src={IconLocation} alt="Icone de localização" />
 
-      <a onClick={showLocation}>Selecione uma localização</a>
+      <a onClick={showLocation} className="text-[#A0A0A0]">
+        Selecione uma localização
+      </a>
 
       {/* <aside>
           <div style={myFont.style} className={myFont.className}>
