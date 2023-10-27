@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,23 +24,23 @@ export default function RootLayout({
   const navLinks: NavLink[] = [
     {
       name: "iPhones",
-      href: "/products/iphone",
+      href: "/shop/iphone",
     },
     {
       name: "Androids",
-      href: "/products/android",
+      href: "/shop/android",
     },
     {
       name: "Smartwatchs",
-      href: "/products/smartwatch",
+      href: "/shop/smartwatch",
     },
     {
       name: "Fones Bluetooth",
-      href: "/products/fone",
+      href: "/shop/fone",
     },
     {
       name: "Black Friday",
-      href: "/products/blackfriday",
+      href: "/shop/blackfriday",
     },
   ];
 
@@ -48,6 +49,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header navLinks={navLinks} />
         {children}
+        <Footer />
       </body>
     </html>
   );
