@@ -40,42 +40,42 @@ export default function Footer() {
         <div className="flex gap-24">
           <div className="mt-1 h-36 flex flex-col gap-3">
             <li>
-              <a href="">Sobre</a>
+              <a href="#">Sobre</a>
             </li>
             <li>
-              <a href="">Blog</a>
+              <a href="#">Blog</a>
             </li>
             <li>
-              <a href="">Canal Educativo</a>
+              <a href="#">Canal Educativo</a>
             </li>
             <li>
-              <a href="">Canal Corporativo</a>
+              <a href="#">Canal Corporativo</a>
             </li>
             <li>
-              <a href="">Representantes</a>
+              <a href="#">Representantes</a>
             </li>
             <li>
-              <a href="">Condições de Frete</a>
+              <a href="#">Condições de Frete</a>
             </li>
           </div>
           <div className="mt-1 h-36 flex flex-col gap-3">
             <li>
-              <a href="">Fale Conosco</a>
+              <a href="#">Fale Conosco</a>
             </li>
             <li>
-              <a href="">Trocas e Devoluções</a>
+              <a href="#">Trocas e Devoluções</a>
             </li>
             <li>
-              <a href="">Políticas de Privacidade</a>
+              <a href="#">Políticas de Privacidade</a>
             </li>
             <li>
-              <a href="">Trabalhe Conosco</a>
+              <a href="#">Trabalhe Conosco</a>
             </li>
             <li>
-              <a href="">Assistência Técnica</a>
+              <a href="#">Assistência Técnica</a>
             </li>
             <li>
-              <a href="">Black Friday</a>
+              <a href="#">Black Friday</a>
             </li>
           </div>
         </div>
