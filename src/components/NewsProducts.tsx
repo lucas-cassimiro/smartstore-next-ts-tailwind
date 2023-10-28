@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 
 import Image from "next/image";
 
+import { news } from "@/data/NewsProducts";
+
 const inter = Inter({ subsets: ["latin"] });
 
 const jejugothic = localFont({
@@ -15,22 +17,29 @@ const jejugothic = localFont({
   ],
 });
 
-export default function NewsProducts() {
+export default function NewsProducts({ product }: any) {
   return (
-    <div
-      style={jejugothic.style}
-      className="flex flex-col items-center text-white h-[28.125rem] cursor-pointer mr-[0.625rem]"
-    >
-      <div className="flex items-center justify-center w-[25rem] h-[21.875rem]">
-        {/* <Image className="w-[17.5rem] h-[15.625rem] object-contain"/> */}
-        <span className="text-black">Imagem do produto</span>
+    <>
+      <div
+        style={jejugothic.style}
+        className="flex flex-col items-center text-white h-[28.125rem] cursor-pointer mr-[0.625rem]"
+      >
+        <div className="flex items-center justify-center w-[25rem] h-[21.875rem]">
+          <Image
+            className="w-[17.5rem] h-[15.625rem] object-contain"
+            src={product.img}
+            alt="aaaa"
+          />
+          {/* <span className="text-black">Imagem do produto</span> */}
+        </div>
+        <h2 className="text-[1.875rem] font-normal text-black">
+          {product.name}
+        </h2>
+        <p className={`${inter.className} text-xl font-light text-black`}>
+          A partir de{" "}
+          <span className="text-[#93c1fd]">{product.price}</span>
+        </p>
       </div>
-      <h2 className="text-[1.875rem] font-normal text-black">
-        Nome do produto
-      </h2>
-      <p className={`${inter.className} text-xl font-light text-black`}>
-        A partir de <span className="text-[#93c1fd]">~ preço do produto ~</span>
-      </p>
-    </div>
+    </>
   );
 }

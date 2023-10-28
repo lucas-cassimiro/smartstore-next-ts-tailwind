@@ -20,7 +20,7 @@ export default function CarouselImages() {
       speed={1700}
       slidesPerView={1}
       autoplay={{ delay: 4000, disableOnInteraction: false }}
-      pagination={{ clickable: true}}
+      pagination={{ clickable: true }}
     >
       <SwiperSlide>
         <Image src={IPhone} alt="Imagem 1" className="w-full h-auto" />

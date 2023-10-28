@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.swiper {
+  @apply z-0
+}
+
+.swiper .swiper-wrapper {
+  @apply z-0
+}
+
  .swiper .swiper-pagination {
    @apply mt-[1.875rem] relative celular:mt-[1.2rem]
   }
@@ -9,6 +17,7 @@
  .swiper-pagination .swiper-pagination-bullet {
     @apply w-[6.25rem] h-[0.75rem] rounded-none bg-[#9e9e9ede] cursor-pointer transition-all duration-1000 opacity-100 celular:w-[3rem] celular:h-[0.5rem]
   }
+
 .swiper-pagination .swiper-pagination-bullet-active {
   @apply bg-[#313131]
 }

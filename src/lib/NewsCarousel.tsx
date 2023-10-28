@@ -11,7 +11,7 @@ import NewsProducts from "@/components/NewsProducts";
 //   products: PagesProductsData[];
 // }
 
-export default function NewsCarousel() {
+export default function NewsCarousel({ products }: any) {
   const settings: SliderSettings = {
     spaceBetween: 50,
     slidesPerView: 3,
@@ -50,16 +50,18 @@ export default function NewsCarousel() {
       1440: {
         slidesPerView: 3,
         spaceBetween: 50,
-        pagination: false,
+        pagination: true,
       },
     },
   };
 
   return (
     <Slider settings={settings}>
-      <SwiperSlide>
-        <NewsProducts />
-      </SwiperSlide>
+      {products.map((product: any) => (
+        <SwiperSlide key={product.id}>
+          <NewsProducts product={product} />
+        </SwiperSlide>
+      ))}
     </Slider>
   );
 }
