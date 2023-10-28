@@ -2,7 +2,7 @@
 
 export default function ButtonFilter() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-[11rem]">
       <h4>Preço</h4>
       <label>
         <input

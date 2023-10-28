@@ -3,12 +3,19 @@ import Image from "next/image";
 import Filter from "../../../assets/filter-ordered.png";
 import ButtonFilter from "@/components/Client-components/ButtonFilter";
 
+export async function getProducts(param: string): Promise<any[]> {
+  const response = await fetch(`http://localhost:3001/products/${param}`);
+  const data = await response.json();
+  return data;
+}
+
 export default async function Products({
   params,
 }: {
   params: { products: string };
 }) {
   const categorie = params.products;
+  const data = await getProducts(categorie);
 
   return (
     <div>
