@@ -1,11 +1,13 @@
 "use client";
 
+import { CheckboxGroup, Checkbox } from "@nextui-org/react";
+
 export default function ButtonFilter() {
   return (
-    <div className="flex flex-col w-[11rem]">
-      <h4>Preço</h4>
+    <CheckboxGroup className="flex flex-col w-[12rem]" color="primary">
+      <h4 className="font-bold mb-3">Preço</h4>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="preco"
           value="0-1000"
@@ -14,7 +16,7 @@ export default function ButtonFilter() {
         R$ 0 - R$1000
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="preco"
           value="1001 - 2000"
@@ -23,7 +25,7 @@ export default function ButtonFilter() {
         R$ 1.001 - R$ 2.000
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="preco"
           value="2001 - 3000"
@@ -32,7 +34,7 @@ export default function ButtonFilter() {
         R$ 2.001 - R$ 3.000
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="preco"
           value="3001-4000"
@@ -41,7 +43,7 @@ export default function ButtonFilter() {
         R$ 3.001 - R$ 4.000
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="preco"
           value="4001-5000"
@@ -50,7 +52,7 @@ export default function ButtonFilter() {
         R$ 4.001 - R$ 5.000
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="preco"
           value="5001-6000"
@@ -59,17 +61,18 @@ export default function ButtonFilter() {
         R$ 5.001 - R$ 6.000
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="preco"
           value="6001-7000"
           //   onChange={handleChangePrice}
+          className="mb-3"
         />
         R$ 6.001 - R$ 7.000
       </label>
-      <h4>Armazenamento</h4>
+      <h4 className="font-bold mb-3">Armazenamento</h4>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="armazenamento"
           value="64"
@@ -78,7 +81,7 @@ export default function ButtonFilter() {
         64 GB
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="armazenamento"
           value="128"
@@ -87,7 +90,7 @@ export default function ButtonFilter() {
         128 GB
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="armazenamento"
           value="256"
@@ -96,7 +99,7 @@ export default function ButtonFilter() {
         256 GB
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="armazenamento"
           value="512"
@@ -105,18 +108,19 @@ export default function ButtonFilter() {
         512 GB
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="armazenamento"
           value="1024"
           //  onChange={handleChangeStorage}
+          className="mb-3"
         />
         1 TB
       </label>
 
-      <h4>Cor</h4>
+      <h4 className="font-bold mb-3">Cor</h4>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="cor"
           value="azul"
@@ -125,7 +129,7 @@ export default function ButtonFilter() {
         Azul
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="cor"
           value="branco"
@@ -134,7 +138,7 @@ export default function ButtonFilter() {
         Branco
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="cor"
           value="preto"
@@ -143,7 +147,7 @@ export default function ButtonFilter() {
         Preto
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="cor"
           value="roxo"
@@ -152,14 +156,15 @@ export default function ButtonFilter() {
         Roxo
       </label>
       <label>
-        <input
+        <Checkbox
           type="checkbox"
           name="cor"
           value="dourado"
           //  onChange={handleChangeColor}
+          className="mb-5"
         />
         Dourado
       </label>
-    </div>
+    </CheckboxGroup>
   );
 }

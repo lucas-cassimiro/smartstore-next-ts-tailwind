@@ -22,6 +22,11 @@
   @apply bg-[#313131]
 }
 
+.text-stroke {
+  -webkit-text-stroke: 1px #074291;
+  color: white;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

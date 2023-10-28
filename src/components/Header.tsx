@@ -52,7 +52,7 @@ export default function Header({ navLinks }: NavLinkProps) {
           <Link
             href="/"
             style={lobster.style}
-            className={`flex justify-center stroke-[#074291] ${lobster.className} text-[2.5rem] ml-14 text-white tablet:text-[2rem] celular:text-[1.5rem]`}
+            className={`flex justify-center text-stroke ${lobster.className} text-[2.5rem] ml-14 text-white tablet:text-[2rem] celular:text-[1.5rem]`}
           >
             Smart Store
           </Link>
