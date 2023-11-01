@@ -59,7 +59,7 @@ export default function Header({ navLinks }: NavLinkProps) {
         </h1>
 
         <div className="flex gap-3">
-          <Link href="/carrinho" className="relative flex items-center">
+          <Link href="/shop/carrinho" className="relative flex items-center">
             <div className="flex flex-col items-center">
               <Image
                 src={IconCart}

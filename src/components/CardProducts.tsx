@@ -2,6 +2,8 @@ import Image from "next/image";
 
 import currencyFormat from "@/helpers/currencyFormat";
 
+import ButtonAddToCart from "./Client-components/ButtonAddToCart";
+
 export default function CardProducts({ products }: any) {
   return (
     <div className="flex flex-col items-center">
@@ -14,7 +16,9 @@ export default function CardProducts({ products }: any) {
             </p>
           )}
           {products.black_friday && (
-            <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-5 text-white font-semibold">Black Friday</p>
+            <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-5 text-white font-semibold">
+              Black Friday
+            </p>
           )}
         </div>
         <h4 className="text-[0.875rem] font-normal min-w-[8.25rem]">
@@ -23,7 +27,9 @@ export default function CardProducts({ products }: any) {
         {/* <HalfRating star={products.average_score!} /> */}
 
         {products.black_friday && (
-          <p className="text-[0.75rem] line-through">{currencyFormat(products.price)}</p>
+          <p className="text-[0.75rem] line-through">
+            {currencyFormat(products.price)}
+          </p>
         )}
 
         {products.black_friday && (
@@ -34,7 +40,7 @@ export default function CardProducts({ products }: any) {
               )}
             </p>
 
-            {/* <ButtonAddToCart products={products} /> */}
+            <ButtonAddToCart products={products} />
           </section>
         )}
 
@@ -44,7 +50,7 @@ export default function CardProducts({ products }: any) {
               {currencyFormat(products.price)}
             </p>
 
-            {/* <ButtonAddToCart products={products} /> */}
+            <ButtonAddToCart products={products} />
           </section>
         )}
 

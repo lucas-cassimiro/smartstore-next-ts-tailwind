@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 import { Providers } from "./providers";
+import ProviderCart from "@/Providers/CartProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,10 @@ export interface NavLink {
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: any
 }) {
   const navLinks: NavLink[] = [
     {
@@ -49,9 +52,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header navLinks={navLinks} />
-        <Providers>{children}</Providers>
-        <Footer />
+        <ProviderCart>
+          <Header navLinks={navLinks} />
+          <Providers>
+            {children} {modal}
+          </Providers>
+          <Footer />
+        </ProviderCart>
       </body>
     </html>
   );

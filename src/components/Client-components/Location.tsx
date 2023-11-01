@@ -63,7 +63,7 @@ export default function Location() {
       <aside
         className={`w-0 ${
           location
-            ? "flex flex-col w-[350px] h-screen top-0 left-0 bottom-0 fixed bg-[#ffffff] z-[9999] opacity-[100] p-12 transition-all duration-500"
+            ? "flex flex-col w-[350px] h-screen top-0 left-0 bottom-0 fixed bg-[#ffffff] z-[9999] opacity-[100] p-12 transition-all duration-1000"
             : "w-0"
         }`}
       >
