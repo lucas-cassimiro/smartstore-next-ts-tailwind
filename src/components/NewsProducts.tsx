@@ -22,7 +22,7 @@ export default function NewsProducts({ product }: any) {
     <>
       <div
         style={jejugothic.style}
-        className="flex flex-col items-center text-white h-[28.125rem] cursor-pointer mr-[0.625rem]"
+        className="flex flex-col items-center text-white h-[28.125rem] cursor-pointer mr-[0.625rem] bg-black"
       >
         <div className="flex items-center justify-center w-[25rem] h-[21.875rem]">
           <Image
@@ -32,10 +32,10 @@ export default function NewsProducts({ product }: any) {
           />
           {/* <span className="text-black">Imagem do produto</span> */}
         </div>
-        <h2 className="text-[1.875rem] font-normal text-black">
+        <h2 className="text-[1.875rem] font-normal text-white">
           {product.name}
         </h2>
-        <p className={`${inter.className} text-xl font-light text-black`}>
+        <p className={`${inter.className} text-xl font-light text-white`}>
           A partir de{" "}
           <span className="text-[#93c1fd]">{product.price}</span>
         </p>

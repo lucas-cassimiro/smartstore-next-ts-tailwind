@@ -23,7 +23,7 @@ export default function LoginFrame() {
               Lembrar-me
             </label>
             <Link
-              href="mudarsenha"
+              href="/password"
               className="text-[#4aa4ee] hover:text-[#3286ca]"
             >
               Esqueceu a senha?
