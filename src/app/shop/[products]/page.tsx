@@ -6,13 +6,10 @@ import CardProducts from "@/components/CardProducts";
 
 import { Select, SelectItem } from "@nextui-org/react";
 
-export async function getProducts(param: string): Promise<any[]> {
-  const response = await fetch(`http://localhost:3001/products/${param}`, {
-    next: {
-      revalidate: 60,
-    },
-  });
-  
+import { ProductsData } from "@/interfaces/ProductsData";
+
+async function getProducts(param: string): Promise<ProductsData[]> {
+  const response = await fetch(`http://localhost:3001/products/${param}`);
   const data = await response.json();
   return data;
 }

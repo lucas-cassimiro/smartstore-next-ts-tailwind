@@ -5,6 +5,8 @@ import Image from "next/image";
 
 import { news } from "@/data/NewsProducts";
 
+import currencyFormat from "@/helpers/currencyFormat";
+
 const inter = Inter({ subsets: ["latin"] });
 
 const jejugothic = localFont({
@@ -37,7 +39,7 @@ export default function NewsProducts({ product }: any) {
         </h2>
         <p className={`${inter.className} text-xl font-light text-white`}>
           A partir de{" "}
-          <span className="text-[#93c1fd]">{product.price}</span>
+          <span className="text-[#93c1fd]">{currencyFormat(product.price)}</span>
         </p>
       </div>
     </>

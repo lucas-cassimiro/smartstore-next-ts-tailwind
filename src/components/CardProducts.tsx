@@ -3,11 +3,16 @@ import Image from "next/image";
 import currencyFormat from "@/helpers/currencyFormat";
 
 import ButtonAddToCart from "./Client-components/ButtonAddToCart";
+import { ProductsData } from "@/interfaces/ProductsData";
 
-export default function CardProducts({ products }: any) {
+interface CardProductsProps {
+  products: ProductsData
+}
+
+export default function CardProducts({ products }: CardProductsProps) {
   return (
     <div className="flex flex-col items-center">
-      <Image src={products.img} alt={products.name} />
+      <Image src={products.image} alt={products.name} />
       <div className="flex flex-col w-[90%] ml-4 g-[0.625rem]">
         <div className="flex gap-2 min-w-[14rem]">
           {products.black_friday && (
