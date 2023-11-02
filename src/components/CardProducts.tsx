@@ -9,10 +9,10 @@ interface CardProductsProps {
   products: ProductsData
 }
 
-export default function CardProducts({ products }: CardProductsProps) {
+export default function CardProducts({ products }: any) {
   return (
     <div className="flex flex-col items-center">
-      <Image src={products.image} alt={products.name} />
+      <Image src={products.img} alt={products.name} />
       <div className="flex flex-col w-[90%] ml-4 g-[0.625rem]">
         <div className="flex gap-2 min-w-[14rem]">
           {products.black_friday && (
