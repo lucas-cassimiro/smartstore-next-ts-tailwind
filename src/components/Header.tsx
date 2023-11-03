@@ -10,6 +10,7 @@ import IconCart from "../assets/icon-cart.png";
 import IconLogin from "../assets/login.png";
 
 import Location from "./Client-components/Location";
+import Cart from "./Client-components/Cart";
 
 interface NavLinkProps {
   navLinks: NavLink[];
@@ -59,16 +60,7 @@ export default function Header({ navLinks }: NavLinkProps) {
         </h1>
 
         <div className="flex gap-3">
-          <Link href="/shop/carrinho" className="relative flex items-center">
-            <div className="flex flex-col items-center">
-              <Image
-                src={IconCart}
-                alt="Ícone de carrinho"
-                className="celular:w-4 celular:h-4"
-              />
-              <span className="text-white celular:text-sm">Cart</span>
-            </div>
-          </Link>
+          <Cart />
           <Link href="/login" className="relative flex items-center">
             <div className="flex flex-col items-center">
               <Image

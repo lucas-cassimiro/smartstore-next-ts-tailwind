@@ -45,22 +45,14 @@ export default function Navigation({ navLinks }: NavigationProps) {
           <FaBars size="1.5rem" onClick={showMenu} />
           <div
             className={`${
-              menuOpen
-                ? "flex flex-col w-[15rem] h-screen top-0 right-0 bottom-0 fixed bg-[#313131] z-[9999] opacity-[100] p-8 transition-all duration-500"
-                : "w-0"
-            }`}
+              menuOpen ? "w-[300px]" : ""
+            } py-6 flex flex-col h-screen w-0 overflow-hidden bg-[#313131] transition-width duration-700 ease-in fixed z-20 top-0 bottom-0 right-0`}
           >
-            <button className={menuOpen ? "flex" : "hidden"}>
+            <button className="w-[20px] ml-10">
               <FaTimes size="1.5rem" onClick={showMenu} />
             </button>
 
-            <ul
-              className={
-                menuOpen
-                  ? "flex flex-col my-auto gap-10 items-center"
-                  : "hidden"
-              }
-            >
+            <ul className="flex flex-col my-auto gap-10 items-center min-w-[8.5rem]">
               {navLinks.map((link) => (
                 <Link key={link.name} href={link.href} onClick={showMenu}>
                   {link.name}

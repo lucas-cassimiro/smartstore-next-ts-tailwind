@@ -27,6 +27,14 @@
   color: white;
 }
 
+.carousel1.swiper {
+  @apply w-full
+}
+
+.carousel2.swiper {
+  @apply w-[90%] py-0 px-10
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

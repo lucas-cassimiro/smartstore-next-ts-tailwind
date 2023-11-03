@@ -61,18 +61,11 @@ export default function Location() {
       </a>
 
       <aside
-        className={`w-0 ${
-          location
-            ? "flex flex-col w-[350px] h-screen top-0 left-0 bottom-0 fixed bg-[#ffffff] z-[9999] opacity-[100] p-12 transition-all duration-1000"
-            : "w-0"
-        }`}
+        className={`${
+          location ? "w-[350px]" : ""
+        } py-6 flex flex-col items-center h-screen w-0 overflow-hidden bg-white transition-all duration-1000 ease-in-out fixed z-20 top-0 bottom-0 left-0`}
       >
-        <div
-          style={freeSans.style}
-          className={`${location ? "w-64" : "hidden w-0"} ${
-            freeSans.className
-          }`}
-        >
+        <div style={freeSans.style} className={freeSans.className}>
           <div className="flex justify-between">
             <p className="text-[1.125rem] font-extrabold">
               Qual a sua localização
@@ -102,9 +95,7 @@ export default function Location() {
           </div>
         </div>
 
-        <ul
-          className={`${location ? "flex flex-col mt-10 w-60" : "hidden w-0"} border-4 p-4`}
-        >
+        <ul className="flex flex-col mt-10 w-60 border-4 p-4">
           {/* <li>
             <span>{cep}</span>
           </li> */}

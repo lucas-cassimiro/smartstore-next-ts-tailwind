@@ -7,6 +7,8 @@ import CardProducts from "@/components/CardProducts";
 import { Select, SelectItem } from "@nextui-org/react";
 
 import { ProductsData } from "@/interfaces/ProductsData";
+import { useState } from "react";
+import ButtonFilterMobile from "@/components/Client-components/ButtonFilterMobile";
 
 async function getProducts(param: string): Promise<ProductsData[]> {
   const response = await fetch(`http://localhost:3001/products/${param}`);
@@ -29,7 +31,7 @@ export default async function Products({
         {categorie}
       </p>
       <div className="flex py-0 px-[6.25rem]">
-        <div className="mt-14 min-w-[13.9375rem]">
+        <div className="mt-14 min-w-[13.9375rem] tabletgrande:hidden">
           <h3 className="mb-6 font-bold text-lg">Categorias relacionadas</h3>
           <div className="flex flex-col gap-2 mb-5">
             <p>Androids</p>
@@ -44,8 +46,10 @@ export default async function Products({
           <ButtonFilter />
         </div>
 
-        <div className="flex flex-col w-full">
-          <div className="h-[2rem] flex items-center gap-3 w-full justify-end">
+        <div className="flex flex-col w-full ml-14 tabletgrande:ml-0">
+          <ButtonFilterMobile />
+
+          <div className="h-[2rem] flex items-center gap-3 w-full justify-end mb-20 tabletgrande:hidden">
             <label htmlFor="ordenar" className="text-base font-semibold">
               Ordenar por:
             </label>
@@ -61,10 +65,12 @@ export default async function Products({
               <option value="vendidos">Mais vendidos</option>
             </select>
           </div>
-          <div className="mt-20 flex flex-wrap gap-20 justify-center">
-            {data.map((data) => (
-              <CardProducts products={data} key={data.id} />
-            ))}
+          <div className="flex justify-center w-full">
+            <div className="flex gap-20 items-center flex-wrap mx-auto w-3/4 tabletgrande:w-full">
+              {data.map((data) => (
+                <CardProducts products={data} key={data.id} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

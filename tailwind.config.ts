@@ -16,15 +16,13 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       screens: {
+        tabletgrande: { max: "990px" },
         tablet: { max: "768px" },
         celular: { max: "520px" },
         celularpequeno: { max: "410px" },
       },
-     
     },
   },
-  plugins: [
-    nextui()
-  ],
+  plugins: [nextui()],
 };
 export default config;

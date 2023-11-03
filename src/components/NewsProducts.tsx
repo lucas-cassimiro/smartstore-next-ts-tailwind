@@ -24,7 +24,7 @@ export default function NewsProducts({ product }: any) {
     <>
       <div
         style={jejugothic.style}
-        className="flex flex-col items-center text-white h-[28.125rem] cursor-pointer mr-[0.625rem] bg-black"
+        className="flex flex-col items-center text-white h-[28.125rem] cursor-pointer  bg-black"
       >
         <div className="flex items-center justify-center w-[25rem] h-[21.875rem]">
           <Image

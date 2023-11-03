@@ -5,7 +5,6 @@ import { useSwiper } from "swiper/react";
 import Image from "next/image";
 
 import ArrowLeft from "../assets/arrow-left.png";
-import ArrowRight from "../assets/arrow-right.png";
 
 export default function SliderButton() {
   const swiper = useSwiper();
@@ -16,14 +15,14 @@ export default function SliderButton() {
         <Image
           src={ArrowLeft}
           alt="Seta de voltar"
-          className="swiper-button-prev rotate-180"
+          className="swiper-button-prev"
         />
       </button>
       <button onClick={() => swiper.slideNext()}>
         <Image
-          src={ArrowRight}
+          src={ArrowLeft}
           alt="Seta de avançar"
-          className="swiper-button-next scale-x-[-1]"
+          className="swiper-button-next rotate-180"
           onClick={() => swiper.slideNext()}
         />
       </button>

@@ -18,7 +18,7 @@ export default function Cart() {
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
-      <h1 className="w-full py-6 px-6">
+      <h1 className="w-full py-8 px-[6.25rem]">
         <strong>Você está em:</strong> carrinho
       </h1>
       {cart.length === 0 ? (
