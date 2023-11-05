@@ -3,6 +3,8 @@ import { Products } from "@/contexts/CartContext";
 import { useCart } from "@/hooks/useCart";
 import Image from "next/image";
 
+import { AiOutlineMinus } from "react-icons/ai";
+
 import minusImg from "../../assets/circle-minus.svg";
 
 interface ButtonProps {
@@ -14,7 +16,7 @@ export default function ButtonDecrementToCart({ item }: ButtonProps) {
 
   return (
     <button type="button" onClick={() => productCartDecrement(item)}>
-      <Image src={minusImg} alt="Remover quantidade" />
+      <AiOutlineMinus className="w-6 h-6" />
     </button>
   );
 }
