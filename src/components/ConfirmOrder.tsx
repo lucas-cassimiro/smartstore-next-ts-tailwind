@@ -17,12 +17,6 @@ export default function ConfirmOrder() {
 
   return (
     <div className="pt-6 flex items-center justify-between">
-      {/* <button
-        type="button"
-        className="bg-[#4aa4ee] w-full max-h-[16.5rem] min-h-[4rem] border-none rounded-lg cursor-pointer font-bold text-xl uppercase text-white"
-      >
-        Finalizar Pedido
-      </button> */}
       <span className="font-medium uppercase">
         Total{" "}
         <strong className="ml-3 font-bold text-4xl text-black">
