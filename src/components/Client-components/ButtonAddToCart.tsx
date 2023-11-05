@@ -19,7 +19,7 @@ export default function ButtonAddToCart({ products }: ProductProps) {
   return (
     <button type="button" onClick={() => addProductIntoCart(products)}>
       {productExistent && <span>{productExistent.quantity}</span>}
-      <BsFillCartPlusFill />
+      <BsFillCartPlusFill size="1.5rem"/>
     </button>
   );
 }
