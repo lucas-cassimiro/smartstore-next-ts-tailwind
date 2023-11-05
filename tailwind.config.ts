@@ -23,6 +23,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [nextui()],
+  plugins: [nextui(), require("tailwind-scrollbar")],
 };
 export default config;
