@@ -12,6 +12,7 @@ import ButtonFilterMobile from "@/components/Client-components/ButtonFilterMobil
 
 async function getProducts(param: string): Promise<ProductsData[]> {
   const response = await fetch(`http://localhost:3001/products/${param}`);
+
   const data = await response.json();
   return data;
 }
