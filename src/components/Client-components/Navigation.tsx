@@ -45,20 +45,28 @@ export default function Navigation({ navLinks }: NavigationProps) {
           <FaBars size="1.5rem" onClick={showMenu} />
           <div
             className={`${
-              menuOpen ? "w-[300px]" : ""
-            } py-6 flex flex-col h-screen w-0 overflow-hidden bg-[#313131] transition-width duration-700 ease-in fixed z-20 top-0 bottom-0 right-0`}
+              menuOpen ? "w-full opacity-100 visible bg-black/60" : ""
+            } flex flex-row-reverse h-screen w-0 overflow-hidden opacity-0 transition-colors duration-300 ease-in-out fixed z-20 top-0 bottom-0 right-0 `}
+            onClick={showMenu}
           >
-            <button className="w-[20px] ml-10">
-              <FaTimes size="1.5rem" onClick={showMenu} />
-            </button>
+            <div
+              className={`${
+                menuOpen ? "w-[300px] h-full" : ""
+              } w-0 transition-all duration-1000 ease-in-out py-6 bg-[#313131] overflow-hidden`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="min-w-[20px] ml-10">
+                <FaTimes size="1.5rem" onClick={showMenu} />
+              </button>
 
-            <ul className="flex flex-col my-auto gap-10 items-center min-w-[8.5rem]">
-              {navLinks.map((link) => (
-                <Link key={link.name} href={link.href} onClick={showMenu}>
-                  {link.name}
-                </Link>
-              ))}
-            </ul>
+              <ul className="flex flex-col my-auto gap-10 items-center min-w-[8.5rem] justify-center h-full">
+                {navLinks.map((link) => (
+                  <Link key={link.name} href={link.href} onClick={showMenu}>
+                    {link.name}
+                  </Link>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
