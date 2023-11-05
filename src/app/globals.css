@@ -35,6 +35,12 @@
   @apply w-[90%] py-0 px-10
 }
 
+@layer utilities {
+  .scrollbar-medium::-webkit-scrollbar {
+    width: 0.2rem;
+  }
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
