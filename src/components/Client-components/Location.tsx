@@ -60,58 +60,69 @@ export default function Location() {
         Selecione uma localização
       </a>
 
-      <aside
+      <div
         className={`${
-          location ? "w-[350px]" : ""
-        } py-6 flex flex-col items-center h-screen w-0 overflow-hidden bg-white transition-all duration-1000 ease-in-out fixed z-20 top-0 bottom-0 left-0`}
+          location ? "w-full opacity-100 visible bg-black/60" : "w-0 opacity-0"
+        } flex flex-row-reverse h-screen overflow-hidden transition-colors duration-300 ease-in-out fixed z-20 top-0 right-0`}
+        onClick={showLocation}
       >
-        <div style={freeSans.style} className={freeSans.className}>
-          <div className="flex justify-between">
-            <p className="text-[1.125rem] font-extrabold">
-              Qual a sua localização
-            </p>
-            <button>
-              <FaTimes onClick={showLocation} size="1.5rem" />
-            </button>
-          </div>
+        <div
+          className={`${
+            location ? "w-[400px] h-full" : ""
+          } w-0 transition-all duration-1000 ease-in-out py-6 bg-white overflow-hidden right-0`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="px-6 min-w-[400px]">
+            <div className="flex justify-between items-center mb-10">
+              <p className="text-[1.125rem] font-extrabold">
+                Qual a sua localização
+              </p>
 
-          <div className="mt-10 flex justify-between">
-            <input
-              id="cep"
-              name="cep"
-              value={cep}
-              onChange={(e) => setCep(e.target.value)}
-              placeholder="Insira um CEP"
-              className="w-36 border-[#e5e5e5] text-center border-4"
-            />
+              <FaTimes
+                onClick={showLocation}
+                size="1.5rem"
+                className="cursor-pointer"
+              />
+            </div>
 
-            <button
-              // onClick={() => handleCepChange}
-              style={freeSans.style}
-              className={`text-base ${freeSans.className} bg-[#3877c9] cursor-pointer rounded-[0.1875rem] h-[3.0625rem] py-[0.625rem] px-[1.75rem] font-extrabold`}
-            >
-              Buscar
-            </button>
-          </div>
-        </div>
+            <div className="mt-10 flex gap-2 min-w-full">
+              <input
+                id="cep"
+                name="cep"
+                value={cep}
+                onChange={(e) => setCep(e.target.value)}
+                placeholder="Insira um CEP"
+                className="min-w-2/3 border-[#e5e5e5] text-center border-2"
+              />
 
-        <ul className="flex flex-col mt-10 w-60 border-4 p-4">
-          {/* <li>
+              <button
+                // onClick={() => handleCepChange}
+                style={freeSans.style}
+                className={` ${freeSans.className} bg-[#4aa4ee] cursor-pointer rounded-[0.1875rem] h-[3.0625rem] py-[0.625rem] px-[1.75rem] font-medium text-xl min-w-1/3 hover:bg-[#3286ca] text-white`}
+              >
+                Buscar
+              </button>
+            </div>
+
+            <ul className="flex flex-col mt-10 w-full border-2 p-4 min-w-[302px]">
+              {/* <li>
             <span>{cep}</span>
           </li> */}
-          <li>
-            <span>{data?.logradouro}</span>
-          </li>
-          <li>
-            <span>
-              {data?.cidade}, {data?.uf}
-            </span>
-          </li>
-          <li>
-            <span>{data?.bairro}</span>
-          </li>
-        </ul>
-      </aside>
+              <li>
+                <span>{data?.logradouro}</span>
+              </li>
+              <li>
+                <span>
+                  {data?.cidade}, {data?.uf}
+                </span>
+              </li>
+              <li>
+                <span>{data?.bairro}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
