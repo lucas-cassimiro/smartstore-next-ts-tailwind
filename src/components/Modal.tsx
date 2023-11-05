@@ -29,7 +29,7 @@ export default function Modal({ children }: ModalProps) {
   return (
     <div
       ref={overlay}
-      className="fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black/40 overflow-y-scroll overflow-hidden"
+      className="fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black/40 scrollbar overflow-y-auto"
       onClick={onClick}
     >
       <div
