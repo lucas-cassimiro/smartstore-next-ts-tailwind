@@ -61,6 +61,7 @@ export default function Header({ navLinks }: NavLinkProps) {
 
         <div className="flex gap-3">
           <Cart />
+
           <Link href="/login" className="relative flex items-center">
             <div className="flex flex-col items-center">
               <Image
