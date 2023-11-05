@@ -12,9 +12,9 @@ export default function LoginFrame() {
     <div className="w-full h-full flex justify-center items-center">
       <div className="flex flex-col bg-white h-[500px] w-[600px] justify-center p-6 rounded-md gap-4">
         <h3 className="text-center uppercase text-2xl font-semibold">Login</h3>
-        <span>Username</span>
+        <span>Email</span>
         <input type="text" className="bg-[#ecf2f7]" />
-        <span>Password</span>
+        <span>Senha</span>
         <input type="password" className="bg-[#ecf2f7]" />
         <div>
           <div className="flex justify-between items-center">
