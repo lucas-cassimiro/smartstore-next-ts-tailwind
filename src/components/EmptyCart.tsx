@@ -13,7 +13,7 @@ export function EmptyCart({ title }: EmptyCartProps) {
       <h2 className="max-w-[500px] text-2xl font-bold">{title}</h2>
       <Link
         href="/"
-        className="block bg-[#4aa4ee] w-full max-w-[13rem] h-12 cursor-pointer rounded-lg font-medium text-xl leading-[3rem] text-white hover:bg-[#3286ca]"
+        className="block bg-[#4aa4ee] w-full max-w-[13rem] h-12 cursor-pointer rounded-lg mt-4 mb-12 font-medium text-xl leading-[3rem] text-white hover:bg-[#3286ca]"
       >
         Ir para início
       </Link>
