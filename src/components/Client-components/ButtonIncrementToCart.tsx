@@ -3,6 +3,8 @@ import { useCart } from "@/hooks/useCart";
 
 import Image from "next/image";
 
+import { AiOutlinePlus } from "react-icons/ai";
+
 import plusImg from "../../assets/circle-plus.svg";
 
 interface ButtonProps {
@@ -14,7 +16,7 @@ export default function ButtonIncrementToCart({ item }: ButtonProps) {
 
   return (
     <button type="button" onClick={() => productCartIncrement(item)}>
-      <Image src={plusImg} alt="Adicionar quantidade" />
+      <AiOutlinePlus className="w-6 h-6" />
     </button>
   );
 }
