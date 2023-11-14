@@ -4,76 +4,84 @@ import currencyFormat from "@/helpers/currencyFormat";
 
 import ButtonAddToCart from "./Client-components/ButtonAddToCart";
 import { ProductsData } from "@/interfaces/ProductsData";
+import Link from "next/link";
+
+import HalfRating from "@/lib/HalfRating";
 
 interface CardProductsProps {
-  products: ProductsData
+  products: ProductsData[];
 }
 
-export default function CardProducts({ products }: any) {
+export default function CardProducts({ products }: CardProductsProps) {
   return (
-    <div className="flex flex-col items-center">
-      <Image src={products.img} alt={products.name} />
-      <div className="flex flex-col w-[90%] ml-4 g-[0.625rem]">
-        <div className="flex gap-2 min-w-[14rem]">
-          {products.black_friday && (
-            <p className="py-[0.375rem] px-5 bg-[#d93a1e] text-white font-semibold rounded-[4px]">
-              -{products.discount}%
+    <div className="flex max-w-full w-[1092px] flex-wrap">
+      {products.map((product) => (
+        <Link
+          href={`/produtos/${product.id}`}
+          key={product.id}
+          className="flex flex-col flex-2 m-[1rem] "
+        >
+          {/* <Image src={product.image} alt={product.name} /> */}
+
+          <div className="">
+            {product.black_friday && (
+              <p className="py-[0.375rem] px-2 bg-[#d93a1e] text-white font-semibold rounded-[4px} float-left mr-[6px]">
+                -{product.discount}%
+              </p>
+            )}
+            {product.black_friday && (
+              <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-2 text-white font-semibold float-left mr-[6px]">
+                Black Friday
+              </p>
+            )}
+          </div>
+          <h4 className="text-[0.875rem] font-normal">{product.name}</h4>
+          <HalfRating star={product.average_score} />
+
+          {product.black_friday && (
+            <p className="text-[0.75rem] line-through">
+              {currencyFormat(product.price)}
             </p>
           )}
-          {products.black_friday && (
-            <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-5 text-white font-semibold">
-              Black Friday
+
+          {product.black_friday && (
+            <section className="">
+              <p className="font-semibold text-base">
+                {currencyFormat(
+                  (product.price * (100 - product.discount)) / 100
+                )}
+              </p>
+
+              {/* <ButtonAddToCart products={products} /> */}
+            </section>
+          )}
+
+          {!product.black_friday && (
+            <section className="">
+              <p className="font-semibold text-base">
+                {currencyFormat(product.price)}
+              </p>
+
+              {/* <ButtonAddToCart products={products} /> */}
+            </section>
+          )}
+
+          {!product.black_friday && (
+            <p className="text-[0.75rem] text-black">
+              Ou 12x de {currencyFormat(product.price / 12)}
             </p>
           )}
-        </div>
-        <h4 className="text-[0.875rem] font-normal min-w-[8.25rem]">
-          {products.name}
-        </h4>
-        {/* <HalfRating star={products.average_score!} /> */}
 
-        {products.black_friday && (
-          <p className="text-[0.75rem] line-through">
-            {currencyFormat(products.price)}
-          </p>
-        )}
-
-        {products.black_friday && (
-          <section className="flex justify-between items-center w-[12.5rem]">
-            <p className="font-semibold text-base">
+          {product.black_friday && (
+            <p className="text-[0.75rem] text-black">
+              Ou 12x de{" "}
               {currencyFormat(
-                (products.price * (100 - products.discount!)) / 100
+                (product.price * (100 - product.discount)) / 100 / 12
               )}
             </p>
-
-            <ButtonAddToCart products={products} />
-          </section>
-        )}
-
-        {!products.black_friday && (
-          <section className="flex justify-between items-center w-[12.5rem]">
-            <p className="font-semibold text-base">
-              {currencyFormat(products.price)}
-            </p>
-
-            <ButtonAddToCart products={products} />
-          </section>
-        )}
-
-        {!products.black_friday && (
-          <p className="text-[0.75rem] text-black min-w-[7.6875rem]">
-            Ou 12x de {currencyFormat(products.price / 12)}
-          </p>
-        )}
-
-        {products.black_friday && (
-          <p className="text-[0.75rem] text-black min-w-[7.6875rem]">
-            Ou 12x de{" "}
-            {currencyFormat(
-              (products.price * (100 - products.discount!)) / 100 / 12
-            )}
-          </p>
-        )}
-      </div>
+          )}
+        </Link>
+      ))}
     </div>
   );
 }
