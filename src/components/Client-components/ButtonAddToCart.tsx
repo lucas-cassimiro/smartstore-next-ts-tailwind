@@ -10,16 +10,15 @@ interface ProductProps {
 }
 
 export default function ButtonAddToCart({ products }: ProductProps) {
-  const { cart, addProductIntoCart } = useCart();
-
-  const productExistent = cart.find(
-    (item) => item.id === products.id && item.name === products.name
-  );
+  const { addProductIntoCart } = useCart();
 
   return (
-    <button type="button" onClick={() => addProductIntoCart(products)}>
-      {productExistent && <span>{productExistent.quantity}</span>}
-      <BsFillCartPlusFill size="1.5rem"/>
+    <button
+      type="button"
+      className="bg-[#4aa4ee] hover:bg-[#3286ca] p-4 rounded-[4px] font-medium"
+      onClick={() => addProductIntoCart(products)}
+    >
+      Adicionar ao carrinho
     </button>
   );
 }
