@@ -1,6 +1,6 @@
 "use client";
 
-import { NavLink } from "@/app/layout";
+import { NavLink } from "@/Providers/LayoutProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -46,12 +46,12 @@ export default function Navigation({ navLinks }: NavigationProps) {
           <div
             className={`${
               menuOpen ? "w-full opacity-100 visible bg-black/60" : ""
-            } flex flex-row-reverse h-screen w-0 overflow-hidden opacity-0 transition-colors duration-300 ease-in-out fixed z-20 top-0 bottom-0 right-0 `}
+            } flex flex-row-reverse h-full w-0 overflow-hidden opacity-0 transition-colors duration-300 ease-in-out fixed z-20 top-0 bottom-0 right-0 `}
             onClick={showMenu}
           >
             <div
               className={`${
-                menuOpen ? "w-[300px] h-full" : ""
+                menuOpen ? "w-[230px] h-full" : ""
               } w-0 transition-all duration-1000 ease-in-out py-6 bg-[#313131] overflow-hidden`}
               onClick={(e) => e.stopPropagation()}
             >
