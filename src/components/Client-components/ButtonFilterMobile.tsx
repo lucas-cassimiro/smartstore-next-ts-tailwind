@@ -128,7 +128,7 @@ export default function ButtonFilterMobile() {
                   <h4 className="font-bold text-lg">Armazenamento</h4>
                 </div>
 
-                <ButtonFilterCapacity />
+                {/* <ButtonFilterCapacity /> */}
               </div>
             </div>
           </div>
