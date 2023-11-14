@@ -14,40 +14,52 @@ import ButtonIncrementToCart from "./ButtonIncrementToCart";
 import ConfirmOrder from "../ConfirmOrder";
 import ButtonRemoveFromCart from "./ButtonRemoveFromCart";
 import { EmptyCart } from "../EmptyCart";
+import Link from "next/link";
+
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export default function Cart() {
   const [cartOpen, setCartOpen] = useState(false);
-
   const showCartOpen = () => setCartOpen(!cartOpen);
 
-  const { cart } = useCart();
+  const { cart} = useCart();
+
+  const productExistent = cart.find((product) => product);
 
   return (
     <>
       <button className="relative flex items-center" onClick={showCartOpen}>
         <div className="flex flex-col items-center">
-          <Image
-            src={IconCart}
-            alt="Ícone de carrinho"
-            className="celular:w-4 celular:h-4"
-          />
-          <span className="text-white celular:text-sm">Cart</span>
+          <div className="relative">
+            {/* <Image
+              src={IconCart}
+              alt="Ícone de carrinho"
+              className="celular:w-4 celular:h-4"
+            /> */}
+            <AiOutlineShoppingCart className="celular:w-4 celular:h-4 w-6 h-5 text-white" />
+            {productExistent && (
+              <span className="absolute bg-[#D4D4D8] rounded-full border-[2px] border-white w-4 h-4 flex items-center justify-center top-[-1px] left-[16px]">
+                {cart.length}
+              </span>
+            )}
+          </div>
+          <span className="text-white celular:text-sm text-sm">Cart</span>
         </div>
       </button>
 
       <div
         className={`${
           cartOpen ? "w-full opacity-100 visible bg-black/60" : ""
-        } flex flex-row-reverse  h-screen w-0 overflow-hidden opacity-0 transition-colors duration-300 ease-in-out fixed z-20 top-0 bottom-0 left-0 `}
+        } flex flex-row-reverse  h-full w-0 overflow-hidden opacity-0 transition-colors duration-300 ease-in-out fixed z-20 top-0 bottom-0 left-0 `}
         onClick={showCartOpen}
       >
         <div
           className={`${
-            cartOpen ? "w-[500px] h-full" : ""
+            cartOpen ? "w-[400px] h-full tablet:w-[300px]" : ""
           } w-0 transition-all duration-1000 ease-in-out py-6 bg-white overflow-hidden`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="px-6 min-w-[500px] h-full">
+          <div className="px-6 w-[400px] h-full tablet:w-[300px] relative">
             <div className="flex justify-between mb-10 items-center">
               <FaTimes
                 size="1.5rem"
@@ -62,25 +74,32 @@ export default function Cart() {
               <EmptyCart title="Ops! Seu carrinho está vazio" />
             ) : (
               <>
-                <div className="flex flex-col items-center gap-8 overflow-y-auto max-h-[550px] scrollbar h-[800px] scrollbar-medium">
+                <div className="flex items-center gap-2 overflow-y-auto scrollbar scrollbar-medium relative">
                   {cart.map((cart) => (
-                    <div key={cart.id} className="flex items-center gap-5">
-                      <span className="text-xs min-w-[140px]">
-                        AQUI VAI SER A IMAGEM
+                    <>
+                      <span
+                        className="text-xs w-[100px] tablet:w-[60px]"
+                        key={cart.id}
+                      >
+                        AQUI VAI
                       </span>
-                      <div className="flex flex-col mb-10 gap-[6px] min-w-[267px]">
+                      <div className="flex flex-col mb-10 gap-[6px]">
                         {cart.black_friday ? (
                           <>
-                            <span className="text-lg">{cart.name}</span>
+                            <span className="text-base tablet:text-xs">
+                              {cart.name}
+                            </span>
                             <div className="flex gap-2">
-                              <p className="py-[0.375rem] px-5 bg-[#d93a1e] text-white font-semibold rounded-[4px]">
+                              <p className="py-[0.3rem] px-3 bg-[#d93a1e] text-white font-semibold rounded-[4px] text-sm tablet:text-xs">
                                 -{cart.discount}%
                               </p>
-                              <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-5 text-white font-semibold">
+                              <p className="bg-[#313131] rounded-[4px] py-[0.3rem] px-3 text-white font-semibold text-sm tablet:text-xs">
                                 Black Friday
                               </p>
                             </div>
-                            <span>Quantidade: {cart.quantity}</span>
+                            <span className="text-sm">
+                              Quantidade: {cart.quantity}
+                            </span>
                             <span className="line-through text-xs">
                               {currencyFormat(cart.price)}
                             </span>
@@ -92,16 +111,16 @@ export default function Cart() {
                               </strong>
                               à vista
                             </span>
-                            <div className="flex border-2 gap-3 w-[110px] h-[40px] p-2 items-center">
+                            <div className="flex border-2 gap-3 w-[90px] h-[40px] p-2 items-center">
                               <ButtonDecrementToCart item={cart} />
 
-                              <span className="font-medium text-lg">
+                              <span className="font-medium text-sm">
                                 {`${cart.quantity}`.padStart(2, "0")}
                               </span>
 
                               <ButtonIncrementToCart item={cart} />
-                              <ButtonRemoveFromCart item={cart} />
                             </div>{" "}
+                            <ButtonRemoveFromCart item={cart} />
                           </>
                         ) : (
                           <>
@@ -118,17 +137,18 @@ export default function Cart() {
                           </>
                         )}
                       </div>
-                    </div>
+                    </>
                   ))}
                 </div>
-
-                <ConfirmOrder />
-                <button
-                  type="button"
-                  className="bg-[#4aa4ee] w-full max-h-[16.5rem] min-h-[4rem] border-none rounded-lg cursor-pointer font-bold text-xl uppercase text-white hover:bg-[#3286ca]"
-                >
-                  Finalizar Pedido
-                </button>
+                <div className="absolute bottom-0 flex flex-col w-[350px] tablet:w-[250px]">
+                  <ConfirmOrder />
+                  <Link
+                    href="/checkout"
+                    className="bg-[#4aa4ee] p-4 border-none rounded-lg cursor-pointer font-bold text-xl text-center uppercase text-white hover:bg-[#3286ca] w-full"
+                  >
+                    Finalizar Pedido
+                  </Link>
+                </div>
               </>
             )}
           </div>
