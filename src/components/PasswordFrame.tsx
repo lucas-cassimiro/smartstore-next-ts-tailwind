@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { Input, Button } from "@nextui-org/react";
+
 export default function PasswordFrame() {
   return (
     <div className="w-full h-full flex justify-center items-center">
@@ -12,11 +14,15 @@ export default function PasswordFrame() {
           Digite seu endereço de e-mail para receber um link seguro para
           redefinir sua senha.
         </span>
-        <span className="mb-2">Email</span>
-        <input type="text" className="bg-[#ecf2f7] mb-6" />
-        <button className="bg-[#4aa4ee] text-white font-light cursor-pointer rounded-md hover:bg-[#3286ca] h-[50px] text-lg">
+        <Input type="email" className="mb-5" label="Email" isRequired />
+
+        <Button
+          className="text-white text-lg font-light"
+          color="primary"
+          type="submit"
+        >
           Enviar solicitação
-        </button>
+        </Button>
       </div>
     </div>
   );
