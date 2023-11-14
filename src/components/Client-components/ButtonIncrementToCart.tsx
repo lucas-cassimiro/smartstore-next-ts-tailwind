@@ -16,7 +16,7 @@ export default function ButtonIncrementToCart({ item }: ButtonProps) {
 
   return (
     <button type="button" onClick={() => productCartIncrement(item)}>
-      <AiOutlinePlus className="w-6 h-6" />
+      <AiOutlinePlus className="w-4 h-4" />
     </button>
   );
 }
