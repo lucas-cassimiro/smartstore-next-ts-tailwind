@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.swiper {
+  @apply z-0
+}
+
+.swiper .swiper-wrapper {
+  @apply z-0
+}
+
+ .swiper .swiper-pagination {
+   @apply mt-[1.875rem] relative celular:mt-[1.2rem]
+  }
+
+ .swiper-pagination .swiper-pagination-bullet {
+    @apply w-[6.25rem] h-[0.75rem] rounded-none bg-[#9e9e9ede] cursor-pointer transition-all duration-1000 opacity-100 celular:w-[3rem] celular:h-[0.5rem]
+  }
+
+.swiper-pagination .swiper-pagination-bullet-active {
+  @apply bg-[#313131]
+}
+
+/* .swiper .swiper-button-prev {
+  @apply hover:[#93C1FD]
+}
+
+.swiper .swiper-button-next {
+  @apply hover:[#93C1FD]
+} */
+
+.text-stroke {
+  -webkit-text-stroke: 1px #074291;
+  color: white;
+}
+
+.carousel1.swiper {
+  @apply w-full
+}
+
+.carousel2.swiper {
+  @apply max-w-[1450px] py-0 px-10
+}
+
+.scrollbar {
+  @apply block overflow-y-scroll
+}
+
+@layer utilities {
+  .scrollbar-medium::-webkit-scrollbar {
+    width: 0.2rem;
+  }
+}
+
+.error-message {
+  max-height: 1.5em; /* ou ajuste conforme necessário */
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
