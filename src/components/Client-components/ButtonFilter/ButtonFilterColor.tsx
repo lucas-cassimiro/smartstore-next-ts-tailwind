@@ -3,7 +3,7 @@ import { Checkbox } from "@nextui-org/react";
 export default function ButtonFilterColor() {
   return (
     <>
-      <label>
+      <label className="cursor-pointer">
         <Checkbox
           type="checkbox"
           name="cor"
@@ -12,7 +12,7 @@ export default function ButtonFilterColor() {
         />
         Azul
       </label>
-      <label>
+      <label className="cursor-pointer">
         <Checkbox
           type="checkbox"
           name="cor"
@@ -21,7 +21,7 @@ export default function ButtonFilterColor() {
         />
         Branco
       </label>
-      <label>
+      <label className="cursor-pointer">
         <Checkbox
           type="checkbox"
           name="cor"
@@ -30,7 +30,7 @@ export default function ButtonFilterColor() {
         />
         Preto
       </label>
-      <label>
+      <label className="cursor-pointer">
         <Checkbox
           type="checkbox"
           name="cor"
@@ -39,7 +39,7 @@ export default function ButtonFilterColor() {
         />
         Roxo
       </label>
-      <label>
+      <label className="cursor-pointer">
         <Checkbox
           type="checkbox"
           name="cor"
