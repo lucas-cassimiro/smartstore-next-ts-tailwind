@@ -16,7 +16,7 @@ export default function ButtonDecrementToCart({ item }: ButtonProps) {
 
   return (
     <button type="button" onClick={() => productCartDecrement(item)}>
-      <AiOutlineMinus className="w-6 h-6" />
+      <AiOutlineMinus className="w-4 h-4" />
     </button>
   );
 }
