@@ -26,7 +26,8 @@ type User = {
 
 type AuthContextType = {
   isAuthenticated: boolean;
-  user: User[];
+  isLoading: boolean;
+  user: User | null;
   errorMessage: string | null;
   signIn: (data: FormData) => Promise<void>;
   signOut: () => void;
@@ -35,10 +36,11 @@ type AuthContextType = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User[]>([]);
+  const [user, setUser] = useState<User | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const isAuthenticated = user.length >= 1;
+  const isAuthenticated = !!user;
 
   const router = useRouter();
 
@@ -53,12 +55,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       })
         .then((response) => response.json())
         .then((userData) => {
-          setUser(Array.isArray(userData) ? userData : [userData]);
+          setUser(userData);
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
           setErrorMessage("Erro ao buscar dados do usuário");
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
@@ -85,28 +92,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       setUser(response.user);
+
       setErrorMessage(null);
 
-      router.push("/meu-cadastro");
+      router.push("/");
       window.location.reload();
     } catch (error) {
       console.error("Error during fetch:", error);
       setErrorMessage("Usuário ou senha inválidos.");
+    } finally {
+      setIsLoading(false);
     }
-
   }
 
   const signOut = useCallback(() => {
     destroyCookie(null, "smartstore.token");
-    setUser([]);
+    setUser(null);
     setErrorMessage(null);
+
     router.push("/");
     window.location.reload();
   }, [router]);
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, signIn, signOut, user, errorMessage }}
+      value={{
+        isAuthenticated,
+        signIn,
+        signOut,
+        user,
+        errorMessage,
+        isLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>
