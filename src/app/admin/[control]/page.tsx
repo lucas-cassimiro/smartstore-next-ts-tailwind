@@ -82,40 +82,40 @@ export default function Admin({ params }: { params: { control: string } }) {
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     console.log(data);
 
-    // try {
-    //   // data.preventDefault();
+    try {
+      // data.preventDefault();
 
-    //   const url =
-    //     method === "POST"
-    //       ? `http://localhost:3001/${control}`
-    //       : `http://localhost:3001/${control}/${data.id}`;
+      const url =
+        method === "POST"
+          ? `http://localhost:3001/${control}`
+          : `http://localhost:3001/${control}/${data.id}`;
 
-    //   const request = await fetch(url, {
-    //     method: method,
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   });
+      const request = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    //   if (!request.ok) {
-    //     const errorResponse = await request.json();
+      if (!request.ok) {
+        const errorResponse = await request.json();
 
-    //     setErrorMessage(errorResponse);
+        setErrorMessage(errorResponse);
 
-    //     throw new Error(errorResponse.message);
-    //   }
+        throw new Error(errorResponse.message);
+      }
 
-    //   const response = await request.json();
+      const response = await request.json();
 
-    //   setSuccessMessage(response);
+      setSuccessMessage(response);
 
-    //   console.log(response);
+      console.log(response);
 
-    //   setErrorMessage(null);
-    // } catch (error) {
-    //   console.error("Error during fetch:", error);
-    // }
+      setErrorMessage(null);
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
   };
 
   const onError: SubmitErrorHandler<FormData> = (errors) => console.log(errors);
