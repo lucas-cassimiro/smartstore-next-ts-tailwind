@@ -140,7 +140,7 @@ export default function Cart() {
                     </>
                   ))}
                 </div>
-                <div className="absolute bottom-0 flex flex-col w-[350px] tablet:w-[250px]">
+                <div className="absolute bottom-0 flex flex-col w-[350px] tablet:w-[250px] bg-white">
                   <ConfirmOrder />
                   <Link
                     href="/checkout"
