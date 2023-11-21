@@ -21,7 +21,7 @@ export default function Logado() {
       <div className="flex items-center flex-col" onClick={showIsLog}>
         <FaUserCircle className="text-white h-6 w-6 cursor-pointer" />
         <span className="text-white text-sm cursor-pointer">
-          {user.length > 0 && user[0].first_name}
+          {user?.first_name}
         </span>
       </div>
       <div
@@ -40,7 +40,7 @@ export default function Logado() {
             <div className="flex items-center gap-3">
               <FaUserCircle className="text-white h-7 w-7" />
               <span className="text-white text-xl font-semibold tablet:text-base">
-                Olá, {user.length > 0 && user[0].first_name}
+                Olá, {user?.first_name}
               </span>
             </div>
             <span
@@ -57,10 +57,7 @@ export default function Logado() {
             <Link href="/orderHistory" onClick={showIsLog}>
               Meus pedidos
             </Link>
-            <Link href="/favoritos" onClick={showIsLog}>
-              Favoritos
-            </Link>
-            {user.length > 0 && user[0].admin_auth && (
+            {user?.admin_auth && (
               <>
                 <Link href="/admin/produto" onClick={showIsLog}>
                   Painel de Administrador
