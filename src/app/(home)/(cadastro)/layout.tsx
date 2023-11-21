@@ -20,10 +20,6 @@ const navLinks: NavLink[] = [
     name: "Meus pedidos",
     href: "/orderHistory",
   },
-  {
-    name: "Favoritos",
-    href: "/favoritos",
-  },
 ];
 
 export default function CadastroLayout({
