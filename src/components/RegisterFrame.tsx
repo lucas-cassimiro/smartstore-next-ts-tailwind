@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/hooks/useAuth";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useState } from "react";
@@ -24,6 +25,8 @@ type ErrorResponse = {
 export default function RegisterFrame() {
   const [errorMessage, setErrorMessage] = useState<ErrorResponse | null>(null);
 
+  const { signIn } = useAuth();
+
   console.log(errorMessage);
 
   const {
@@ -31,7 +34,6 @@ export default function RegisterFrame() {
     register,
     formState: { errors },
     getValues,
-    control,
   } = useForm<FormData>({
     defaultValues: {
       email: "",
@@ -57,6 +59,7 @@ export default function RegisterFrame() {
         },
         body: JSON.stringify(postData),
       });
+      
       if (!request.ok) {
         const errorResponse = await request.json();
 
@@ -67,6 +70,21 @@ export default function RegisterFrame() {
 
       const response = await request.json();
       console.log(response);
+
+      try {
+        const {
+          cpf,
+          cellphone,
+          date_birth,
+          last_name,
+          first_name,
+          ...logData
+        } = postData;
+
+        await signIn(logData);
+      } catch (error) {
+        console.error("Error:", error);
+      }
     } catch (error) {
       console.error("Error during fetch:", error);
     }
@@ -287,7 +305,11 @@ export default function RegisterFrame() {
           >
             Continuar
           </button> */}
-          <Button className="text-white text-base" color="primary" type="submit">
+          <Button
+            className="text-white text-base"
+            color="primary"
+            type="submit"
+          >
             Continuar
           </Button>
         </form>
