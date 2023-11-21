@@ -36,8 +36,8 @@ export default function UserLayout({ navLinks }: NavLinkProps) {
         })}
       </div>
       <div className="flex flex-col gap-6 w-[300px]">
-        <div className="border-b-[1px] border-black">
-          <span className="font-semibold text-lg mb-10">Minha conta</span>
+        <div className="border-b-[1px] border-black flex">
+          <span className="font-semibold text-lg mb-5">Minha conta</span>
         </div>
         {navLinks.map((link) => {
           const isActive = pathname.endsWith(link.href);
@@ -48,12 +48,15 @@ export default function UserLayout({ navLinks }: NavLinkProps) {
                 isActive ? "font-semibold" : "border-none"
               } tablet:hidden list-none `}
             >
-              <div className="flex items-center justify-between">
-                <Link href={link.href} className="text-black text-lg ">
+              <Link
+                href={link.href}
+                className="text-black text-lg flex items-center justify-between"
+              >
+                <span className="hover:border-b-2 border-black">
                   {link.name}
-                </Link>
+                </span>
                 <GrFormNext />
-              </div>
+              </Link>
             </li>
           );
         })}
