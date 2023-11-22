@@ -95,7 +95,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       setErrorMessage(null);
 
-      router.push("/");
       window.location.reload();
     } catch (error) {
       console.error("Error during fetch:", error);
