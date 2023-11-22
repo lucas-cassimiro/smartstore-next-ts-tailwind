@@ -183,6 +183,7 @@ export default function LoginFrame() {
                         label: "text-small",
                       }}
                       className="text-white"
+                      defaultSelected
                     >
                       <span className="text-white">Lembrar-me</span>
                     </Switch>
