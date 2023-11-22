@@ -69,7 +69,8 @@ export default async function Products({
               </select>
             </div>
             <div className="flex flex-wrap">
-              <CardProducts products={data} />
+              {data.length >= 1 ? <CardProducts products={data} /> : <span>Não há produtos para exibição.</span>}
+             {/*<CardProducts products={data} />*/}
             </div>
           </div>
         </div>
