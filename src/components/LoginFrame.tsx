@@ -37,9 +37,12 @@ import {
   Checkbox,
   Input,
   Link,
+  Switch,
 } from "@nextui-org/react";
+
 import { MailIcon } from "./MailIcon";
 import { LockIcon } from "./LockIcon";
+import RegisterFrame from "./RegisterFrame";
 
 export type FormData = {
   email: string;
@@ -53,7 +56,9 @@ export type FormData = {
 export default function LoginFrame() {
   const { signIn, errorMessage } = useContext(AuthContext);
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
+  const [registered, setRegistered] = useState<boolean>(false);
 
   const {
     handleSubmit,
@@ -77,35 +82,40 @@ export default function LoginFrame() {
 
   const onError: SubmitErrorHandler<FormData> = (errors) => console.log(errors);
 
+    const handleCloseModal = () => {
+      setRegistered(false);
+      onClose();
+    };
+
   return (
     <>
-      <Button
-        onPress={onOpen}
-        color="primary"
+      <button
+        onClick={onOpen}
         className="relative flex items-center"
       >
         <div className="flex flex-col items-center">
           <FaUserAlt className="text-white celular:w-4 celular:h-4 w-6 h-5" />
           <span className="text-white celular:text-sm text-sm">Login</span>
         </div>
-      </Button>
+      </button>
       <Modal
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        placement="top-center"
-        backdrop="blur"
+        onOpenChange={handleCloseModal}
+        placement="center"
+        //backdrop="blur"
       >
-        <ModalContent style={{ backgroundColor: "hsl(240, 6%, 10%)" }}>
+        <ModalContent style={{ backgroundColor: "hsl(240, 6%, 10%)" }} className="max-w-[500px]">
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1 text-white">ENTRAR</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1 text-white">
+                ENTRAR
+              </ModalHeader>
               <ModalBody>
                 <form
                   onSubmit={handleSubmit(handleSignIn, onError)}
                   className="flex flex-col gap-3"
                 >
                   <Input
-                    autoFocus
                     endContent={
                       <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     }
@@ -120,7 +130,7 @@ export default function LoginFrame() {
                         value:
                           /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                         message:
-                          "Entrada inválida. Informe um endereço de e-mail válido. Por exemplo, lucas@cassimiro.com.",
+                          "Entrada inválida. Informe um endereço de e-mail válido. Por exemplo, john@doe.com.",
                       },
                     })}
                     // onClick={() => {
@@ -168,20 +178,29 @@ export default function LoginFrame() {
                   )}
 
                   <div className="flex py-2 px-1 justify-between">
-                    <Checkbox
+                    <Switch
                       classNames={{
                         label: "text-small",
                       }}
-                     
+                      className="text-white"
                     >
-                      Lembrar-me
-                    </Checkbox>
-                    <Link color="primary" href="#" size="sm">
-                      Esqueceu sua senha?
+                      <span className="text-white">Lembrar-me</span>
+                    </Switch>
+                    <Link
+                      color="primary"
+                      href="#"
+                      size="sm"
+                      onClick={() => setRegistered(!registered)}
+                    >
+                      Não possui uma conta? Inscrever-se
                     </Link>
                   </div>
                   <ModalFooter className="px-0">
-                    <Button color="danger" variant="flat" onPress={onClose}>
+                    <Button
+                      color="danger"
+                      variant="flat"
+                      onPress={handleCloseModal}
+                    >
                       Fechar
                     </Button>
                     <Button type="submit" color="primary">
@@ -193,6 +212,9 @@ export default function LoginFrame() {
             </>
           )}
         </ModalContent>
+        {registered && (
+         <RegisterFrame />
+        )}
       </Modal>
     </>
   );
