@@ -3,14 +3,13 @@
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 
-import { GetServerSideProps } from "next";
-import { parseCookies } from "nookies";
 import { AuthGuard } from "@/components/AuthGuard";
 
 import moment from "moment";
+import { Radio, RadioGroup } from "@nextui-org/react";
 
 export default function MeuCadastro() {
-  const { user } = useAuth();
+  const { user, address } = useAuth();
 
   return (
     <AuthGuard>
@@ -71,19 +70,17 @@ export default function MeuCadastro() {
                 Adicionar endereço
               </Link>
             </div>
+            <RadioGroup label="Selecione o endereço que deseja">
+              {address.map((add) => (
+                <Radio value={add.street_address} key={add.id}>
+                  {add.street_address}, {add.number_address} {add.complement} -{" "}
+                  {add.city} - {add.state}
+                </Radio>
+              ))}
+            </RadioGroup>
           </div>
         </div>
       </div>
     </AuthGuard>
   );
 }
-
-// export const getServerSideProps: GetServerSideProps = async (ctx) => {
-//   const cookies = parseCookies(ctx);
-
-//   return {
-//     props: {
-
-//     }
-//   }
-// }
