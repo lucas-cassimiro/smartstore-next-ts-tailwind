@@ -24,10 +24,22 @@ type User = {
   admin_auth: boolean;
 };
 
+type Address = {
+  id: number;
+  street_address: string;
+  number_address: number;
+  complement: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  recipient: string;
+};
+
 type AuthContextType = {
   isAuthenticated: boolean;
   isLoading: boolean;
   user: User | null;
+  address: Address[];
   errorMessage: string | null;
   signIn: (data: FormData) => Promise<void>;
   signOut: () => void;
@@ -35,8 +47,15 @@ type AuthContextType = {
 
 export const AuthContext = createContext({} as AuthContextType);
 
+async function getAddress(userId: number) {
+  const request = await fetch(`http://localhost:3001/endereco/${userId}`);
+  return await request.json();
+}
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [address, setAddress] = useState<Address[]>([]);
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -69,6 +88,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
+  useEffect(() => {
+    async function fetchData() {
+      if (user?.id) {
+        const addressData = await getAddress(user.id);
+        setAddress(addressData);
+      }
+    }
+
+    fetchData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   async function signIn({ email, password_hash }: FormData) {
     try {
       const url = "http://localhost:3001/users/login";
@@ -79,6 +111,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         },
         body: JSON.stringify({ email, password_hash }),
       });
+
       if (!request.ok) {
         const errorResponse = await request.json();
 
@@ -120,6 +153,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signIn,
         signOut,
         user,
+        address,
         errorMessage,
         isLoading,
       }}
