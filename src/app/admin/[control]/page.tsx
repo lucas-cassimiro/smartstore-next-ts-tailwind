@@ -12,6 +12,8 @@ import {
 import { Input, Checkbox, Button, RadioGroup, Radio } from "@nextui-org/react";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 
+import moment from "moment";
+
 type FormData = {
   id?: number;
   name?: string;
@@ -49,6 +51,8 @@ export default function Admin({ params }: { params: { control: string } }) {
 
   const [method, setMethod] = useState<string>("");
 
+  const [data, setData] = useState<any>([]);
+
   const [errorMessage, setErrorMessage] = useState<MessageResponse | null>(
     null
   );
@@ -57,6 +61,8 @@ export default function Admin({ params }: { params: { control: string } }) {
   );
 
   const [blackFridayChecked, setBlackFridayChecked] = useState<boolean>(false);
+
+  console.log(data);
 
   const {
     handleSubmit,
@@ -67,8 +73,6 @@ export default function Admin({ params }: { params: { control: string } }) {
   } = useForm<FormData>({
     mode: "onBlur",
   });
-
-  console.log(getValues);
 
   const changeMethod = (method: string) => {
     reset();
@@ -146,8 +150,6 @@ export default function Admin({ params }: { params: { control: string } }) {
 
   const isUpdatedAtRequired = ["estoque"].includes(control) && method === "PUT";
 
-  const [data, setData] = useState<any>([]);
-
   const post: string = "POST";
   const put: string = "PUT";
   const del: string = "DELETE";
@@ -165,8 +167,6 @@ export default function Admin({ params }: { params: { control: string } }) {
     }
     fetchData();
   }, [control]);
-
-  console.log(data);
 
   const name = (
     <>
@@ -398,327 +398,6 @@ export default function Admin({ params }: { params: { control: string } }) {
     </>
   );
 
-  const renderRadios = () => {
-    switch (control) {
-      case "produto":
-        return (
-          <RadioGroup
-            className="flex gap-3 mt-6 flex-col"
-            defaultValue="POST"
-            label="Selecione o método que você deseja"
-          >
-            <Radio value="POST" onClick={() => changeMethod(post)}>
-              Cadastrar
-            </Radio>
-            <Radio value="PUT" onClick={() => changeMethod(put)}>
-              Atualizar
-            </Radio>
-            <Radio value="DELETE" onClick={() => changeMethod(del)}>
-              Deletar
-            </Radio>
-          </RadioGroup>
-        );
-      case "estoque":
-        return (
-          <RadioGroup
-            className="flex gap-3 mt-6 flex-col"
-            defaultValue="PUT"
-            label="Selecione o método que você deseja"
-          >
-            <Radio value="PUT" onClick={() => changeMethod(put)}>
-              Atualizar
-            </Radio>
-          </RadioGroup>
-        );
-      case "cor":
-      case "armazenamento":
-      case "categoria":
-        return (
-          <RadioGroup
-            className="flex gap-3 mt-6 flex-col"
-            defaultValue="POST"
-            label="Selecione o método que você deseja"
-          >
-            <Radio value="POST" onClick={() => changeMethod(post)}>
-              Cadastrar
-            </Radio>
-            <Radio value="PUT" onClick={() => changeMethod(put)}>
-              Atualizar
-            </Radio>
-          </RadioGroup>
-        );
-      default:
-        return null;
-    }
-  };
-
-  const renderInputs = () => {
-    if (method === "POST" && control === "produto") {
-      return (
-        <>
-          <div className="flex gap-14 justify-center items-center">
-            <div className="flex flex-col gap-2">
-              {name}
-
-              {inputPrice}
-
-              <span>Foto do produto</span>
-              <Button endContent={<BsFillCameraFill />}>
-                <input type="file" name="productImage" />
-              </Button>
-
-              <label>
-                <Checkbox
-                  id="black_friday"
-                  type="checkbox"
-                  checked={blackFridayChecked}
-                  {...register("black_friday", {
-                    setValueAs: (value) => value.target.checked,
-                  })}
-                />
-                Black friday
-              </label>
-
-              {inputDiscount}
-
-              {inputDescription}
-
-              <Input
-                id="color_id"
-                type="number"
-                label="ID da COR"
-                isRequired
-                // name="color_id"
-                // value={formData.color_id}
-                // onChange={handleChange}
-                className="w-[250px]"
-                {...register("color_id", {
-                  required: true,
-                })}
-              />
-              {errors?.color_id && (
-                <span className="text-[#a94442] text-sm">
-                  Campo obrigatório.
-                </span>
-              )}
-            </div>
-            <div className="flex flex-col gap-2">
-              <span>ID Armazenamento</span>
-              <Input
-                id="storage_id"
-                type="number"
-                // name="storage_id"
-                // value={formData.storage_id}
-                // onChange={handleChange}
-                className="w-[250px]"
-                {...register("storage_id", {
-                  required: true,
-                })}
-              />
-
-              <span>ID Categoria</span>
-              <Input
-                id="categorie_id"
-                type="number"
-                // name="categorie_id"
-                // value={formData.categorie_id}
-                // onChange={handleChange}
-                className="w-[250px]"
-                {...register("categorie_id", {
-                  required: true,
-                })}
-              />
-
-              {inputEan}
-
-              {inputStatus}
-
-              {inputPurchasePrice}
-
-              {inputExpiryDate}
-
-              {inputCreatedAt}
-
-              {inputQuantity}
-            </div>
-          </div>
-        </>
-      );
-    } else if (method === "PUT" && control === "produto") {
-      return (
-        <>
-          <div className="flex gap-14 justify-center items-center">
-            <div className="flex flex-col gap-2">
-              {inputId}
-
-              {name}
-
-              {inputPrice}
-
-              <span>Imagem</span>
-              <Button endContent={<BsFillCameraFill />}>
-                <input type="file" name="productImage" />
-              </Button>
-
-              <label>
-                <Checkbox
-                  id="black_friday"
-                  type="checkbox"
-                  {...register("black_friday")}
-                />
-                Black friday
-              </label>
-
-              {inputDiscount}
-
-              {inputDescription}
-              {/* <span>ID Cor</span>
-              <Input
-                id="color_id"
-                type="number"
-                name="color_id"
-                value={formData.color_id}
-                onChange={handleChange}
-                className="w-[250px]"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <span>ID Armazenamento</span>
-              <Input
-                id="storage_id"
-                type="number"
-                name="storage_id"
-                value={formData.storage_id}
-                onChange={handleChange}
-                className="w-[250px]"
-              />
-
-              <span>ID Categoria</span>
-              <Input
-                id="categorie_id"
-                type="number"
-                name="categorie_id"
-                value={formData.categorie_id}
-                onChange={handleChange}
-                className="w-[250px]"
-              /> */}
-
-              {inputEan}
-            </div>
-          </div>
-        </>
-      );
-    } else if (method === "DELETE" && control === "produto") {
-      return <>{inputId}</>;
-    } else if (method === "PUT" && control === "estoque") {
-      return (
-        <>
-          <div className="flex gap-14">
-            <div className="flex flex-col gap-2">
-              <Input
-                type="number"
-                label="ID do Produto"
-                isRequired
-                className="w-[250px]"
-                {...register("id", {
-                  required: isIdRequired,
-                })}
-              />
-              {errors?.id && (
-                <span className="text-[#a94442] text-sm">
-                  Campo obrigatório.
-                </span>
-              )}
-
-              {inputStatus}
-
-              {inputPurchasePrice}
-            </div>
-            <div className="flex flex-col gap-2">
-              {inputExpiryDate}
-
-              <Input
-                type="text"
-                label="Data da atualização"
-                isRequired
-                className="w-[250px]"
-                {...register("updated_at", {
-                  required: isUpdatedAtRequired,
-                })}
-              />
-              {errors?.updated_at && (
-                <span className="text-[#a94442] text-sm">
-                  Campo obrigatório.
-                </span>
-              )}
-
-              {inputQuantity}
-            </div>
-          </div>
-        </>
-      );
-    } else if (
-      (method === "POST" && control === "cor") ||
-      control === "categoria"
-    ) {
-      return (
-        <>
-          <>{name}</>
-        </>
-      );
-    } else if (method === "PUT" && control === "armazenamento") {
-      return (
-        <>
-          <div className="flex flex-col gap-5">
-            {inputId}
-
-            <Input
-              type="number"
-              label="Capacidade de armazenamento"
-              isRequired
-              className="w-[250px]"
-              {...register("capacity", {
-                required: isCapacityRequired,
-              })}
-            />
-            {errors?.capacity && (
-              <span className="text-[#a94442] text-sm">Campo obrigatório.</span>
-            )}
-          </div>
-        </>
-      );
-    } else if (method === "POST" && control === "armazenamento") {
-      return (
-        <>
-          <Input
-            type="number"
-            label="Capacidade de armazenamento"
-            isRequired
-            className="w-[250px]"
-            {...register("capacity", {
-              required: isCapacityRequired,
-            })}
-          />
-          {errors?.capacity && (
-            <span className="text-[#a94442] text-sm">Campo obrigatório.</span>
-          )}
-        </>
-      );
-    } else if (
-      (method === "PUT" && control === "cor") ||
-      control === "categoria"
-    ) {
-      return (
-        <div className="flex flex-col gap-5">
-          {inputId}
-          {name}
-        </div>
-      );
-    } else {
-      return null;
-    }
-  };
-
   return (
     <section className="px-10 w-[70%]">
       <h1 className="text-center mb-5 text-2xl font-semibold">
@@ -885,13 +564,19 @@ export default function Admin({ params }: { params: { control: string } }) {
                     {currencyFormat(data.purchase_price)}
                   </td>
                   <td className="py-2 px-4 border-b border-r text-xs">
-                    {data.expiry_date}
+                    {moment(data.expiry_date)
+                      .add(1, "days")
+                      .format("DD/MM/YYYY")}
                   </td>
                   <td className="py-2 px-4 border-b border-r text-sm">
-                    {data.created_at}
+                    {moment(data.created_at)
+                      .add(1, "days")
+                      .format("DD/MM/YYYY")}
                   </td>
                   <td className="py-2 px-4 border-b border-r text-sm">
-                    {data.updated_at}
+                    {moment(data.updated_at)
+                      .add(1, "days")
+                      .format("DD/MM/YYYY")}
                   </td>
                   <td className="py-2 px-4 border-b border-r text-sm">
                     {data.quantity}
@@ -954,16 +639,318 @@ export default function Admin({ params }: { params: { control: string } }) {
         </tbody>
       </table>
 
-      {renderRadios()}
+      {control === "produto" && (
+        <>
+          <RadioGroup
+            className="flex gap-3 mt-6 flex-col"
+            defaultValue="POST"
+            label="Selecione o método que você deseja"
+          >
+            <Radio value="POST" onClick={() => changeMethod(post)}>
+              Cadastrar
+            </Radio>
+            <Radio value="PUT" onClick={() => changeMethod(put)}>
+              Atualizar
+            </Radio>
+            <Radio value="DELETE" onClick={() => changeMethod(del)}>
+              Deletar
+            </Radio>
+          </RadioGroup>
+        </>
+      )}
+
+      {control === "estoque" && (
+        <>
+          <RadioGroup
+            className="flex gap-3 mt-6 flex-col"
+            defaultValue="PUT"
+            label="Selecione o método que você deseja"
+          >
+            <Radio value="PUT" onClick={() => changeMethod(put)}>
+              Atualizar
+            </Radio>
+          </RadioGroup>
+        </>
+      )}
+
+      {["cor", "armazenamento", "categoria"].includes(control) && (
+        <RadioGroup
+          className="flex gap-3 mt-6 flex-col"
+          defaultValue="POST"
+          label="Selecione o método que você deseja"
+        >
+          <Radio value="POST" onClick={() => changeMethod(post)}>
+            Cadastrar
+          </Radio>
+          <Radio value="PUT" onClick={() => changeMethod(put)}>
+            Atualizar
+          </Radio>
+        </RadioGroup>
+      )}
 
       <form
         method={method}
         action={`http://localhost:3001/${control}/${data.id}`}
+        //action="/public/upload/images/product"
         onSubmit={handleSubmit(onSubmit, onError)}
         encType="multipart/form-data"
         className="flex flex-col items-center gap-2 py-5 px-10"
       >
-        {renderInputs()}
+        {method === "POST" && control === "produto" && (
+          <>
+            <div className="flex gap-14 justify-center items-center">
+              <div className="flex flex-col gap-2">
+                {name}
+
+                {inputPrice}
+
+                <span>Foto do produto</span>
+
+                <input type="file" name="file" />
+
+                <label>
+                  <Checkbox
+                    id="black_friday"
+                    type="checkbox"
+                    checked={blackFridayChecked}
+                    {...register("black_friday", {
+                      setValueAs: (value) => value.target.checked,
+                    })}
+                  />
+                  Black friday
+                </label>
+
+                {inputDiscount}
+
+                {inputDescription}
+
+                <Input
+                  id="color_id"
+                  type="number"
+                  label="ID da COR"
+                  isRequired
+                  // name="color_id"
+                  // value={formData.color_id}
+                  // onChange={handleChange}
+                  className="w-[250px]"
+                  {...register("color_id", {
+                    required: true,
+                  })}
+                />
+                {errors?.color_id && (
+                  <span className="text-[#a94442] text-sm">
+                    Campo obrigatório.
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col gap-2">
+                <span>ID Armazenamento</span>
+                <Input
+                  id="storage_id"
+                  type="number"
+                  // name="storage_id"
+                  // value={formData.storage_id}
+                  // onChange={handleChange}
+                  className="w-[250px]"
+                  {...register("storage_id", {
+                    required: true,
+                  })}
+                />
+
+                <span>ID Categoria</span>
+                <Input
+                  id="categorie_id"
+                  type="number"
+                  // name="categorie_id"
+                  // value={formData.categorie_id}
+                  // onChange={handleChange}
+                  className="w-[250px]"
+                  {...register("categorie_id", {
+                    required: true,
+                  })}
+                />
+
+                {inputEan}
+
+                {inputStatus}
+
+                {inputPurchasePrice}
+
+                {inputExpiryDate}
+
+                {inputCreatedAt}
+
+                {inputQuantity}
+              </div>
+            </div>
+          </>
+        )}
+
+        {method === "PUT" && control === "produto" && (
+          <div className="flex gap-14 justify-center items-center">
+            <div className="flex flex-col gap-2">
+              {inputId}
+
+              {name}
+
+              {inputPrice}
+
+              <span>Imagem</span>
+              <Button endContent={<BsFillCameraFill />}>
+                <input type="file" name="file" />
+              </Button>
+
+              <label>
+                <Checkbox
+                  id="black_friday"
+                  type="checkbox"
+                  {...register("black_friday")}
+                />
+                Black friday
+              </label>
+
+              {inputDiscount}
+
+              {inputDescription}
+
+              {/* <span>ID Cor</span>
+              <Input
+                id="color_id"
+                type="number"
+                name="color_id"
+                value={formData.color_id}
+                onChange={handleChange}
+                className="w-[250px]"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <span>ID Armazenamento</span>
+              <Input
+                id="storage_id"
+                type="number"
+                name="storage_id"
+                value={formData.storage_id}
+                onChange={handleChange}
+                className="w-[250px]"
+              />
+
+              <span>ID Categoria</span>
+              <Input
+                id="categorie_id"
+                type="number"
+                name="categorie_id"
+                value={formData.categorie_id}
+                onChange={handleChange}
+                className="w-[250px]"
+              /> */}
+
+              {inputEan}
+            </div>
+          </div>
+        )}
+
+        {method === "DELETE" && control === "produto" && <span>{inputId}</span>}
+
+        {method === "PUT" && control === "estoque" && (
+          <>
+            <div className="flex gap-14">
+              <div className="flex flex-col gap-2">
+                <Input
+                  type="number"
+                  label="ID do Produto"
+                  isRequired
+                  className="w-[250px]"
+                  {...register("id", {
+                    required: isIdRequired,
+                  })}
+                />
+                {errors?.id && (
+                  <span className="text-[#a94442] text-sm">
+                    Campo obrigatório.
+                  </span>
+                )}
+
+                {inputStatus}
+
+                {inputPurchasePrice}
+              </div>
+              <div className="flex flex-col gap-2">
+                {inputExpiryDate}
+
+                <Input
+                  type="text"
+                  label="Data da atualização"
+                  isRequired
+                  className="w-[250px]"
+                  {...register("updated_at", {
+                    required: isUpdatedAtRequired,
+                  })}
+                />
+                {errors?.updated_at && (
+                  <span className="text-[#a94442] text-sm">
+                    Campo obrigatório.
+                  </span>
+                )}
+
+                {inputQuantity}
+              </div>
+            </div>
+          </>
+        )}
+
+        {method === "PUT" && control === "armazenamento" && (
+          <>
+            <div className="flex flex-col gap-5">
+              {inputId}
+
+              <Input
+                type="number"
+                label="Capacidade de armazenamento"
+                isRequired
+                className="w-[250px]"
+                {...register("capacity", {
+                  required: isCapacityRequired,
+                })}
+              />
+              {errors?.capacity && (
+                <span className="text-[#a94442] text-sm">
+                  Campo obrigatório.
+                </span>
+              )}
+            </div>
+          </>
+        )}
+
+        {method === "POST" && control === "armazenamento" && (
+          <>
+            <Input
+              type="number"
+              label="Capacidade de armazenamento"
+              isRequired
+              className="w-[250px]"
+              {...register("capacity", {
+                required: isCapacityRequired,
+              })}
+            />
+            {errors?.capacity && (
+              <span className="text-[#a94442] text-sm">Campo obrigatório.</span>
+            )}
+          </>
+        )}
+
+        {((method === "POST" && control === "cor") ||
+          (method === "POST" && control === "categoria")) && <>{name}</>}
+
+        {((method === "PUT" && control === "cor") ||
+          (method === "PUT" && control === "categoria")) && (
+          <>
+            <div className="flex flex-col gap-5">
+              {inputId}
+              {name}
+            </div>
+          </>
+        )}
+
         {errorMessage?.message && (
           <>
             <span className="text-[#a94442] text-sm">
@@ -980,12 +967,18 @@ export default function Admin({ params }: { params: { control: string } }) {
           </>
         )}
 
-        <button
-          type="submit"
-          className="bg-[#4aa4ee] hover:bg-[#3286ca] transition-all duration-700 ease-in-out p-2 text-white font-medium cursor-pointer rounded-md text-base uppercase"
-        >
-          ENVIAR
-        </button>
+        {control === "pedidos" ? (
+          ""
+        ) : (
+          <>
+            <button
+              type="submit"
+              className="bg-[#4aa4ee] hover:bg-[#3286ca] transition-all duration-700 ease-in-out p-2 text-white font-medium cursor-pointer rounded-md text-base uppercase"
+            >
+              ENVIAR
+            </button>
+          </>
+        )}
       </form>
     </section>
   );
