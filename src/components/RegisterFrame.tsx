@@ -25,7 +25,7 @@ import { LockIcon } from "./LockIcon";
 type FormData = {
   email: string;
   password_hash: string;
-  confirmPassword?: string;
+  confirmPassword: string;
   cpf: string;
   cellphone: string;
   first_name: string;
@@ -66,7 +66,8 @@ export default function RegisterFrame() {
     try {
       const { confirmPassword, ...postData } = data;
 
-      const url = "http://localhost:3001/users";
+      const url = "https://smartshop-api-foy4.onrender.com/users/";
+
       const request = await fetch(url, {
         method: "POST",
         headers: {
@@ -274,12 +275,12 @@ export default function RegisterFrame() {
                 {...register("cellphone", {
                   required: "Campo obrigatório.",
                   minLength: {
-                    value: 14,
-                    message: "O campo requer no mínimo 14 caracteres",
+                    value: 15,
+                    message: "O campo requer no mínimo 15 caracteres",
                   },
                   maxLength: {
-                    value: 14,
-                    message: "O campo requer no máximo 14 caracteres",
+                    value: 15,
+                    message: "O campo requer no máximo 15 caracteres",
                   },
                 })}
               />
