@@ -4,7 +4,9 @@ import { ProductsData } from "@/interfaces/ProductsData";
 import Modal from "@/components/Modal";
 
 async function getProductById(productId: number): Promise<ProductsData[]> {
-  const request = await fetch(`http://localhost:3001/produto/${productId}`);
+  const request = await fetch(
+    `https://smartshop-api-foy4.onrender.com/produto/${productId}`
+  );
   const data = await request.json();
   return data;
 }
