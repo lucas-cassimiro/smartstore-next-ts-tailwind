@@ -28,7 +28,7 @@ export default function CadastrarEndereco() {
   const [inputCep, setInputCep] = useState<string>("");
   const [cep, setCep] = useState<CepData>({} as CepData);
 
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false)
 
   async function handleCepChange(
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
