@@ -40,7 +40,9 @@ type MessageResponse = {
 };
 
 async function getData(param: string): Promise<any> {
-  const response = await fetch(`http://localhost:3001/${param}`);
+  const response = await fetch(
+    `https://smartshop-api-foy4.onrender.com/${param}`
+  );
 
   const data = await response.json();
   return data;
@@ -91,8 +93,8 @@ export default function Admin({ params }: { params: { control: string } }) {
 
       const url =
         method === "POST"
-          ? `http://localhost:3001/${control}`
-          : `http://localhost:3001/${control}/${data.id}`;
+          ? `https://smartshop-api-foy4.onrender.com/${control}`
+          : `https://smartshop-api-foy4.onrender.com/${control}/${data.id}`;
 
       const request = await fetch(url, {
         method: method,
@@ -690,7 +692,7 @@ export default function Admin({ params }: { params: { control: string } }) {
 
       <form
         method={method}
-        action={`http://localhost:3001/${control}/${data.id}`}
+        action={`https://smartshop-api-foy4.onrender.com/${control}/${data.id}`}
         //action="/public/upload/images/product"
         onSubmit={handleSubmit(onSubmit, onError)}
         encType="multipart/form-data"
@@ -709,13 +711,10 @@ export default function Admin({ params }: { params: { control: string } }) {
                 <input type="file" name="file" />
 
                 <label>
-                  <Checkbox
+                  <input
                     id="black_friday"
                     type="checkbox"
-                    checked={blackFridayChecked}
-                    {...register("black_friday", {
-                      setValueAs: (value) => value.target.checked,
-                    })}
+                    {...register("black_friday")}
                   />
                   Black friday
                 </label>
