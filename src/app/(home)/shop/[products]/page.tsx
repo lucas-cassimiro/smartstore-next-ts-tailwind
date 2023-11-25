@@ -11,7 +11,9 @@ import { useState } from "react";
 import ButtonFilterMobile from "@/components/Client-components/ButtonFilterMobile";
 
 async function getProducts(param: string): Promise<ProductsData[]> {
-  const response = await fetch(`http://localhost:3001/produto/${param}`);
+  const response = await fetch(
+    `https://smartshop-api-foy4.onrender.com/produto/${param}`
+  );
 
   const data = await response.json();
   return data;
@@ -69,8 +71,12 @@ export default async function Products({
               </select>
             </div>
             <div className="flex flex-wrap">
-              {data.length >= 1 ? <CardProducts products={data} /> : <span>Não há produtos para exibição.</span>}
-             {/*<CardProducts products={data} />*/}
+              {data.length >= 1 ? (
+                <CardProducts products={data} />
+              ) : (
+                <span>Não há produtos para exibição.</span>
+              )}
+              {/*<CardProducts products={data} />*/}
             </div>
           </div>
         </div>
