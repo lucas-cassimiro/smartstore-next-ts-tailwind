@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Header from "./Header";
 
-import { NavLink } from "@/Providers/LayoutProvider";
+import { NavLink } from "@/providers/LayoutProvider";
 import { useAuth } from "@/hooks/useAuth";
 import { AuthContext } from "@/contexts/AuthContext";
 
