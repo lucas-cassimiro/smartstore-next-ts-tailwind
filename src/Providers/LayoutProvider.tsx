@@ -1,4 +1,4 @@
-import ProviderCart from "@/Providers/CartProvider";
+import ProviderCart from "@/providers/CartProvider";
 import Header from "../components/Header";
 
 import Footer from "../components/Footer";
@@ -9,7 +9,7 @@ import { Inter } from "next/font/google";
 
 import NextUiProvider from "./NextUiProvider";
 
-import ProviderAuth from "@/Providers/AuthProvider";
+import ProviderAuth from "@/providers/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
