@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import LayoutProvider from "@/providers/LayoutProvider";
+import LayoutProvider from "@/Providers/LayoutProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",

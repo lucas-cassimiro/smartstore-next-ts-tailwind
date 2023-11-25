@@ -1,4 +1,4 @@
-import { NavLink } from "../providers/LayoutProvider";
+import { NavLink } from "../Providers/LayoutProvider";
 import Navigation from "./Client-components/Navigation";
 import Link from "next/link";
 

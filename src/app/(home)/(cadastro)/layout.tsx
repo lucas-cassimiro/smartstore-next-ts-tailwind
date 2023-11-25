@@ -2,7 +2,7 @@ import UserLayout from "@/components/UserLayout";
 import type { Metadata } from "next";
 
 import { Inter } from "next/font/google";
-import { NavLink } from "@/providers/LayoutProvider";
+import { NavLink } from "@/Providers/LayoutProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

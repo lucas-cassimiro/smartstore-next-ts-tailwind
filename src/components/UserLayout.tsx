@@ -1,6 +1,6 @@
 "use client";
 
-import { NavLink } from "../providers/LayoutProvider";
+import { NavLink } from "../Providers/LayoutProvider";
 import Link from "next/link";
 
 import { usePathname } from "next/navigation";
