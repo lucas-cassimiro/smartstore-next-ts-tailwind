@@ -48,7 +48,9 @@ type AuthContextType = {
 export const AuthContext = createContext({} as AuthContextType);
 
 async function getAddress(userId: number) {
-  const request = await fetch(`http://localhost:3001/endereco/${userId}`);
+  const request = await fetch(
+    `https://smartshop-api-foy4.onrender.com/endereco/${userId}`
+  );
   return await request.json();
 }
 
@@ -67,7 +69,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { "smartstore.token": token } = parseCookies();
 
     if (token) {
-      fetch("http://localhost:3001/users/profile", {
+      fetch("https://smartshop-api-foy4.onrender.com/users/profile", {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -97,13 +99,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     fetchData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   async function signIn({ email, password_hash }: FormData) {
     try {
-      const url = "http://localhost:3001/users/login";
+      const url = "https://smartshop-api-foy4.onrender.com/users/login";
       const request = await fetch(url, {
         method: "POST",
         headers: {
