@@ -2,11 +2,10 @@ import React, { useMemo, useState, useCallback, useEffect } from "react";
 
 export default function useTable() {
   const [filterValue, setFilterValue] = React.useState("");
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  // const [visibleColumns, setVisibleColumns] = React.useState(
-  //   new Set(INITIAL_VISIBLE_COLUMNS)
-  // );
-  const [statusFilter, setStatusFilter] = React.useState("all");
+  const [statusFilter, setStatusFilter] = useState<Set<string>>(
+    new Set<string>()
+  );
+
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   console.log(rowsPerPage);
   const [sortDescriptor, setSortDescriptor] = React.useState({
@@ -33,14 +32,6 @@ export default function useTable() {
         data.name.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
-    // if (
-    //   statusFilter !== "all" &&
-    //   Array.from(statusFilter).length !== statusOptions.length
-    // ) {
-    //   filteredData = filteredData.filter((data) =>
-    //     Array.from(statusFilter).includes(data.status)
-    //   );
-    // }
 
     return filteredData;
   }, [data, filterValue, hasSearchFilter]);
@@ -95,6 +86,18 @@ export default function useTable() {
     setPage(1);
   }, []);
 
+const onStatusSelectionChange = useCallback(
+  (selection: Set<string>) => {
+    // Atualize o estado statusFilter diretamente com o Set<string>
+    setStatusFilter(selection);
+  },
+  [setStatusFilter]
+);
+
+
+
+
+
   return {
     items,
     onSearchChange,
@@ -108,7 +111,6 @@ export default function useTable() {
     recebeDados,
     page,
     statusFilter,
-    //statusOptions,
     setStatusFilter,
     setFilterValue,
     isLoading,
@@ -118,5 +120,6 @@ export default function useTable() {
     data,
     sortedItems,
     sortDescriptor,
+    onStatusSelectionChange,
   };
 }
