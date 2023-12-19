@@ -20,7 +20,7 @@ export default function MeuCadastro() {
             <div className="flex justify-between items-center">
               <span className="font-bold text-lg">Dados pessoais</span>
               <Link
-                href="/alterar-dados"
+                href="/meu-cadastro/alterar-dados"
                 className="border-2 border-[#e5e5e5] text-sm py-4 px-8 rounded-sm text-[#7c7b7b]"
               >
                 Alterar dados
@@ -64,20 +64,24 @@ export default function MeuCadastro() {
             <div className="flex justify-between items-center">
               <span className="font-bold text-lg">Endereços</span>
               <Link
-                href="/cadastrar-endereco"
+                href="/meu-cadastro/cadastrar-endereco"
                 className="border-2 border-[#e5e5e5] text-sm py-4 px-6 rounded-sm text-[#7c7b7b]"
               >
                 Adicionar endereço
               </Link>
             </div>
-            <RadioGroup label="Selecione o endereço que deseja">
-              {address.map((add) => (
-                <Radio value={add.street_address} key={add.id}>
-                  {add.street_address}, {add.number_address} {add.complement} -{" "}
-                  {add.city} - {add.state}
-                </Radio>
-              ))}
-            </RadioGroup>
+            {address.length > 0 ? (
+              <RadioGroup label="Selecione o endereço que deseja">
+                {address.map((add) => (
+                  <Radio value={add.street_address} key={add.id}>
+                    {add.street_address}, {add.number_address} {add.complement}{" "}
+                    - {add.city} - {add.state}
+                  </Radio>
+                ))}
+              </RadioGroup>
+            ) : (
+              "Não há endereços cadastrados."
+            )}
           </div>
         </div>
       </div>
