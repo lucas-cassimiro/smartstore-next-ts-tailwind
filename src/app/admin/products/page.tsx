@@ -160,7 +160,7 @@ export default function Products() {
     setIsLoading,
     filterValue,
     setPage,
-    data
+    data,
   } = useTable();
 
   useEffect(() => {
@@ -301,25 +301,6 @@ export default function Products() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
-                >
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              ></DropdownMenu>
-            </Dropdown>
-
             <Button
               color="primary"
               endContent={<PlusIcon />}
@@ -390,7 +371,7 @@ export default function Products() {
         </div>
       </div>
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items.length, page, pages, hasSearchFilter]);
 
   return (
@@ -427,7 +408,7 @@ export default function Products() {
           isLoading={isLoading}
           loadingContent={<Spinner label="Loading..." />}
           //emptyContent={"Produto não encontrado"}
-          items={filteredItems}
+          items={items}
         >
           {(item) => (
             <TableRow key="1">
