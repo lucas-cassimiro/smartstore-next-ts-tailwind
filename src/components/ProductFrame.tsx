@@ -19,8 +19,15 @@ export default function ProductFrame({ products }: CardProductsProps) {
           key={product.id}
         >
           <div className="flex justify-around">
-            {/* <Image /> */}
-            <span>IMAGEM DO PRODUTO</span>
+            <Image
+              className="w-[17.5rem] h-[17rem] object-contain"
+              src={`http://localhost:3333/tmp/uploads/${product.image}`}
+              alt="Imagem do produto"
+              quality={80}
+              priority={true}
+              width={350}
+              height={350}
+            />
             <div className="flex flex-col gap-2">
               <h1 className="text-2xl font-bold">{product.name}</h1>
               <div className="flex gap-2 items-center">
