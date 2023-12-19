@@ -1,17 +1,23 @@
 "use client";
 
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination, A11y } from "swiper/modules";
-import "swiper/swiper-bundle.css";
+import React, { useEffect, useState } from "react";
+import { SwiperSlide } from "swiper/react";
+
 import Slider, { SliderSettings } from "./Slider";
 import NewsProducts from "@/components/NewsProducts";
 
-// interface NewsProps {
-//   products: PagesProductsData[];
-// }
+import { ProductsData } from "@/interfaces/ProductsData";
 
-export default function NewsCarousel({ products }: any) {
+import "swiper/swiper-bundle.css";
+
+async function getNewsProducts() {
+  const request = await fetch("http://localhost:3333/news/");
+  return await request.json();
+}
+
+export default function NewsCarousel() {
+  const [data, setData] = useState<ProductsData[]>([]);
+
   const settings: SliderSettings = {
     spaceBetween: 50,
     slidesPerView: 3,
@@ -55,11 +61,20 @@ export default function NewsCarousel({ products }: any) {
     },
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getNewsProducts();
+      setData(data);
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <Slider settings={settings}>
-      {products.map((product: any) => (
-        <SwiperSlide key={product.id}>
-          <NewsProducts product={product} />
+      {data.map((data) => (
+        <SwiperSlide key={data.id}>
+          <NewsProducts product={data} />
         </SwiperSlide>
       ))}
     </Slider>
