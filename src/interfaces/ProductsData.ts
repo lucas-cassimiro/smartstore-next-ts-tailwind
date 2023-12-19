@@ -1,10 +1,10 @@
 import { StaticImageData } from "next/image";
 
-export type ProductsData = {
+export interface ProductsData {
   id: number;
   name: string;
+  image: StaticImageData;
   price: number;
-  image: string;
   black_friday: boolean;
   discount: number;
   average_score: number;
@@ -13,4 +13,5 @@ export type ProductsData = {
   storage_id: number;
   categorie_id: number;
   ean: string;
+  highlight: boolean;
 }
