@@ -33,25 +33,26 @@ export default function Orders() {
   console.log(orders);
 
   const {
-    filteredProducts,
-    hasSearchFilter,
     items,
-    onClear,
-    onNextPage,
-    onPreviousPage,
-    onRowsPerPageChange,
     onSearchChange,
+    onPreviousPage,
+    onNextPage,
     pages,
+    onClear,
+    filteredItems,
+    hasSearchFilter,
+    onRowsPerPageChange,
     recebeDados,
     page,
+    statusFilter,
+    //statusOptions,
+    setStatusFilter,
+    setFilterValue,
     isLoading,
     setIsLoading,
-    setFilterValue,
-    setStatusFilter,
-    statusFilter,
-    statusOptions,
     filterValue,
     setPage,
+    data,
   } = useTable();
 
   useEffect(() => {
@@ -62,6 +63,7 @@ export default function Orders() {
     }
 
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const topContent = useMemo(() => {
@@ -78,25 +80,6 @@ export default function Orders() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
-                >
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              ></DropdownMenu>
-            </Dropdown>
-
             <Button
               color="primary"
               endContent={<PlusIcon />}
@@ -124,15 +107,7 @@ export default function Orders() {
         </div>
       </div>
     );
-  }, [
-    filterValue,
-    onSearchChange,
-    statusFilter,
-    setStatusFilter,
-    orders.length,
-    onRowsPerPageChange,
-    onClear,
-  ]);
+  }, [filterValue, onSearchChange, orders.length, onRowsPerPageChange, onClear]);
 
   const bottomContent = useMemo(() => {
     return (
