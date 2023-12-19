@@ -43,9 +43,9 @@
   @apply max-w-[1450px] py-0 px-10
 }
 
-.scrollbar {
+/* .scrollbar {
   @apply block overflow-y-scroll
-}
+} */
 
 @layer utilities {
   .scrollbar-medium::-webkit-scrollbar {
