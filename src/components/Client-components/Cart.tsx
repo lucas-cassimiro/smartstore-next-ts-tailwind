@@ -16,13 +16,13 @@ import ButtonRemoveFromCart from "./ButtonRemoveFromCart";
 import { EmptyCart } from "../EmptyCart";
 import Link from "next/link";
 
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FaShoppingCart } from "react-icons/fa";
 
 export default function Cart() {
   const [cartOpen, setCartOpen] = useState(false);
   const showCartOpen = () => setCartOpen(!cartOpen);
 
-  const { cart} = useCart();
+  const { cart } = useCart();
 
   const productExistent = cart.find((product) => product);
 
@@ -36,7 +36,7 @@ export default function Cart() {
               alt="Ícone de carrinho"
               className="celular:w-4 celular:h-4"
             /> */}
-            <AiOutlineShoppingCart className="celular:w-4 celular:h-4 w-6 h-5 text-white" />
+            <FaShoppingCart className="celular:w-4 celular:h-4 w-6 h-5 text-white" />
             {productExistent && (
               <span className="absolute bg-[#D4D4D8] rounded-full border-[2px] border-white w-4 h-4 flex items-center justify-center top-[-1px] left-[16px]">
                 {cart.length}
@@ -74,15 +74,20 @@ export default function Cart() {
               <EmptyCart title="Ops! Seu carrinho está vazio" />
             ) : (
               <>
-                <div className="flex items-center gap-2 overflow-y-auto scrollbar scrollbar-medium relative">
+                <div className="flex items-center gap-2 overflow-y-auto scrollbar scrollbar-medium relative flex-wrap">
                   {cart.map((cart) => (
-                    <>
-                      <span
-                        className="text-xs w-[100px] tablet:w-[60px]"
-                        key={cart.id}
-                      >
-                        AQUI VAI
-                      </span>
+                    <div
+                      key={cart.id}
+                      className="flex flex-wrap w-full items-center"
+                    >
+                      <Image
+                        src={`http://localhost:3333/tmp/uploads/${cart.image}`}
+                        alt="Imagem do produto"
+                        quality={80}
+                        priority={true}
+                        width={100}
+                        height={100}
+                      />
                       <div className="flex flex-col mb-10 gap-[6px]">
                         {cart.black_friday ? (
                           <>
@@ -137,7 +142,7 @@ export default function Cart() {
                           </>
                         )}
                       </div>
-                    </>
+                    </div>
                   ))}
                 </div>
                 <div className="absolute bottom-0 flex flex-col w-[350px] tablet:w-[250px] bg-white">
