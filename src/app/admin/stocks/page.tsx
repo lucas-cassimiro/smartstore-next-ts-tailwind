@@ -75,25 +75,27 @@ export default function Stocks() {
   });
 
   const {
-    filteredProducts,
-    hasSearchFilter,
     items,
-    onClear,
-    onNextPage,
-    onPreviousPage,
-    onRowsPerPageChange,
     onSearchChange,
+    onPreviousPage,
+    onNextPage,
     pages,
+    onClear,
+    filteredItems,
+    hasSearchFilter,
+    onRowsPerPageChange,
     recebeDados,
     page,
+    statusFilter,
+    //statusOptions,
+    setStatusFilter,
+    setFilterValue,
     isLoading,
     setIsLoading,
-    setFilterValue,
-    setStatusFilter,
-    statusFilter,
-    statusOptions,
     filterValue,
     setPage,
+    data,
+    onStatusSelectionChange,
   } = useTable();
 
   useEffect(() => {
@@ -183,25 +185,6 @@ export default function Stocks() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
-                >
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              ></DropdownMenu>
-            </Dropdown>
-
             <Button
               color="primary"
               endContent={<PlusIcon />}
@@ -229,15 +212,7 @@ export default function Stocks() {
         </div>
       </div>
     );
-  }, [
-    filterValue,
-    onSearchChange,
-    statusFilter,
-    setStatusFilter,
-    stocks.length,
-    onRowsPerPageChange,
-    onClear,
-  ]);
+  }, [filterValue, onSearchChange, stocks.length, onRowsPerPageChange, onClear]);
 
   const bottomContent = useMemo(() => {
     return (
@@ -304,7 +279,7 @@ export default function Stocks() {
           isLoading={isLoading}
           loadingContent={<Spinner label="Loading..." />}
           //emptyContent={"Produto não encontrado"}
-          items={filteredProducts}
+          items={items}
         >
           {(item) => (
             <TableRow key="1">
