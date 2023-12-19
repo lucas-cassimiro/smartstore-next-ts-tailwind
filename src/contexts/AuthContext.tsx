@@ -40,7 +40,6 @@ type AuthContextType = {
   isLoading: boolean;
   user: User | null;
   address: Address[];
-  errorMessage: string | null;
   signIn: (data: FormData) => Promise<void>;
   signOut: () => void;
 };
@@ -48,9 +47,7 @@ type AuthContextType = {
 export const AuthContext = createContext({} as AuthContextType);
 
 async function getAddress(userId: number) {
-  const request = await fetch(
-    `https://smartshop-api-foy4.onrender.com/endereco/${userId}`
-  );
+  const request = await fetch(`http://localhost:3333/address/${userId}`);
   return await request.json();
 }
 
@@ -58,7 +55,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [address, setAddress] = useState<Address[]>([]);
 
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const isAuthenticated = !!user;
@@ -69,7 +65,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { "smartstore.token": token } = parseCookies();
 
     if (token) {
-      fetch("https://smartshop-api-foy4.onrender.com/users/profile", {
+      fetch("http://localhost:3333/users/profile", {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -80,7 +76,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
-          setErrorMessage("Erro ao buscar dados do usuário");
+          //setErrorMessage("Erro ao buscar dados do usuário");
         })
         .finally(() => {
           setIsLoading(false);
@@ -103,7 +99,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function signIn({ email, password_hash }: FormData) {
     try {
-      const url = "https://smartshop-api-foy4.onrender.com/users/login";
+      const url = "http://localhost:3333/users/login";
       const request = await fetch(url, {
         method: "POST",
         headers: {
@@ -114,24 +110,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (!request.ok) {
         const errorResponse = await request.json();
-
-        throw new Error(errorResponse.message);
+        throw new Error(
+          errorResponse.message || "Erro desconhecido no servidor"
+        );
       }
 
       const response = await request.json();
 
       setCookie(response, "smartstore.token", response.token, {
-        maxAge: 60 * 60 * 1, //1 hora
+        maxAge: 60 * 60 * 1, //1 hora --> aqui expira em 1h, mas no backend coloquei pra expirar em 8h -> verificar isso dps
       });
 
       setUser(response.user);
 
-      setErrorMessage(null);
-
       window.location.reload();
+
+      return response;
+      
     } catch (error) {
-      console.error("Error during fetch:", error);
-      setErrorMessage("Usuário ou senha inválidos.");
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -140,7 +137,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signOut = useCallback(() => {
     destroyCookie(null, "smartstore.token");
     setUser(null);
-    setErrorMessage(null);
 
     router.push("/");
     window.location.reload();
@@ -154,7 +150,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signOut,
         user,
         address,
-        errorMessage,
         isLoading,
       }}
     >
