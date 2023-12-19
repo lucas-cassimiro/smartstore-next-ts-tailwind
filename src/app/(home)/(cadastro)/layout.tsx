@@ -20,6 +20,14 @@ const navLinks: NavLink[] = [
     name: "Meus pedidos",
     href: "/orderHistory",
   },
+  {
+    name: "Alterar dados",
+    href: "/meu-cadastro/alterar-dados",
+  },
+  {
+    name: "Novo endereço",
+    href: "/meu-cadastro/cadastrar-endereco",
+  },
 ];
 
 export default function CadastroLayout({
