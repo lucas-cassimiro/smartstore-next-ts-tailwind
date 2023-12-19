@@ -59,7 +59,7 @@ export default function Logado() {
             </Link>
             {user?.admin_auth && (
               <>
-                <Link href="/admin/produto" onClick={showIsLog}>
+                <Link href="/admin/products" onClick={showIsLog}>
                   Painel de Administrador
                 </Link>
               </>
