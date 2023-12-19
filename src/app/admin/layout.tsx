@@ -26,27 +26,35 @@ export default function AdminLayout({
   const navLinks: NavLink[] = [
     {
       name: "Produtos",
-      href: "/admin/produto",
+      href: "/admin/products",
     },
     {
       name: "Estoque",
-      href: "/admin/estoque",
+      href: "/admin/stocks",
     },
     {
       name: "Cor",
-      href: "/admin/cor",
+      href: "/admin/colors",
     },
     {
       name: "Armazenamento",
-      href: "/admin/armazenamento",
+      href: "/admin/storages",
     },
     {
       name: "Categoria",
-      href: "/admin/categoria",
+      href: "/admin/categories",
     },
     {
       name: "Pedidos",
-      href: "/admin/pedidos",
+      href: "/admin/orders",
+    },
+    {
+      name: "Novidades",
+      href: "/admin/news",
+    },
+    {
+      name: "Oferta Black Friday",
+      href: "/admin/blackfriday",
     },
   ];
 
