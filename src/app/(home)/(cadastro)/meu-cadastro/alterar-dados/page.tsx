@@ -2,16 +2,30 @@
 
 import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
-import { Button, Input } from "@nextui-org/react";
+import {
+  Button,
+  Input,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
+
 import { useForm, SubmitErrorHandler, SubmitHandler } from "react-hook-form";
 
 import { useEffect, useState } from "react";
 import moment from "moment";
 
+import Router, { useRouter } from "next/navigation";
+
 import InputMask from "react-input-mask";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { useHookFormMask } from "use-mask-input";
 
 const isValidDate = (dateString: string) => {
   const regex = /^\d{2}\/\d{2}\/\d{4}$/;
@@ -71,6 +85,9 @@ export default function AlterarDados() {
   const { user } = useAuth();
 
   const [successMessage, setSuccessMessage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -79,7 +96,7 @@ export default function AlterarDados() {
     setError,
     reset,
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<updateUserFormData>({
     mode: "onBlur",
     criteriaMode: "all",
@@ -90,6 +107,8 @@ export default function AlterarDados() {
       date_birth: "",
     },
   });
+
+  const updateWithMask = useHookFormMask(register);
 
   const onSubmit: SubmitHandler<updateUserFormData> = async (
     data: updateUserFormData
@@ -121,6 +140,8 @@ export default function AlterarDados() {
       const response = await request.json();
       console.log(response);
 
+      setIsModalOpen(true);
+
       reset();
     } catch (error) {
       console.error("Error during fetch:", error);
@@ -131,12 +152,14 @@ export default function AlterarDados() {
     console.log(errors);
 
   useEffect(() => {
-    setValue(
-      "date_birth",
-      moment(user?.date_birth).add(1, "days").format("DD/MM/YYYY") || ""
-    );
+    setValue("date_birth", moment(user?.date_birth).format("DD/MM/YYYY"));
     setValue("cellphone", user?.cellphone || "");
-  }, [user, setValue]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const voltarRota = () => {
+    router.push("/meu-cadastro");
+  };
 
   return (
     <AuthGuard>
@@ -228,51 +251,81 @@ export default function AlterarDados() {
               defaultValue={user?.last_name}
               className="max-w-[26.5rem]"
             />
-            <InputMask
-              mask="99/99/9999"
-              maskChar={null}
-              {...register("date_birth")}
-            >
-              <Input
-                type="text"
-                label="Data de nascimento"
-                defaultValue={user?.date_birth}
-                isClearable
-                {...register("date_birth")}
-                isInvalid={errors?.date_birth && true}
-                className="max-w-[26.5rem]"
-                color={errors?.date_birth ? "danger" : "default"}
-                errorMessage={errors?.date_birth && errors?.date_birth?.message}
-              />
-            </InputMask>
 
-            <InputMask
-              mask="(99) 99999-9999"
-              maskChar={null}
-              {...register("cellphone")}
-            >
-              <Input
-                type="tel"
-                label="Celular"
-                className="max-w-[26.5rem]"
-                isClearable
-                {...register("cellphone")}
-                isInvalid={errors?.cellphone && true}
-                color={errors?.cellphone ? "danger" : "default"}
-                errorMessage={errors?.cellphone && errors?.cellphone?.message}
-              />
-            </InputMask>
+            <Input
+              type="text"
+              label="Data de nascimento"
+              defaultValue={user?.date_birth}
+              isClearable
+              // {...updateWithMask("date_birth", ["99/99/9999"], {
+              //   required: true,
+              // })}
+              isInvalid={errors?.date_birth && true}
+              className="max-w-[26.5rem]"
+              color={errors?.date_birth ? "danger" : "default"}
+              errorMessage={errors?.date_birth && errors?.date_birth?.message}
+            />
+
+            <Input
+              type="tel"
+              label="Celular"
+              className="max-w-[26.5rem]"
+              defaultValue={user?.cellphone}
+              isClearable
+              {...updateWithMask("cellphone", ["(99) 99999-9999"], {
+                required: true,
+              })}
+              isInvalid={errors?.cellphone && true}
+              color={errors?.cellphone ? "danger" : "default"}
+              errorMessage={errors?.cellphone && errors?.cellphone?.message}
+            />
 
             <div className="flex gap-2">
-              <Button color="secondary" className="w-[13rem]">
+              <Button color="secondary" className="w-[13rem]" onClick={voltarRota}>
                 Voltar
               </Button>
-              <Button type="submit" color="primary" className="w-[13rem]">
+              <Button
+                type="submit"
+                color="primary"
+                className="w-[13rem]"
+                isLoading={isSubmitting}
+              >
                 Salvar
               </Button>
             </div>
           </form>
         </div>
+
+        <Modal
+          isOpen={isModalOpen}
+          onOpenChange={() => setIsModalOpen(false)}
+          backdrop="blur"
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1 uppercase">
+                  Alterar dados
+                </ModalHeader>
+                <ModalBody>
+                  <span>
+                    Depois de alterar sua senha, pediremos que você faça login
+                    novamente.
+                  </span>
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    color="success"
+                    onPress={onClose}
+                    className="uppercase"
+                  >
+                    Ok
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
       </div>
     </AuthGuard>
   );
