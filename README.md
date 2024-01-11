@@ -1,7 +1,8 @@
 <h1 align="center"><strong>Repositório Front-end: Smart Store</strong></h1>
-<p>Este é o repositório Front-end da loja online Smart Store.
-A Smart Store é uma aplicação Full Stack onde temos a integração do Frontend com o Backend.</p>
 <br>
+<h3 align="center">A Smart Store é uma aplicação Full Stack onde temos a integração do Frontend com o Backend.</h3>
+<br>
+<p>Este é um projeto de e-commerce online COMPLETO.</p>
 
 <h2>Rodando o projeto na sua máquina</h2>
 
@@ -9,7 +10,7 @@ A Smart Store é uma aplicação Full Stack onde temos a integração do Fronten
 
 ```
 git clone https://github.com/lucas-cassimiro/smartstore-next-ts-tailwind.git
-
+cd smartstore-next-ts-tailwind
 ```
 
 <h2>Instalando dependências</h2>
@@ -33,9 +34,7 @@ pnpm install
 
 <h2>Link para o repositório Back-end:</h2>
 
-```
-https://github.com/lucas-cassimiro/smartstore-api
-```
+- [BACK-END](https://github.com/lucas-cassimiro/smartstore-api)
 
 <h2>🛠️ Ferramentas Utilizadas para o Front-end do projeto</h2>
 
