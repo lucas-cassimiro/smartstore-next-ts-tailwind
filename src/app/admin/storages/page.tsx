@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
   Input,
+  Button,
 } from "@nextui-org/react";
 
 import { useEffect, useState } from "react";
@@ -21,6 +22,8 @@ import { z } from "zod";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MessageResponseData } from "@/interfaces/MessageResponseData";
+import { EditIcon } from "@/svg/EditIcon";
+import { DeleteIcon } from "@/svg/DeleteIcon";
 
 const createOrUpdateStorageSchema = (method: string) => {
   return z.object({
@@ -107,6 +110,25 @@ export default function Storages() {
     }
   };
 
+  const handleRemove = async (id: number) => {
+    try {
+      //setProducts((prevData) => prevData.filter((item) => item.id !== id));
+
+      const response = await fetch(`http://localhost:3333/storages/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const responseData = await response.json();
+      //setMessageResponse(responseData);
+      //setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
+  };
+
   const onError: SubmitErrorHandler<StorageSchema> = (errors) =>
     console.log(errors);
 
@@ -126,6 +148,7 @@ export default function Storages() {
         <TableHeader>
           <TableColumn>ID</TableColumn>
           <TableColumn>CAPACIDADE</TableColumn>
+          <TableColumn>AÇÕES</TableColumn>
         </TableHeader>
 
         <TableBody
@@ -136,11 +159,32 @@ export default function Storages() {
             <TableRow key={storage.id}>
               <TableCell>{storage.id}</TableCell>
               <TableCell>{storage.capacity}</TableCell>
+              <TableCell className="flex gap-2 items-center">
+                <span
+                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                  onClick={() => {
+                    setMethod("PUT");
+                    setValue("id", storage.id);
+                  }}
+                >
+                  <EditIcon />
+                </span>
+
+                <span
+                  className="text-lg text-danger cursor-pointer active:opacity-50"
+                  onClick={() => handleRemove(storage.id)}
+                >
+                  <DeleteIcon />
+                </span>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <form
+        onSubmit={handleSubmit(onSubmit, onError)}
+        className="flex flex-col items-center gap-5 mt-16"
+      >
         {method === "PUT" && (
           <>
             <Input
@@ -170,12 +214,9 @@ export default function Storages() {
           errorMessage={errors?.capacity && errors.capacity.message}
         />
 
-        <button
-          type="submit"
-          className="bg-[#4aa4ee] hover:bg-[#3286ca] transition-all duration-700 ease-in-out p-2 text-white font-medium cursor-pointer rounded-md text-base uppercase"
-        >
+        <Button type="submit" color="primary" isLoading={isSubmitting}>
           ENVIAR
-        </button>
+        </Button>
       </form>
     </section>
   );
