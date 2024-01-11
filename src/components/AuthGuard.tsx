@@ -4,8 +4,6 @@ import { useEffect } from "react";
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
-import { parseCookies } from "nookies";
-import { GetServerSidePropsContext } from "next";
 
 export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
