@@ -210,7 +210,7 @@ export default function LoginFrame() {
                         <Button
                           type="submit"
                           color="primary"
-                          disabled={isSubmitting}
+                          isLoading={isSubmitting}
                         >
                           Entrar
                         </Button>
