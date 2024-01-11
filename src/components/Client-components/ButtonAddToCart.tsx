@@ -4,6 +4,7 @@ import { ProductsData } from "@/interfaces/ProductsData";
 import { BsFillCartPlusFill } from "react-icons/bs";
 
 import { useCart } from "@/hooks/useCart";
+import useModal from "@/hooks/useModal";
 
 interface ProductProps {
   products: ProductsData;
@@ -11,12 +12,15 @@ interface ProductProps {
 
 export default function ButtonAddToCart({ products }: ProductProps) {
   const { addProductIntoCart } = useCart();
+  const { onDismiss } = useModal();
 
   return (
     <button
       type="button"
-      className="bg-[#4aa4ee] hover:bg-[#3286ca] p-4 rounded-[4px] font-medium"
-      onClick={() => addProductIntoCart(products)}
+      className="bg-[#4aa4ee] transition-all hover:bg-[#3286ca] p-4 rounded-[2px] font-medium"
+      onClick={() => {
+        addProductIntoCart(products), onDismiss();
+      }}
     >
       Adicionar ao carrinho
     </button>
