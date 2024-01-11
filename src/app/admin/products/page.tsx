@@ -24,7 +24,14 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Tooltip,
 } from "@nextui-org/react";
+
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 
 import { DeleteIcon } from "@/svg/DeleteIcon";
@@ -33,7 +40,7 @@ import { SearchIcon } from "@/svg/SearchIcon";
 import { ChevronDownIcon } from "@/svg/ChevronDownIcon";
 import { PlusIcon } from "@/svg/PlusIcon";
 
-import useTable from "@/components/Logic/useFormTableLogic";
+import useTable from "@/hooks/useFormTableLogic";
 import currencyFormat from "@/helpers/currencyFormat";
 
 import { SubmitHandler, useForm, SubmitErrorHandler } from "react-hook-form";
@@ -46,6 +53,11 @@ import { StoragesData } from "@/interfaces/StoragesData";
 import { CategoriesData } from "@/interfaces/CategoriesData";
 
 import { MessageResponseData } from "@/interfaces/MessageResponseData";
+
+import { useHookFormMask } from "use-mask-input";
+
+import { CameraIcon } from "@/svg/CameraIcon";
+import moment from "moment";
 
 type ProductSchema = {
   id?: number;
@@ -121,11 +133,10 @@ export default function Products() {
 
   const [method, setMethod] = useState<string>("POST");
 
-  const [errorMessage, setErrorMessage] = useState<MessageResponseData | null>(
-    null
-  );
-  const [successMessage, setSuccessMessage] =
+  const [messageResponse, setMessageResponse] =
     useState<MessageResponseData | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const {
     handleSubmit,
@@ -139,6 +150,8 @@ export default function Products() {
     criteriaMode: "all",
     resolver: zodResolver(createOrUpdateProductSchema(method)),
   });
+
+  const registerWithMask = useHookFormMask(register);
 
   const {
     items,
@@ -200,50 +213,29 @@ export default function Products() {
 
       const formData = new FormData();
 
-      formData.append("name", data.name || "");
-      formData.append("price", data.price ? data.price.toString() : "");
-      formData.append(
-        "black_friday",
-        data.black_friday ? data.black_friday.toString() : ""
-      );
-      formData.append(
-        "highlight",
-        data.highlight ? data.highlight.toString() : ""
-      );
-      formData.append(
-        "black_friday_offer",
-        data.black_friday_offer ? data.black_friday_offer.toString() : ""
-      );
-      formData.append("status", data.status || "");
-      formData.append("description", data.description || "");
-      formData.append(
-        "quantity",
-        data.quantity ? data.quantity.toString() : ""
-      );
-      formData.append(
-        "discount",
-        data.discount ? data.discount.toString() : ""
-      );
-      formData.append("ean", data.ean || "");
-      formData.append(
-        "color_id",
-        data.color_id ? data.color_id.toString() : ""
-      );
-      formData.append(
-        "storage_id",
-        data.storage_id ? data.storage_id.toString() : ""
-      );
-      formData.append(
-        "categorie_id",
-        data.categorie_id ? data.categorie_id.toString() : ""
-      );
-      formData.append("expiry_date", data.expiry_date || "");
-      formData.append(
-        "purchase_price",
-        data.purchase_price ? data.purchase_price.toString() : ""
-      );
+      Object.entries(data).forEach(([key, value]) => {
+        if (
+          value !== undefined &&
+          value !== null &&
+          value !== "" &&
+          value !== 0
+        ) {
+          if (
+            key === "expiry_date" &&
+            typeof value === "string" &&
+            moment(value, "DD/MM/YYYY", true).isValid()
+          ) {
+            const formattedExpiryDate = moment(value, "DD/MM/YYYY").format(
+              "YYYY-MM-DD"
+            );
+            formData.append(key, formattedExpiryDate);
+          } else {
+            formData.append(key, String(value));
+          }
+        }
+      });
 
-      if (data.file) {
+      if (data.file && data.file.length > 0) {
         formData.append("file", data.file[0]);
       }
 
@@ -254,16 +246,36 @@ export default function Products() {
 
       if (!request.ok) {
         const errorResponse = await request.json();
-        setErrorMessage(errorResponse);
+        setMessageResponse(errorResponse);
+        setIsModalOpen(true);
         throw new Error(errorResponse.message);
       }
 
       const response = await request.json();
-      setSuccessMessage(response);
+      setMessageResponse(response);
 
-      setErrorMessage(null);
+      setIsModalOpen(true);
 
       reset();
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
+  };
+
+  const handleRemove = async (id: number) => {
+    try {
+      setProducts((prevData) => prevData.filter((item) => item.id !== id));
+
+      const response = await fetch(`http://localhost:3333/products/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const responseData = await response.json();
+      setMessageResponse(responseData);
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Error during fetch:", error);
     }
@@ -293,9 +305,12 @@ export default function Products() {
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
+            label="Pesquisar"
             className="w-full sm:max-w-[44%]"
             placeholder="Procurar por nome..."
-            startContent={<SearchIcon />}
+            startContent={
+              <SearchIcon className="text-black/50 mb-0.5 pointer-events-none flex-shrink-0" />
+            }
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
@@ -401,7 +416,7 @@ export default function Products() {
           <TableColumn>DESCRIÇÃO</TableColumn>
           <TableColumn>EAN</TableColumn>
           <TableColumn>DESTAQUE</TableColumn>
-          <TableColumn>ACTIONS</TableColumn>
+          <TableColumn>AÇÕES</TableColumn>
         </TableHeader>
 
         <TableBody
@@ -451,13 +466,10 @@ export default function Products() {
                 >
                   <EditIcon />
                 </span>
+
                 <span
                   className="text-lg text-danger cursor-pointer active:opacity-50"
-                  onClick={() => {
-                    setMethod("DELETE");
-                    setValue("id", item.id);
-                    handleSubmit(onSubmit)();
-                  }}
+                  onClick={() => handleRemove(item.id)}
                 >
                   <DeleteIcon />
                 </span>
@@ -474,7 +486,7 @@ export default function Products() {
         encType="multipart/form-data"
         className="flex flex-col items-center gap-2 py-5 px-10"
       >
-        <div className="flex gap-14 justify-center items-center">
+        <div className="flex gap-14 justify-center items-center mt-16">
           <div className="flex flex-col gap-2">
             <Input
               type="text"
@@ -492,6 +504,11 @@ export default function Products() {
             <Input
               type="text"
               label="Preço"
+              startContent={
+                <div className="pointer-events-none flex items-center">
+                  <span className="text-default-400 text-small">R$</span>
+                </div>
+              }
               isRequired={method === "POST" ? true : false}
               className="w-[250px]"
               {...register("price")}
@@ -538,6 +555,11 @@ export default function Products() {
               type="number"
               label="Desconto"
               className="w-[250px]"
+              startContent={
+                <div className="pointer-events-none flex items-center">
+                  <span className="text-default-400 text-small">%</span>
+                </div>
+              }
               {...register("discount")}
               isInvalid={errors?.discount && true}
               color={errors?.discount ? "danger" : "default"}
@@ -559,6 +581,7 @@ export default function Products() {
             <Select
               label="Cor"
               isRequired={method === "POST" ? true : false}
+              className="w-[250px]"
               {...register("color_id")}
             >
               {colors.map((color) => (
@@ -631,6 +654,11 @@ export default function Products() {
                 <Input
                   id="purchase_price"
                   type="number"
+                  startContent={
+                    <div className="pointer-events-none flex items-center">
+                      <span className="text-default-400 text-small">R$</span>
+                    </div>
+                  }
                   label="Preço de compra"
                   className="w-[250px]"
                   {...register("purchase_price")}
@@ -650,8 +678,11 @@ export default function Products() {
                   id="expiry_date"
                   type="text"
                   label="Data de expiração"
+                  placeholder="__/__/____"
                   className="w-[250px]"
-                  {...register("expiry_date")}
+                  {...registerWithMask("expiry_date", ["99/99/9999"], {
+                    required: true,
+                  })}
                   isInvalid={errors?.expiry_date && true}
                   color={errors?.expiry_date ? "danger" : "default"}
                   errorMessage={
@@ -677,13 +708,39 @@ export default function Products() {
             )}
           </div>
         </div>
-        <button
+        <Button
           type="submit"
-          className="bg-[#4aa4ee] hover:bg-[#3286ca] transition-all duration-700 ease-in-out p-2 text-white font-medium cursor-pointer rounded-md text-base uppercase"
+          isLoading={isSubmitting}
+          color="primary"
+          className="mt-10"
         >
           ENVIAR
-        </button>
+        </Button>
       </form>
+
+      <Modal
+        isOpen={isModalOpen}
+        onOpenChange={() => setIsModalOpen(false)}
+        backdrop="blur"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 uppercase">
+                Cadastro de produto
+              </ModalHeader>
+              <ModalBody>
+                <span>{messageResponse?.message}</span>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="success" onPress={onClose} className="uppercase">
+                  Ok
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </section>
   );
 }
