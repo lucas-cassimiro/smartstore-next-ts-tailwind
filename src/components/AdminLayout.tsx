@@ -16,7 +16,7 @@ export default function LayoutAdmin({ navLinks }: NavLinkProps) {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col gap-6 w-[300px]">
+    <div className="flex flex-col gap-6 w-[300px] tablet:hidden">
       <div className="border-b-[1px] border-black">
         <span className="font-semibold text-xl mb-10">Painel de Administração</span>
       </div>
@@ -27,7 +27,7 @@ export default function LayoutAdmin({ navLinks }: NavLinkProps) {
             key={link.name}
             className={`${
               isActive ? "font-semibold" : "border-none"
-            } tablet:hidden list-none `}
+            } list-none `}
           >
             <div className="flex items-center justify-between">
               <Link href={link.href} className="text-black text-lg ">
