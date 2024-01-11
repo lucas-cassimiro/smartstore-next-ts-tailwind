@@ -11,14 +11,20 @@ export default function SliderButton() {
 
   return (
     <>
-      <button onClick={() => swiper.slidePrev()}>
+      <button
+        onClick={() => swiper.slidePrev()}
+        className="tabletgrande:hidden"
+      >
         <Image
           src={ArrowLeft}
           alt="Seta de voltar"
           className="swiper-button-prev"
         />
       </button>
-      <button onClick={() => swiper.slideNext()}>
+      <button
+        onClick={() => swiper.slideNext()}
+        className="tabletgrande:hidden"
+      >
         <Image
           src={ArrowLeft}
           alt="Seta de avançar"
