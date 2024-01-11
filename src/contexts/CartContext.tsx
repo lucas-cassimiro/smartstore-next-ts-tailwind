@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
 
 import { ProductsData } from "../interfaces/ProductsData";
 
@@ -10,6 +10,8 @@ export interface Products extends ProductsData {
 
 interface CartContextProps {
   cart: Products[];
+  cartOpen: boolean;
+  setCartOpen: Dispatch<SetStateAction<boolean>>;
   addProductIntoCart: (product: ProductsData) => void;
   removeProductFromCart: (product: Products) => void;
   productCartIncrement: (product: Products) => void;
@@ -26,6 +28,7 @@ const localStorageKey = "@SmartStore:cart";
 
 export function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<Products[]>([]);
+  const [cartOpen, setCartOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (cart.length === 0) return;
@@ -62,6 +65,7 @@ export function CartProvider({ children }: CartProviderProps) {
       });
 
       setCart(newCart);
+      setCartOpen(true);
 
       return;
     }
@@ -70,6 +74,7 @@ export function CartProvider({ children }: CartProviderProps) {
     const newCart = [...cart, newProduct];
 
     setCart(newCart);
+    setCartOpen(true);
   }
 
   function removeProductFromCart(product: Products) {
@@ -120,6 +125,8 @@ export function CartProvider({ children }: CartProviderProps) {
     <CartContext.Provider
       value={{
         cart,
+        cartOpen,
+        setCartOpen,
         addProductIntoCart,
         removeProductFromCart,
         productCartIncrement,
