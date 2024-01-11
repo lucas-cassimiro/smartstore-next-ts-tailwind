@@ -6,6 +6,8 @@ import Image from "next/image";
 import ButtonAddToCart from "./Client-components/ButtonAddToCart";
 import HalfRating from "@/lib/HalfRating";
 
+import { FaLocationDot } from "react-icons/fa6";
+
 interface CardProductsProps {
   products: ProductsData[];
 }
@@ -58,7 +60,7 @@ export default function ProductFrame({ products }: CardProductsProps) {
                   <span>no PIX</span>
                 </section>
               )}
-              <span>Você economiza (-10%)</span>
+              <span className="text-[#878787] text-[13px]">Você economiza (-10%)</span>
               {!product.black_friday && (
                 <section className="flex items-end gap-2">
                   <p className="font-semibold text-2xl gap-2">
@@ -70,43 +72,53 @@ export default function ProductFrame({ products }: CardProductsProps) {
               )}
               {!product.black_friday && (
                 <p className="text-[0.9rem] text-black min-w-[7.6875rem]">
-                  Ou 12x de {currencyFormat(product.price / 12)}
+                  Ou <strong>12x</strong> de{" "}
+                  <strong>{currencyFormat(product.price / 12)}</strong>
                 </p>
               )}
 
               {product.black_friday && (
                 <p className="text-[0.9rem] text-black min-w-[7.6875rem]">
-                  Ou 12x de{" "}
-                  {currencyFormat(
-                    (product.price * (100 - product.discount)) / 100 / 12
-                  )}
+                  Ou <strong>12x</strong> de{" "}
+                  <strong>
+                    {currencyFormat(
+                      (product.price * (100 - product.discount)) / 100 / 12
+                    )}
+                  </strong>
                 </p>
               )}
               <span className="bg-[#efefef] py-2 px-3 text-sm">
-                Ou em 21x de{" "}
-                {currencyFormat(
-                  (product.price * (100 - product.discount)) / 100 / 21
-                )}{" "}
-                no cartão Bradesco
+                Ou em <strong>21x</strong> de{" "}
+                <strong>
+                  {currencyFormat(
+                    (product.price * (100 - product.discount)) / 100 / 21
+                  )}{" "}
+                  no cartão Bradesco
+                </strong>
               </span>
               <span className="bg-[#efefef] py-2 px-3 text-sm">
-                Ou em 21x de{" "}
-                {currencyFormat(
-                  (product.price * (100 - product.discount)) / 100 / 21
-                )}{" "}
-                no cartão Itaú
+                Ou em <strong>21x</strong> de{" "}
+                <strong>
+                  {currencyFormat(
+                    (product.price * (100 - product.discount)) / 100 / 21
+                  )}{" "}
+                  no cartão Itaú
+                </strong>
               </span>
-              <span className="text-xs">Calcular o prazo de entrega</span>
+              <span className="text-sm">Calcular o prazo de entrega</span>
               <div className="flex gap-2">
                 <input
                   placeholder="Insira seu CEP"
-                  className="w-32 border border-[#c0c0c0]"
+                  className="w-32 border border-[#c0c0c0] text-center"
                 />
                 <button className="p-4 bg-black text-white text-sm rounded-[3px]">
                   Calcular
                 </button>
               </div>
-              <span>Use minha localização</span>
+              <div className="flex items-center gap-1 cursor-pointer w-[172px]">
+                <FaLocationDot />
+                <span className="text-sm">Use minha localização</span>
+              </div>
               <ButtonAddToCart products={product} />
             </div>
           </div>
