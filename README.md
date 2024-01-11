@@ -1,20 +1,28 @@
-<h1 align="center"><strong>Repositório Front-end: Smart Store</strong></h1>
+<h1 align="center"><strong>Smart Store - Plataforma de E-commerce</strong></h1>
+<h3 align="center">Explore a Smart Store, uma aplicação Full Stack integrando Frontend e Backend para uma experiência de compra completa.</h3>
 <br>
-<h3 align="center">A Smart Store é uma aplicação Full Stack onde temos a integração do Frontend com o Backend.</h3>
-<br>
-<p>Este é um projeto de e-commerce online COMPLETO.</p>
+<p>A Smart Store representa um ambicioso projeto de e-commerce online, englobando todos os elementos essenciais para uma experiência de compra robusta. Alguns dos principais recursos incluem:</p>
+- Tabelas e Funcionalidades:
+- Produtos;
+- Estoque;
+- Usuários e Autenticação;
+- Avaliações;
+- Categorias de Produtos;
+- Cores;
+- Armazenamento;
+- Endereços.
 
-<h2>Rodando o projeto na sua máquina</h2>
+<h2>Configurando o Ambiente Local</h2>
 
-<p>Para rodar o projeto na sua máquina, basta clonar o repositório em seu ambiente de desenvolvimento local:</p>
+<p>Para iniciar o projeto localmente, siga estes passos:</p>
 
 ```
 git clone https://github.com/lucas-cassimiro/smartstore-next-ts-tailwind.git
 cd smartstore-next-ts-tailwind
 ```
 
-<h2>Instalando dependências</h2>
-<p>Certifique-se de ter Node.js instalado no seu sistema. Em seguida, instale as dependências necessárias:</p>
+<h2>Instalando Dependências</h2>
+<p>Assegure-se de ter o Node.js instalado e, em seguida, execute o seguinte comando:</p>
 
 ```
 npm install
@@ -32,11 +40,11 @@ yarn dev
 pnpm install
 ```
 
-<h2>Link para o repositório Back-end:</h2>
+<h2>Repositório do Backend:</h2>
 
-- [BACK-END](https://github.com/lucas-cassimiro/smartstore-api)
+- [Backend Smart Store](https://github.com/lucas-cassimiro/smartstore-api)
 
-<h2>🛠️ Ferramentas Utilizadas para o Front-end do projeto</h2>
+<h2>🛠️ Ferramentas Utilizadas no Frontend</h2>
 
 - Next.js;
 - TypeScript;
@@ -45,6 +53,6 @@ pnpm install
 - Controle de versão GIT
 - [CEP API](https://viacep.com.br/)
 
-💻 Página do projeto - [Projeto Smart Store](https://smartstore-next-react-ts-76yi-eujjthbuw-lucas-cassimiro.vercel.app/)
+💻 Visite a Smart Store em [Projeto Smart Store](https://smartstore-next-react-ts-76yi-eujjthbuw-lucas-cassimiro.vercel.app/)
 
-🙋‍♂️ Perfil no LinkedIn - [Lucas Cassimiro](https://www.linkedin.com/in/lucasocassimiro/)
+🙋‍♂️ Conecte-se no Linkedin: [Lucas Cassimiro](https://www.linkedin.com/in/lucasocassimiro/)
