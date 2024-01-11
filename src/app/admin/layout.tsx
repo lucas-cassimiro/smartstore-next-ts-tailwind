@@ -4,7 +4,8 @@ import { Inter } from "next/font/google";
 
 import LayoutAdmin from "@/components/AdminLayout";
 
-import "../../styles/globals.css"
+import "../../styles/globals.css";
+import { AuthGuardAdmin } from "@/components/AuthGuardAdmin";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -61,8 +62,10 @@ export default function AdminLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex justify-center gap-20 py-8 `}>
-        <LayoutAdmin navLinks={navLinks} />
-        {children}
+       
+          <LayoutAdmin navLinks={navLinks} />
+          {children}
+        
       </body>
     </html>
   );
