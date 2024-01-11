@@ -8,7 +8,9 @@ import { ProductsData } from "@/interfaces/ProductsData";
 import Image from "next/image";
 
 async function getAllProducts() {
-  const response = await fetch("http://localhost:3333/products/");
+  const response = await fetch(
+    "https://smartshop-api-foy4.onrender.com/products/"
+  );
   return await response.json();
 }
 
@@ -32,7 +34,7 @@ export default function sessionNews() {
 
   async function handleSubmit(productId: number, highlight: boolean) {
     try {
-      const url = `http://localhost:3333/products/${productId}`;
+      const url = `https://smartshop-api-foy4.onrender.com/products/${productId}`;
 
       const request = await fetch(url, {
         method: "PUT",
@@ -63,7 +65,7 @@ export default function sessionNews() {
           >
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
               <Image
-                src={`http://localhost:3333/tmp/uploads/${product.image}`}
+                src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${product.image}`}
                 alt="Imagem do produto"
                 width={50}
                 height={50}
