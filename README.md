@@ -2,15 +2,19 @@
 <h3 align="center">Explore a Smart Store, uma aplicação Full Stack integrando Frontend e Backend para uma experiência de compra completa.</h3>
 <br>
 <p>A Smart Store representa um ambicioso projeto de e-commerce online, englobando todos os elementos essenciais para uma experiência de compra robusta. Alguns dos principais recursos incluem:</p>
+
 - Tabelas e Funcionalidades:
 - Produtos;
 - Estoque;
 - Usuários e Autenticação;
-- Avaliações;
+- Tabela de compras;
+- Avaliações de Produtos;
 - Categorias de Produtos;
 - Cores;
 - Armazenamento;
 - Endereços.
+- Novidades;
+- Black Friday;
 
 <h2>Configurando o Ambiente Local</h2>
 
