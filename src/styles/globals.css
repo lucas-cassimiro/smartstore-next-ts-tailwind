@@ -6,6 +6,10 @@
   @apply z-0
 }
 
+.swiper .swiper-slide {
+  @apply flex justify-center
+}
+
 .swiper .swiper-wrapper {
   @apply z-0
 }
@@ -22,14 +26,6 @@
   @apply bg-[#313131]
 }
 
-/* .swiper .swiper-button-prev {
-  @apply hover:[#93C1FD]
-}
-
-.swiper .swiper-button-next {
-  @apply hover:[#93C1FD]
-} */
-
 .text-stroke {
   -webkit-text-stroke: 1px #074291;
   color: white;
@@ -40,12 +36,13 @@
 }
 
 .carousel2.swiper {
-  @apply max-w-[1450px] py-0 px-10
+  @apply max-w-[1450px] py-0 px-10 tablet:px-0
 }
 
-/* .scrollbar {
+.scrollbar {
   @apply block overflow-y-scroll
-} */
+  /* aqui tava block */
+}
 
 @layer utilities {
   .scrollbar-medium::-webkit-scrollbar {
