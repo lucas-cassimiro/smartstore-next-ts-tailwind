@@ -1,30 +1,13 @@
 "use client";
 
-import { useRef, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import useModal from "@/hooks/useModal";
 
 interface ModalProps {
   children: React.ReactNode;
 }
 
 export default function Modal({ children }: ModalProps) {
-  const overlay = useRef<HTMLDivElement>(null);
-  const wrapper = useRef<HTMLDivElement>(null);
-
-  const router = useRouter();
-
-  const onDismiss = useCallback(() => {
-    router.back();
-  }, [router]);
-
-  const onClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (e.target === overlay.current || e.target === wrapper.current) {
-        if (onDismiss) onDismiss();
-      }
-    },
-    [onDismiss, overlay, wrapper]
-  );
+  const { onClick, onDismiss, overlay, wrapper } = useModal();
 
   return (
     <div
