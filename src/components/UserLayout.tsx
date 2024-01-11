@@ -29,7 +29,7 @@ export default function UserLayout({ navLinks }: NavLinkProps) {
 
   return (
     <section>
-      <div className="flex flex-col flex-wrap gap-4 mb-5">
+      <div className="flex flex-col flex-wrap gap-4 mb-5 tabletgrande:hidden">
         <Breadcrumbs variant="solid">
           <BreadcrumbItem href="/">Home</BreadcrumbItem>
           {navLinks.map((link) => {
@@ -48,9 +48,9 @@ export default function UserLayout({ navLinks }: NavLinkProps) {
           })}
         </Breadcrumbs>
       </div>
-      <div className="flex flex-col gap-6 w-[300px]">
-        <div className="border-b-[1px] border-black flex">
-          <span className="font-semibold text-lg mb-5">Minha conta</span>
+      <div className="flex flex-col gap-6 w-[300px] min-w-[200px] mb-10">
+        <div className="border-b-[1px] border-black flex tablet:border-b-0">
+          <span className="font-semibold text-lg mb-5 tablet:mb-1">Minha conta</span>
         </div>
         {menuNavLinks.map((link) => {
           const isActive = pathname.endsWith(link.href);
@@ -59,7 +59,7 @@ export default function UserLayout({ navLinks }: NavLinkProps) {
               key={link.name}
               className={`${
                 isActive ? "font-semibold" : "border-none"
-              } tablet:hidden list-none `}
+              } list-none `}
             >
               <Link
                 href={link.href}
@@ -68,7 +68,7 @@ export default function UserLayout({ navLinks }: NavLinkProps) {
                 <span className="hover:border-b-2 border-black">
                   {link.name}
                 </span>
-                <GrFormNext />
+                <GrFormNext className="tablet:hidden"/>
               </Link>
             </li>
           );
