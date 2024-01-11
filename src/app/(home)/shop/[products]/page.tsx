@@ -12,7 +12,9 @@ import ButtonFilterMobile from "@/components/Client-components/ButtonFilterMobil
 import SelectCategorie from "@/components/Client-components/ButtonFilter/SelectCategorie";
 
 async function getProducts(param: string): Promise<ProductsData[]> {
-  const response = await fetch(`http://localhost:3333/products/${param}`);
+  const response = await fetch(
+    `https://smartshop-api-foy4.onrender.com/products/${param}`
+  );
   const data = await response.json();
   return data;
 }
