@@ -13,12 +13,12 @@ import ButtonFilterCapacity from "./ButtonFilter/ButtonFilterCapacity";
 import ButtonFilterColor from "./ButtonFilter/ButtonFilterColor";
 
 export default function ButtonFilterMobile() {
-  const [filter, setFilter] = useState(false);
+  const [filter, setFilter] = useState<boolean>(false);
 
-  const [price, setPrice] = useState(false);
-  const [armazenamento, setArmazenamento] = useState(false);
-  const [cor, setCor] = useState(false);
-  const [order, setOrder] = useState(false);
+  const [price, setPrice] = useState<boolean>(false);
+  const [armazenamento, setArmazenamento] = useState<boolean>(false);
+  const [cor, setCor] = useState<boolean>(false);
+  const [order, setOrder] = useState<boolean>(false);
 
   const showFilterPrice = () => setPrice(!price);
   const showFilterArmazenamento = () => setArmazenamento(!armazenamento);
@@ -128,7 +128,7 @@ export default function ButtonFilterMobile() {
                   <h4 className="font-bold text-lg">Armazenamento</h4>
                 </div>
 
-                {/* <ButtonFilterCapacity /> */}
+                <ButtonFilterCapacity />
               </div>
             </div>
           </div>
