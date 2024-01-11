@@ -27,7 +27,7 @@ import { SearchIcon } from "@/svg/SearchIcon";
 import { ChevronDownIcon } from "@/svg/ChevronDownIcon";
 import { PlusIcon } from "@/svg/PlusIcon";
 
-import useTable from "@/components/Logic/useFormTableLogic";
+import useTable from "@/hooks/useFormTableLogic";
 import currencyFormat from "@/helpers/currencyFormat";
 import moment from "moment";
 
@@ -212,7 +212,13 @@ export default function Stocks() {
         </div>
       </div>
     );
-  }, [filterValue, onSearchChange, stocks.length, onRowsPerPageChange, onClear]);
+  }, [
+    filterValue,
+    onSearchChange,
+    stocks.length,
+    onRowsPerPageChange,
+    onClear,
+  ]);
 
   const bottomContent = useMemo(() => {
     return (
@@ -301,7 +307,10 @@ export default function Stocks() {
           )}
         </TableBody>
       </Table>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col justify-center items-center gap-3 mt-16"
+      >
         <Input
           type="number"
           label="ID do Produto"
@@ -313,7 +322,11 @@ export default function Stocks() {
           errorMessage={errors?.product_id && errors?.product_id.message}
         />
 
-        <Select label="Status do produto" {...register("status")}>
+        <Select
+          label="Status do produto"
+          {...register("status")}
+          className="w-[250px]"
+        >
           {estoque.map((estoque: any) => (
             <SelectItem key={estoque} value={estoque} {...register("status")}>
               {estoque}
@@ -343,12 +356,14 @@ export default function Stocks() {
           className="w-[250px]"
           {...register("quantity")}
         />
-        <button
+        <Button
           type="submit"
-          className="bg-[#4aa4ee] hover:bg-[#3286ca] transition-all duration-700 ease-in-out p-2 text-white font-medium cursor-pointer rounded-md text-base uppercase"
+          isLoading={isSubmitting}
+          color="primary"
+          className="self-center mt-5"
         >
           ENVIAR
-        </button>
+        </Button>
       </form>
     </section>
   );
