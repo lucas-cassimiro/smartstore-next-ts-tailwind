@@ -46,16 +46,16 @@ export default function BlackFridayCarousel() {
       },
       800: {
         spaceBetween: 50,
-        slidesPerView: 2,
+        slidesPerView: 3,
       },
       990: {
         pagination: false,
         slidesPerView: 3,
       },
       1200: {
-        slidesPerView: 3,
+        slidesPerView: 4,
         pagination: false,
-        spaceBetween: 1,
+        spaceBetween: 10,
       },
       1350: {
         slidesPerView: 4,
