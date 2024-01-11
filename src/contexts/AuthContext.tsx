@@ -2,11 +2,14 @@
 
 import {
   createContext,
+  Dispatch,
+  SetStateAction,
   useContext,
   useState,
   useEffect,
   useCallback,
 } from "react";
+
 import { FormData } from "@/components/LoginFrame";
 
 import { setCookie, parseCookies, destroyCookie } from "nookies";
@@ -33,6 +36,7 @@ type Address = {
   city: string;
   state: string;
   recipient: string;
+  cep: string;
 };
 
 type AuthContextType = {
@@ -40,6 +44,7 @@ type AuthContextType = {
   isLoading: boolean;
   user: User | null;
   address: Address[];
+  setAddress: Dispatch<SetStateAction<Address[]>>;
   signIn: (data: FormData) => Promise<void>;
   signOut: () => void;
 };
@@ -118,7 +123,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const response = await request.json();
 
       setCookie(response, "smartstore.token", response.token, {
-        maxAge: 60 * 60 * 1, //1 hora --> aqui expira em 1h, mas no backend coloquei pra expirar em 8h -> verificar isso dps
+        maxAge: 60 * 60 * 1,
       });
 
       setUser(response.user);
@@ -126,7 +131,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       window.location.reload();
 
       return response;
-      
     } catch (error) {
       throw error;
     } finally {
@@ -150,6 +154,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signOut,
         user,
         address,
+        setAddress,
         isLoading,
       }}
     >
