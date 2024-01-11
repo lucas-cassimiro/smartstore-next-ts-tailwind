@@ -14,11 +14,11 @@ interface CardProductsProps {
 
 export default function CardProducts({ product }: CardProductsProps) {
   return (
-    <div>
+    <div className="flex justify-center ml-[1rem]">
       {/* className="flex max-w-full w-[1092px] flex-wrap" */}
       <Link
         href={`/produtos/${product.id}`}
-        className="flex flex-col flex-2 m-[1rem] "
+        className="flex flex-col"
       >
         <Image
           className="w-[9.375rem] h-[11.875rem] object-contain"
@@ -42,7 +42,7 @@ export default function CardProducts({ product }: CardProductsProps) {
             </p>
           )}
         </div>
-        <h4 className="text-[0.875rem] font-normal">{product.name}</h4>
+        <h4 className="text-sm font-normal">{product.name}</h4>
         <HalfRating star={product.average_score} />
 
         {product.black_friday && (
@@ -56,8 +56,6 @@ export default function CardProducts({ product }: CardProductsProps) {
             <p className="font-semibold text-base">
               {currencyFormat((product.price * (100 - product.discount)) / 100)}
             </p>
-
-            {/* <ButtonAddToCart products={products} /> */}
           </section>
         )}
 
@@ -66,8 +64,6 @@ export default function CardProducts({ product }: CardProductsProps) {
             <p className="font-semibold text-base">
               {currencyFormat(product.price)}
             </p>
-
-            {/* <ButtonAddToCart products={products} /> */}
           </section>
         )}
 
