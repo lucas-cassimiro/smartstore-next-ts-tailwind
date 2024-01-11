@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
   Input,
+  Button,
 } from "@nextui-org/react";
 
 import { useEffect, useState } from "react";
@@ -19,6 +20,8 @@ import { z } from "zod";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MessageResponseData } from "@/interfaces/MessageResponseData";
+import { EditIcon } from "@/svg/EditIcon";
+import { DeleteIcon } from "@/svg/DeleteIcon";
 
 const createOrUpdateCategorieSchema = (method: string) => {
   return z.object({
@@ -76,8 +79,8 @@ export default function Categories() {
     try {
       const url =
         method === "POST"
-          ? `http://localhost:3333/categories`
-          : `http://localhost:3333/categories/${data.id}`;
+          ? `https://smartshop-api-foy4.onrender.com/categories`
+          : `https://smartshop-api-foy4.onrender.com/${data.id}`;
 
       const { id, ...requestData } = data;
 
@@ -108,6 +111,25 @@ export default function Categories() {
   const onError: SubmitErrorHandler<CategorieSchema> = (errors) =>
     console.log(errors);
 
+  const handleRemove = async (id: number) => {
+    try {
+      //setProducts((prevData) => prevData.filter((item) => item.id !== id));
+
+      const response = await fetch(`http://localhost:3333/categories/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const responseData = await response.json();
+      //setMessageResponse(responseData);
+      //setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
+  };
+
   return (
     <section className="px-10 w-[70%]">
       <h1 className="text-center mb-5 text-2xl font-semibold">
@@ -124,6 +146,7 @@ export default function Categories() {
         <TableHeader>
           <TableColumn>ID</TableColumn>
           <TableColumn>NOME</TableColumn>
+          <TableColumn>AÇÕES</TableColumn>
         </TableHeader>
 
         <TableBody
@@ -134,12 +157,33 @@ export default function Categories() {
             <TableRow key={categorie.id}>
               <TableCell>{categorie.id}</TableCell>
               <TableCell>{categorie.name}</TableCell>
+              <TableCell className="flex gap-2 items-center">
+                <span
+                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                  onClick={() => {
+                    setMethod("PUT");
+                    setValue("id", categorie.id);
+                  }}
+                >
+                  <EditIcon />
+                </span>
+
+                <span
+                  className="text-lg text-danger cursor-pointer active:opacity-50"
+                  onClick={() => handleRemove(categorie.id)}
+                >
+                  <DeleteIcon />
+                </span>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
 
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <form
+        onSubmit={handleSubmit(onSubmit, onError)}
+        className="flex flex-col items-center gap-5 mt-16"
+      >
         {method === "PUT" && (
           <>
             <Input
@@ -168,12 +212,9 @@ export default function Categories() {
           errorMessage={errors?.name && errors.name.message}
         />
 
-        <button
-          type="submit"
-          className="bg-[#4aa4ee] hover:bg-[#3286ca] transition-all duration-700 ease-in-out p-2 text-white font-medium cursor-pointer rounded-md text-base uppercase"
-        >
+        <Button type="submit" color="primary" isLoading={isSubmitting}>
           ENVIAR
-        </button>
+        </Button>
       </form>
     </section>
   );
