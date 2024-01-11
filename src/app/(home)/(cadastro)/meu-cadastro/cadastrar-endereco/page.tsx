@@ -2,65 +2,60 @@
 
 import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
-import { Button, Input } from "@nextui-org/react";
+import {
+  Button,
+  Input,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
 import { useState, useEffect, useCallback } from "react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { SubmitHandler, useForm, SubmitErrorHandler } from "react-hook-form";
+import { MessageResponseData } from "@/interfaces/MessageResponseData";
+import { useRouter } from "next/navigation";
 
-const schemaForm = z
-  .object({
-    address: z.object({
-      user_id: z.coerce.number().min(1, "Campo obrigatório."),
-      cep: z
-        .string()
-        .nonempty("Campo obrigatório.")
-        .min(8, "Por favor, informe um CEP válido."),
-      street_address: z.string().nonempty("Campo obrigatório."),
-      number_address: z.string().nonempty("Campo obrigatório."),
-      complement: z.string(),
-      neighborhood: z
-        .string()
-        .nonempty("Campo obrigatório.")
-        .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos."),
-      city: z
-        .string()
-        .nonempty("Campo obrigatório.")
-        .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos."),
-      state: z
-        .string()
-        .nonempty("Campo obrigatório.")
-        .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos."),
-      recipient: z
-        .string()
-        .min(1, "Campo obrigatório.")
-        .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos.")
-        .refine(
-          (data) => {
-            const names = data.split(" ");
-            return names.length === 2;
-          },
-          {
-            message: "Por favor, digite o nome completo.",
-          }
-        ),
-    }),
-  })
-  .transform((field) => ({
-    address: {
-      user_id: field.address.user_id,
-      cep: field.address.cep,
-      street_address: field.address.street_address,
-      number_address: field.address.number_address,
-      complement: field.address.complement,
-      neighborhood: field.address.neighborhood,
-      city: field.address.city,
-      state: field.address.state,
-      recipient: field.address.recipient,
-    },
-  }));
+const schemaForm = z.object({
+  user_id: z.coerce.number(),
+  cep: z
+    .string()
+    .nonempty("Campo obrigatório.")
+    .min(8, "Por favor, informe um CEP válido."),
+  street_address: z.string().nonempty("Campo obrigatório."),
+  number_address: z.string().nonempty("Campo obrigatório."),
+  complement: z.string(),
+  neighborhood: z
+    .string()
+    .nonempty("Campo obrigatório.")
+    .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos."),
+  city: z
+    .string()
+    .nonempty("Campo obrigatório.")
+    .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos."),
+  state: z
+    .string()
+    .nonempty("Campo obrigatório.")
+    .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos."),
+  recipient: z
+    .string()
+    .min(1, "Campo obrigatório.")
+    .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos.")
+    .refine(
+      (data) => {
+        const names = data.split(" ");
+        return names.length === 2;
+      },
+      {
+        message: "Por favor, digite o nome completo.",
+      }
+    ),
+});
 
 type FormProps = z.infer<typeof schemaForm>;
 
@@ -74,10 +69,14 @@ interface AddressProps {
 }
 
 export default function CadastrarEndereco() {
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [messageResponse, setMessageResponse] =
+    useState<MessageResponseData | null>(null);
   const [isCepFilled, setIsCepFilled] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const { user } = useAuth();
+
+  const router = useRouter();
 
   const {
     getValues,
@@ -86,34 +85,33 @@ export default function CadastrarEndereco() {
     handleSubmit,
     register,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormProps>({
     criteriaMode: "all",
     mode: "onBlur",
     resolver: zodResolver(schemaForm),
     defaultValues: {
-      address: {
-        cep: "",
-        street_address: "",
-        number_address: "",
-        complement: "",
-        neighborhood: "",
-        city: "",
-        state: "",
-        recipient: "",
-      },
+      user_id: user?.id || 0,
+      cep: "",
+      street_address: "",
+      number_address: "",
+      complement: "",
+      neighborhood: "",
+      city: "",
+      state: "",
+      recipient: "",
     },
   });
 
-  const zipCode = watch("address.cep");
+  const zipCode = watch("cep");
 
   const handleSetData = useCallback(
     (data: AddressProps) => {
-      setValue("address.city", data.localidade);
-      setValue("address.street_address", data.logradouro);
-      setValue("address.state", data.uf);
-      setValue("address.neighborhood", data.bairro);
-      setValue("address.complement", data.complemento);
+      setValue("city", data.localidade);
+      setValue("street_address", data.logradouro);
+      setValue("state", data.uf);
+      setValue("neighborhood", data.bairro);
+      setValue("complement", data.complemento);
     },
     [setValue]
   );
@@ -141,9 +139,10 @@ export default function CadastrarEndereco() {
     data: FormProps
   ) => {
     try {
-      data.address.user_id = user!.id;
+      data.user_id = user?.id || 0;
 
       const url = `http://localhost:3333/address/`;
+
       const request = await fetch(url, {
         method: "POST",
         headers: {
@@ -154,18 +153,25 @@ export default function CadastrarEndereco() {
       if (!request.ok) {
         const errorResponse = await request.json();
 
-        setErrorMessage(errorResponse);
+        setMessageResponse(errorResponse);
 
         throw new Error(errorResponse.message);
       }
 
       const response = await request.json();
-      console.log(response);
 
-      reset()
+      setMessageResponse(response);
+
+      setIsModalOpen(true);
+
+      reset();
     } catch (error) {
       console.error("Error during fetch:", error);
     }
+  };
+
+  const voltarRota = () => {
+    router.push("/meu-cadastro");
   };
 
   const onError: SubmitErrorHandler<FormData> = (errors) => console.log(errors);
@@ -177,18 +183,18 @@ export default function CadastrarEndereco() {
           <h1 className="text-3xl font-bold mb-12">Novo endereço</h1>
           <form
             className="flex flex-col gap-5 w-[700px] mb-7"
-            onSubmit={handleSubmit(handleFormSubmit)}
+            onSubmit={handleSubmit(handleFormSubmit, onError)}
           >
             <Input
               isRequired
               label="CEP"
               className="max-w-[112px]"
               maxLength={9}
-              {...register("address.cep")}
+              {...register("cep")}
               isClearable
-              isInvalid={errors?.address?.cep && true}
-              color={errors?.address?.cep ? "danger" : "default"}
-              errorMessage={errors?.address?.cep && errors?.address.cep.message}
+              isInvalid={errors?.cep && true}
+              color={errors?.cep ? "danger" : "default"}
+              errorMessage={errors?.cep && errors?.cep.message}
             />
             <a
               href="https://buscacepinter.correios.com.br/app/endereco/index.php"
@@ -204,13 +210,12 @@ export default function CadastrarEndereco() {
               label="Endereço"
               disabled={!isCepFilled}
               className="max-w-[26.5rem]"
-              {...register("address.street_address")}
+              {...register("street_address")}
               isClearable
-              isInvalid={errors?.address?.street_address && true}
-              color={errors?.address?.street_address ? "danger" : "default"}
+              isInvalid={errors?.street_address && true}
+              color={errors?.street_address ? "danger" : "default"}
               errorMessage={
-                errors?.address?.street_address &&
-                errors?.address.street_address.message
+                errors?.street_address && errors?.street_address.message
               }
             />
 
@@ -222,13 +227,12 @@ export default function CadastrarEndereco() {
                   isRequired
                   disabled={!isCepFilled}
                   className="w-[80px]"
-                  {...register("address.number_address")}
+                  {...register("number_address")}
                   isClearable
-                  isInvalid={errors?.address?.number_address && true}
-                  color={errors?.address?.number_address ? "danger" : "default"}
+                  isInvalid={errors?.number_address && true}
+                  color={errors?.number_address ? "danger" : "default"}
                   errorMessage={
-                    errors?.address?.number_address &&
-                    errors?.address.number_address.message
+                    errors?.number_address && errors?.number_address.message
                   }
                 />
               </div>
@@ -238,7 +242,7 @@ export default function CadastrarEndereco() {
                 label="Complemento"
                 disabled={!isCepFilled}
                 className="w-[330px]"
-                {...register("address.complement")}
+                {...register("complement")}
               />
             </div>
             <Input
@@ -247,13 +251,12 @@ export default function CadastrarEndereco() {
               isRequired
               className="max-w-[26.5rem]"
               disabled
-              {...register("address.neighborhood")}
+              {...register("neighborhood")}
               isClearable
-              isInvalid={errors?.address?.neighborhood && true}
-              color={errors?.address?.neighborhood ? "danger" : "default"}
+              isInvalid={errors?.neighborhood && true}
+              color={errors?.neighborhood ? "danger" : "default"}
               errorMessage={
-                errors?.address?.neighborhood &&
-                errors?.address.neighborhood.message
+                errors?.neighborhood && errors?.neighborhood.message
               }
             />
 
@@ -264,13 +267,11 @@ export default function CadastrarEndereco() {
                 label="Cidade"
                 disabled
                 className="w-[310px]"
-                {...register("address.city")}
+                {...register("city")}
                 isClearable
-                isInvalid={errors?.address?.city && true}
-                color={errors?.address?.city ? "danger" : "default"}
-                errorMessage={
-                  errors?.address?.city && errors?.address.city.message
-                }
+                isInvalid={errors?.city && true}
+                color={errors?.city ? "danger" : "default"}
+                errorMessage={errors?.city && errors?.city.message}
               />
 
               <Input
@@ -278,7 +279,7 @@ export default function CadastrarEndereco() {
                 label="Estado"
                 isRequired
                 disabled
-                {...register("address.state")}
+                {...register("state")}
               />
             </div>
             <Input
@@ -286,24 +287,61 @@ export default function CadastrarEndereco() {
               isRequired
               label="Destinatário"
               className="max-w-[26.5rem]"
-              {...register("address.recipient")}
+              {...register("recipient")}
               isClearable
-              isInvalid={errors?.address?.recipient && true}
-              color={errors?.address?.recipient ? "danger" : "default"}
-              errorMessage={
-                errors?.address?.recipient && errors?.address.recipient.message
-              }
+              isInvalid={errors?.recipient && true}
+              color={errors?.recipient ? "danger" : "default"}
+              errorMessage={errors?.recipient && errors?.recipient.message}
             />
 
             <div className="flex gap-2">
-              <Button color="secondary" className="w-[13rem]">
+              <Button
+                color="secondary"
+                className="w-[13rem]"
+                onClick={voltarRota}
+              >
                 Voltar
               </Button>
-              <Button type="submit" color="primary" className="w-[13rem]">
+              <Button
+                type="submit"
+                color="primary"
+                className="w-[13rem]"
+                isLoading={isSubmitting}
+              >
                 Salvar
               </Button>
             </div>
           </form>
+
+          <Modal
+            isOpen={isModalOpen}
+            onOpenChange={() => setIsModalOpen(false)}
+            backdrop="blur"
+          >
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1 uppercase">
+                    Cadastro de endereço
+                  </ModalHeader>
+                  <ModalBody>
+                    <span className="text-black">
+                      {messageResponse?.message}
+                    </span>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button
+                      color="success"
+                      onPress={onClose}
+                      className="uppercase"
+                    >
+                      Ok
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
         </div>
       </div>
     </AuthGuard>
