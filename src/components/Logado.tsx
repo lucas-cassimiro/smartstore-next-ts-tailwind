@@ -44,7 +44,7 @@ export default function Logado() {
               </span>
             </div>
             <span
-              className="text-white font-semibold leading-3 tablet:text-sm cursor-pointer"
+              className="text-white font-semibold leading-3 tablet:text-sm cursor-pointer underline"
               onClick={signOut}
             >
               Sair
