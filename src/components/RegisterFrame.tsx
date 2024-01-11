@@ -415,8 +415,8 @@ export default function RegisterFrame() {
               />
 
               <ModalFooter className="px-0">
-                <Button type="submit" color="primary" disabled={isSubmitting}>
-                  {isSubmitting ? "Enviando..." : "Continuar"}
+                <Button type="submit" color="primary" isLoading={isSubmitting}>
+                  Continuar
                 </Button>
               </ModalFooter>
             </form>
