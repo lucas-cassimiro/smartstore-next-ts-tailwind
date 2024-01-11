@@ -25,7 +25,7 @@ import { PlusIcon } from "@/svg/PlusIcon";
 import { BsXCircleFill } from "react-icons/bs";
 import currencyFormat from "@/helpers/currencyFormat";
 
-import useTable from "@/components/Logic/useFormTableLogic";
+import useTable from "@/hooks/useFormTableLogic";
 
 export default function Orders() {
   const [orders, setOrders] = useState<OrdersData[]>([]);
