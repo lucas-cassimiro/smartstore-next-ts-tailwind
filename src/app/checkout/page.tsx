@@ -1,3 +1,3 @@
 export default function Checkout() {
-  return <div>PÁGINA DE CHECKOUT</div>;
+  return <div>ESSA VAI SER A PÁGINA DE CHECKOUT</div>;
 }
