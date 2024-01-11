@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
   Input,
+  Button,
 } from "@nextui-org/react";
 
 import { MessageResponseData } from "@/interfaces/MessageResponseData";
@@ -22,6 +23,8 @@ import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ColorsData } from "@/interfaces/ColorsData";
+import { EditIcon } from "@/svg/EditIcon";
+import { DeleteIcon } from "@/svg/DeleteIcon";
 
 const createOrUpdateColorSchema = (method: string) => {
   return z.object({
@@ -77,8 +80,8 @@ export default function Colors() {
     try {
       const url =
         method === "POST"
-          ? `http://localhost:3333/colors`
-          : `http://localhost:3333/colors/${data.id}`;
+          ? `https://smartshop-api-foy4.onrender.com/colors`
+          : `https://smartshop-api-foy4.onrender.com/colors/${data.id}`;
 
       const { id, ...requestData } = data;
 
@@ -110,6 +113,25 @@ export default function Colors() {
   const onError: SubmitErrorHandler<ColorSchema> = (errors) =>
     console.log(errors);
 
+  const handleRemove = async (id: number) => {
+    try {
+      //setProducts((prevData) => prevData.filter((item) => item.id !== id));
+
+      const response = await fetch(`http://localhost:3333/colors/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const responseData = await response.json();
+      //setMessageResponse(responseData);
+      //setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
+  };
+
   return (
     <section className="px-10 w-[70%]">
       <h1 className="text-center mb-5 text-2xl font-semibold">
@@ -126,6 +148,7 @@ export default function Colors() {
         <TableHeader>
           <TableColumn>ID</TableColumn>
           <TableColumn>NOME</TableColumn>
+          <TableColumn>AÇÕES</TableColumn>
         </TableHeader>
 
         <TableBody
@@ -136,11 +159,32 @@ export default function Colors() {
             <TableRow key={color.id}>
               <TableCell>{color.id}</TableCell>
               <TableCell>{color.name}</TableCell>
+              <TableCell className="flex gap-2 items-center">
+                <span
+                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                  onClick={() => {
+                    setMethod("PUT");
+                    setValue("id", color.id);
+                  }}
+                >
+                  <EditIcon />
+                </span>
+
+                <span
+                  className="text-lg text-danger cursor-pointer active:opacity-50"
+                  onClick={() => handleRemove(color.id)}
+                >
+                  <DeleteIcon />
+                </span>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <form
+        onSubmit={handleSubmit(onSubmit, onError)}
+        className="flex flex-col items-center gap-5 mt-16"
+      >
         {method === "PUT" && (
           <>
             <Input
@@ -169,12 +213,9 @@ export default function Colors() {
           errorMessage={errors?.name && errors.name.message}
         />
 
-        <button
-          type="submit"
-          className="bg-[#4aa4ee] hover:bg-[#3286ca] transition-all duration-700 ease-in-out p-2 text-white font-medium cursor-pointer rounded-md text-base uppercase"
-        >
+        <Button type="submit" color="primary" isLoading={isSubmitting}>
           ENVIAR
-        </button>
+        </Button>
       </form>
     </section>
   );
