@@ -37,7 +37,7 @@ export default function CadastroLayout({
 }) {
   return (
     <div
-      className={`${inter.className} flex m-auto max-w-[1450px] w-full py-5 justify-between px-10`}
+      className={`${inter.className} flex m-auto max-w-[1450px] w-full py-5 justify-between px-10 tabletgrande:py-2 tabletgrande:px-3 tablet:flex-col`}
     >
       <UserLayout navLinks={navLinks} />
       {children}
