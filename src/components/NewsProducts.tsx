@@ -32,7 +32,7 @@ export default function NewsProducts({ product }: any) {
       >
         <div className="flex items-center justify-center w-[25rem] h-[21.875rem] tabletgrande:h-[16rem] celularmedio:h-[14rem]">
           <Image
-            className="w-[16.5rem] h-[14.625rem] celularmedio:w-[8rem] celularmedio:h-[6rem] desktopequeno:w-[12.5rem] desktopequeno:h-[10.625rem] tabletgrande:w-[10rem] tabletgrande:h-[8rem]"
+            className="w-[16.5rem] h-[14.625rem] celularmedio:w-[6rem] celularmedio:h-[6rem] desktopequeno:w-[12.5rem] desktopequeno:h-[10.625rem] tabletgrande:w-[10rem] tabletgrande:h-[8rem] object-contain"
             src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${product.image}`}
             alt="Imagem do produto"
             quality={80}
