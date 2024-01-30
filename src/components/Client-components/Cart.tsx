@@ -76,7 +76,7 @@ export default function Cart() {
                         className="flex w-full items-start gap-2"
                       >
                         <Image
-                          src={`http://localhost:3333/tmp/uploads/${cart.image}`}
+                          src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${cart.image}`}
                           alt="Imagem do produto"
                           quality={80}
                           priority={true}
