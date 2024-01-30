@@ -3,8 +3,6 @@ import { Inter } from "next/font/google";
 
 import Image from "next/image";
 
-import { news } from "@/data/NewsProducts";
-
 import currencyFormat from "@/helpers/currencyFormat";
 
 import Link from "next/link";
