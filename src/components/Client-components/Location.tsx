@@ -90,11 +90,16 @@ export default function Location() {
 
   return (
     <>
-      <Image src={IconLocation} alt="Icone de localização" />
+      <div className="flex items-center gap-1">
+        <Image src={IconLocation} alt="Icone de localização" />
 
-      <a onClick={showLocation} className="text-[#A0A0A0] cursor-pointer">
-        Selecione uma localização
-      </a>
+        <a
+          onClick={showLocation}
+          className="text-[#A0A0A0] cursor-pointer tablet:text-sm"
+        >
+          Selecione uma localização
+        </a>
+      </div>
 
       <div
         className={`${
