@@ -16,14 +16,14 @@ export default function Home() {
       <CarouselImages />
       <div className="w-full">
         <span
-          className="flex justify-center text-[2.1875rem] font-normal my-4 tablet:text-[1.675rem] celular:text-[1.2rem]"
+          className="flex justify-center text-[2.1875rem] font-normal my-4 tablet:text-[1.675rem] celularmedio:text-[1.3rem]"
           style={jejugothic.style}
         >
           Novidades
         </span>
         <NewsCarousel />
         <span
-          className="flex justify-center text-[2.1875rem] font-normal my-4 tablet:text-[1.675rem] celular:text-[1.2rem]"
+          className="flex justify-center text-[2.1875rem] font-normal my-4 tablet:text-[1.675rem] celularmedio:text-[1.3rem]"
           style={jejugothic.style}
         >
           Black Friday
