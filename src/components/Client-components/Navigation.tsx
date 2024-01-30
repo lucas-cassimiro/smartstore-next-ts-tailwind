@@ -42,7 +42,7 @@ export default function Navigation({ navLinks }: NavigationProps) {
           <Location />
         </div>
         <div className="hidden tablet:flex text-white">
-          <FaBars size="1.5rem" onClick={showMenu} />
+          <FaBars onClick={showMenu} className="w-5 h-5" />
           <div
             className={`${
               menuOpen ? "w-full opacity-100 visible bg-black/60" : ""
@@ -56,7 +56,7 @@ export default function Navigation({ navLinks }: NavigationProps) {
               onClick={(e) => e.stopPropagation()}
             >
               <button className="min-w-[20px] ml-10">
-                <FaTimes size="1.5rem" onClick={showMenu} />
+                <FaTimes onClick={showMenu} className="w-5 h-5" />
               </button>
 
               <ul className="flex flex-col my-auto gap-10 items-center min-w-[8.5rem] justify-center h-full">
