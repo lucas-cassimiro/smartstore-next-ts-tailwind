@@ -14,16 +14,16 @@ interface CardProductsProps {
 
 export default function ProductFrame({ products }: CardProductsProps) {
   return (
-    <div className="w-full h-full flex justify-center items-center mt-40">
+    <div className="w-full h-full flex justify-center items-center mt-40 tablet:mt-0">
       {products.map((product) => (
         <section
-          className="flex flex-col bg-white h-[800px] w-[800px] p-6 rounded-md gap-4"
+          className="flex flex-col bg-white h-[800px] w-[800px] p-6 rounded-md gap-4 tablet:h-[500px] tablet:w-[500px]"
           key={product.id}
         >
           <div className="flex justify-around">
-            <div>
+            <div className="tablet:w-[130px]">
               <Image
-                className="w-[17.5rem] h-[17rem] object-contain"
+                className="w-[13rem] h-[14rem] object-contain tablet:w-[8.5rem] tablet:h-[9rem]"
                 src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${product.image}`}
                 alt="Imagem do produto"
                 quality={80}
@@ -38,17 +38,17 @@ export default function ProductFrame({ products }: CardProductsProps) {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-2xl font-bold tabletgrande:text-xl">
+              <h1 className="text-2xl font-bold tabletgrande:text-xl tablet:text-base">
                 {product.name}
               </h1>
               <div className="flex gap-2 items-center">
                 {product.black_friday && (
-                  <p className="py-[0.375rem] px-5 bg-[#d93a1e] text-white font-semibold rounded-[4px] tabletgrande:text-sm">
+                  <p className="py-[0.375rem] px-5 bg-[#d93a1e] text-white font-semibold rounded-[4px] tabletgrande:text-xs tabletgrande:py-[0.2rem] tabletgrande:px-2">
                     -{product.discount}%
                   </p>
                 )}
                 {product.black_friday && (
-                  <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-5 text-white font-semibold tabletgrande:text-xs tabletgrande:px-3">
+                  <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-5 text-white font-semibold tabletgrande:text-xs tabletgrande:py-[0.2rem] tabletgrande:px-2 min-w-[87px]">
                     Black Friday
                   </p>
                 )}
@@ -61,7 +61,7 @@ export default function ProductFrame({ products }: CardProductsProps) {
               )}
               {product.black_friday && (
                 <section className="flex items-end gap-2">
-                  <p className="font-semibold text-2xl tabletgrande:text-[0.6rem]">
+                  <p className="font-semibold text-2xl tabletgrande:text-xl tablet:text-base">
                     {currencyFormat(
                       (product.price * (100 - product.discount)) / 100
                     )}
@@ -71,7 +71,7 @@ export default function ProductFrame({ products }: CardProductsProps) {
               )}
 
               {product.black_friday && (
-                <span className="text-[#878787] text-[13px]">
+                <span className="text-[#878787] text-[13px] tablet:text-[11px]">
                   Você economiza: -R${" "}
                   {((product.price * product.discount) / 100).toLocaleString(
                     "pt-BR",
@@ -94,14 +94,14 @@ export default function ProductFrame({ products }: CardProductsProps) {
                 </section>
               )}
               {!product.black_friday && (
-                <p className="text-[0.9rem] text-black min-w-[7.6875rem] tabletgrande:text-[0.8rem]">
+                <p className="text-[0.9rem] text-black min-w-[7.6875rem] tabletgrande:text-[0.8rem] tablet:text-[0.8rem]">
                   Ou <strong>12x</strong> de{" "}
                   <strong>{currencyFormat(product.price / 12)}</strong>
                 </p>
               )}
 
               {product.black_friday && (
-                <p className="text-[0.9rem] text-black min-w-[7.6875rem]">
+                <p className="text-[0.9rem] text-black min-w-[7.6875rem] tablet:text-[0.8rem]">
                   Ou <strong>12x</strong> de{" "}
                   <strong>
                     {currencyFormat(
@@ -110,7 +110,7 @@ export default function ProductFrame({ products }: CardProductsProps) {
                   </strong>
                 </p>
               )}
-              <span className="bg-[#efefef] py-2 px-3 text-sm tabletgrande:text-xs">
+              <span className="bg-[#efefef] py-2 px-3 text-sm tabletgrande:text-xs tablet:text-[11px]">
                 Ou em <strong>21x</strong> de{" "}
                 <strong>
                   {currencyFormat(
@@ -119,7 +119,7 @@ export default function ProductFrame({ products }: CardProductsProps) {
                   no cartão Bradesco
                 </strong>
               </span>
-              <span className="bg-[#efefef] py-2 px-3 text-sm tabletgrande:text-xs">
+              <span className="bg-[#efefef] py-2 px-3 text-sm tabletgrande:text-xs tablet:text-[11px]">
                 Ou em <strong>21x</strong> de{" "}
                 <strong>
                   {currencyFormat(
