@@ -37,7 +37,7 @@ export default function Cart() {
               </span>
             )}
           </div>
-          <span className="text-white celular:text-sm text-sm">Cart</span>
+          <span className="text-white celular:text-sm text-sm tablet:hidden">Cart</span>
         </div>
       </button>
 
