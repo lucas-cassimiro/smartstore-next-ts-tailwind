@@ -120,7 +120,7 @@ export default function AlterarDados() {
     const { date_birth, repeatNewPassword, ...postData } = data;
 
     try {
-      const url = `http://localhost:3333/usuarios/${user?.id}`;
+      const url = `http://https://smartshop-api-foy4.onrender.com/usuarios/${user?.id}`;
       const request = await fetch(url, {
         method: "PUT",
         headers: {
@@ -163,131 +163,183 @@ export default function AlterarDados() {
 
   return (
     <AuthGuard>
-      <div className="flex flex-col w-[983px] py-14">
-        <div className="m-auto flex flex-col">
-          <h1 className="text-3xl font-bold mb-12">Alterar dados</h1>
+      <div className="flex flex-col w-full py-14 tabletgrande:py-5">
+        <div className="m-auto flex flex-col max-w-[764px] min-w-[200px] tablet:m-0">
+          <h1 className="text-3xl font-bold mb-12 tabletgrande:text-lg">
+            Alterar dados
+          </h1>
           <form
-            className="flex flex-col gap-5 w-[700px] mb-7"
+            className="flex flex-col w-full mb-7"
             onSubmit={handleSubmit(onSubmit, onError)}
             method="PUT"
           >
-            <Input
+            <label htmlFor="email" className="text-sm text-[#878787] mb-1">
+              E-mail*
+            </label>
+            <input
               type="text"
-              isRequired
-              label="Email"
+              id="email"
               disabled
               defaultValue={user?.email}
-              className="max-w-[26.5rem]"
+              className="max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3"
             />
-            <Input
+
+            <label htmlFor="password" className="text-sm text-[#878787] mb-1">
+              Senha atual
+            </label>
+            <input
               type="password"
-              label="Senha atual"
+              id="password"
               minLength={6}
               maxLength={255}
               autoComplete="given-password"
-              className="max-w-[26.5rem]"
-              isClearable
+              className={`${
+                errors.password_hash ? "bg-[#FEE7EF]" : ""
+              } max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
               {...register("password_hash")}
-              isInvalid={errors?.password_hash && true}
-              color={errors?.password_hash ? "danger" : "default"}
-              errorMessage={
-                errors?.password_hash && errors?.password_hash?.message
-              }
             />
 
-            <Input
+            {errors?.password_hash && (
+              <span className="text-[#F31260] text-sm mb-5">
+                {errors?.password_hash?.message}
+              </span>
+            )}
+
+            <label
+              htmlFor="newPassword"
+              className="text-sm text-[#878787] mb-1"
+            >
+              Nova senha
+            </label>
+            <input
               type="password"
-              label="Nova senha"
+              id="newPassword"
               minLength={6}
               maxLength={255}
               autoComplete="given-password"
-              className="max-w-[26.5rem]"
-              isClearable
+              className={`${
+                errors.newPassword ? "bg-[#FEE7EF]" : ""
+              } max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
               {...register("newPassword")}
-              isInvalid={errors?.newPassword && true}
-              color={errors?.newPassword ? "danger" : "default"}
-              errorMessage={errors?.newPassword && errors?.newPassword?.message}
             />
 
-            <Input
+            {errors?.newPassword && (
+              <span className="text-[#F31260] text-sm mb-5">
+                {errors?.newPassword?.message}
+              </span>
+            )}
+
+            <label
+              htmlFor="confirmPassword"
+              className="text-sm text-[#878787] mb-1"
+            >
+              Confirmar nova senha
+            </label>
+            <input
               type="password"
-              label="Confirmar nova senha"
+              id="confirmPassword"
               minLength={6}
               maxLength={255}
               autoComplete="given-password"
-              className="max-w-[26.5rem]"
+              className={`${
+                errors.repeatNewPassword ? "bg-[#FEE7EF]" : ""
+              } max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
               {...register("repeatNewPassword")}
-              isClearable
-              isInvalid={errors?.repeatNewPassword && true}
-              color={errors?.repeatNewPassword ? "danger" : "default"}
-              errorMessage={
-                errors?.repeatNewPassword && errors?.repeatNewPassword?.message
-              }
             />
 
-            <Input
+            {errors?.repeatNewPassword && (
+              <span className="text-[#F31260] text-sm mb-5">
+                {errors?.repeatNewPassword?.message}
+              </span>
+            )}
+
+            <label htmlFor="cpf" className="text-sm text-[#878787] mb-1">
+              CPF*
+            </label>
+            <input
               type="cpf"
-              isRequired
-              label="CPF"
+              id="cpf"
               disabled
               defaultValue={user?.cpf}
-              className="max-w-[26.5rem]"
+              className="max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3"
             />
 
-            <Input
+            <label htmlFor="name" className="text-sm text-[#878787] mb-1">
+              Nome*
+            </label>
+            <input
               type="text"
-              isRequired
-              label="Nome"
+              id="name"
               disabled
               defaultValue={user?.first_name}
-              className="max-w-[26.5rem]"
+              className="max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3"
             />
 
-            <Input
+            <label htmlFor="sobrenome" className="text-sm text-[#878787] mb-1">
+              Sobrenome*
+            </label>
+            <input
               type="text"
-              isRequired
-              label="Sobrenome"
+              id="sobrenome"
               disabled
               defaultValue={user?.last_name}
-              className="max-w-[26.5rem]"
+              className="max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3"
             />
 
-            <Input
+            <label htmlFor="dateBirth" className="text-sm text-[#878787] mb-1">
+              Data de nascimento
+            </label>
+            <input
               type="text"
-              label="Data de nascimento"
+              id="dateBirth"
               defaultValue={user?.date_birth}
-              isClearable
-              // {...updateWithMask("date_birth", ["99/99/9999"], {
-              //   required: true,
-              // })}
-              isInvalid={errors?.date_birth && true}
-              className="max-w-[26.5rem]"
-              color={errors?.date_birth ? "danger" : "default"}
-              errorMessage={errors?.date_birth && errors?.date_birth?.message}
+              {...updateWithMask("date_birth", ["99/99/9999"], {
+                required: true,
+              })}
+              className={`${
+                errors.date_birth ? "bg-[#FEE7EF]" : ""
+              } max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
             />
 
-            <Input
+            {errors?.date_birth && (
+              <span className="text-[#F31260] text-sm mb-5">
+                {errors?.date_birth?.message}
+              </span>
+            )}
+
+            <label htmlFor="cellphone" className="text-sm text-[#878787] mb-1">
+              Celular
+            </label>
+            <input
               type="tel"
-              label="Celular"
-              className="max-w-[26.5rem]"
+              id="cellphone"
+              className={`${
+                errors.cellphone ? "bg-[#FEE7EF]" : ""
+              } max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
               defaultValue={user?.cellphone}
-              isClearable
               {...updateWithMask("cellphone", ["(99) 99999-9999"], {
                 required: true,
               })}
-              isInvalid={errors?.cellphone && true}
-              color={errors?.cellphone ? "danger" : "default"}
-              errorMessage={errors?.cellphone && errors?.cellphone?.message}
             />
 
-            <div className="flex gap-2">
-              <Button color="secondary" className="w-[13rem]" onClick={voltarRota}>
+            {errors?.cellphone && (
+              <span className="text-[#F31260] text-sm mb-5">
+                {errors?.cellphone?.message}
+              </span>
+            )}
+
+            <div className="flex gap-2 tablet:block">
+              <Button
+                color="secondary"
+                className="w-[13rem] tablet:w-full tablet:mb-2"
+                onClick={voltarRota}
+              >
                 Voltar
               </Button>
               <Button
                 type="submit"
                 color="primary"
-                className="w-[13rem]"
+                className="w-[13rem] tablet:w-full"
                 isLoading={isSubmitting}
               >
                 Salvar
@@ -295,38 +347,33 @@ export default function AlterarDados() {
             </div>
           </form>
         </div>
-
-        <Modal
-          isOpen={isModalOpen}
-          onOpenChange={() => setIsModalOpen(false)}
-          backdrop="blur"
-        >
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-col gap-1 uppercase">
-                  Alterar dados
-                </ModalHeader>
-                <ModalBody>
-                  <span>
-                    Depois de alterar sua senha, pediremos que você faça login
-                    novamente.
-                  </span>
-                </ModalBody>
-                <ModalFooter>
-                  <Button
-                    color="success"
-                    onPress={onClose}
-                    className="uppercase"
-                  >
-                    Ok
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onOpenChange={() => setIsModalOpen(false)}
+        backdrop="blur"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 uppercase">
+                Alterar dados
+              </ModalHeader>
+              <ModalBody>
+                <span>
+                  Depois de alterar sua senha, pediremos que você faça login
+                  novamente.
+                </span>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="success" onPress={onClose} className="uppercase">
+                  Ok
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </AuthGuard>
   );
 }

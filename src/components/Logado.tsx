@@ -51,15 +51,27 @@ export default function Logado() {
             </span>
           </div>
           <div className="flex flex-col gap-3 p-6 max-w-[155px]">
-            <Link href="/meu-cadastro" onClick={showIsLog}>
+            <Link
+              href="/meu-cadastro"
+              onClick={showIsLog}
+              className="hover:underline"
+            >
               Meu cadastro
             </Link>
-            <Link href="/orderHistory" onClick={showIsLog}>
+            <Link
+              href="/orderHistory"
+              onClick={showIsLog}
+              className="hover:underline"
+            >
               Meus pedidos
             </Link>
             {user?.admin_auth && (
               <>
-                <Link href="/admin/products" onClick={showIsLog}>
+                <Link
+                  href="/admin/products"
+                  onClick={showIsLog}
+                  className="hover:underline"
+                >
                   Painel de Administrador
                 </Link>
               </>

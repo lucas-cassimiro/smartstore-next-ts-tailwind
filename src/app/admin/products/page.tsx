@@ -90,7 +90,7 @@ const createOrUpdateProductSchema = (method: string) => {
     price:
       method === "POST"
         ? z.coerce.number().min(1, "Campo obrigatório.")
-        : z.number(),
+        : z.coerce.number(),
     black_friday: z.boolean(),
     highlight: z.boolean(),
     status:
@@ -204,12 +204,11 @@ export default function Products() {
     data: ProductSchema
   ) => {
     console.log(data);
-
     try {
       const url =
         method === "POST"
-          ? "http://localhost:3333/products"
-          : `http://localhost:3333/products/${data.id}`;
+          ? "https://smartshop-api-foy4.onrender.com/products"
+          : `https://smartshop-api-foy4.onrender.com/products/${data.id}`;
 
       const formData = new FormData();
 
@@ -266,12 +265,15 @@ export default function Products() {
     try {
       setProducts((prevData) => prevData.filter((item) => item.id !== id));
 
-      const response = await fetch(`http://localhost:3333/products/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://smartshop-api-foy4.onrender.com/products/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const responseData = await response.json();
       setMessageResponse(responseData);
@@ -390,334 +392,344 @@ export default function Products() {
   }, [items.length, page, pages, hasSearchFilter]);
 
   return (
-    <section className="px-10 w-[70%]">
-      <h1 className="text-center mb-5 text-2xl font-semibold">
-        Tabela de produtos
-      </h1>
+    <>
+      <section>
+        <div className="w-[70%] m-auto">
+          <h1 className="text-center mb-5 text-2xl font-semibold">
+            Tabela de Produtos
+          </h1>
 
-      <Table
-        aria-label="Example table with custom cells, pagination and sorting"
-        isHeaderSticky
-        bottomContent={bottomContent}
-        bottomContentPlacement="outside"
-        classNames={{
-          wrapper: "max-h-[382px]",
-        }}
-        topContent={topContent}
-        topContentPlacement="outside"
-      >
-        <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>NOME</TableColumn>
-          <TableColumn>PREÇO</TableColumn>
-          <TableColumn>BLACK FRIDAY</TableColumn>
-          <TableColumn>DESCONTO</TableColumn>
-          <TableColumn>AVALIAÇÃO</TableColumn>
-          <TableColumn>DESCRIÇÃO</TableColumn>
-          <TableColumn>EAN</TableColumn>
-          <TableColumn>DESTAQUE</TableColumn>
-          <TableColumn>AÇÕES</TableColumn>
-        </TableHeader>
+          <Table
+            aria-label="Example table with custom cells, pagination and sorting"
+            isHeaderSticky
+            bottomContent={bottomContent}
+            bottomContentPlacement="outside"
+            classNames={{
+              wrapper: "max-h-[382px]",
+            }}
+            topContent={topContent}
+            topContentPlacement="outside"
+          >
+            <TableHeader>
+              <TableColumn>ID</TableColumn>
+              <TableColumn>NOME</TableColumn>
+              <TableColumn>PREÇO</TableColumn>
+              <TableColumn>BLACK FRIDAY</TableColumn>
+              <TableColumn>DESCONTO</TableColumn>
+              <TableColumn>AVALIAÇÃO</TableColumn>
+              <TableColumn>DESCRIÇÃO</TableColumn>
+              <TableColumn>EAN</TableColumn>
+              <TableColumn>DESTAQUE</TableColumn>
+              <TableColumn>AÇÕES</TableColumn>
+            </TableHeader>
 
-        <TableBody
-          isLoading={isLoading}
-          loadingContent={<Spinner label="Loading..." />}
-          //emptyContent={"Produto não encontrado"}
-          items={items}
-        >
-          {(item) => (
-            <TableRow key="1">
-              <TableCell>{item.id}</TableCell>
-              <TableCell>{item.name}</TableCell>
-              <TableCell>{currencyFormat(item.price)}</TableCell>
-              <TableCell>
-                {item.black_friday ? (
-                  <BsCheckCircleFill className="text-green-500 w-5 h-5" />
-                ) : (
-                  <BsXCircleFill className="text-red-500 w-5 h-5" />
-                )}
-              </TableCell>
-              <TableCell>
-                {item.discount ? (
-                  <span>{item.discount}%</span>
-                ) : (
-                  <BsXCircleFill className="text-red-500 w-5 h-5" />
-                )}
-              </TableCell>
-              <TableCell>{item.average_score}</TableCell>
-              <TableCell title={item.description}>
-                {item.description ? item.description.substring(0, 100) : ""}
-              </TableCell>
-              <TableCell>{item.ean}</TableCell>
-              <TableCell>
-                {item.highlight ? (
-                  <BsCheckCircleFill className="text-green-500 w-5 h-5" />
-                ) : (
-                  <BsXCircleFill className="text-red-500 w-5 h-5" />
-                )}
-              </TableCell>
-              <TableCell className="flex gap-2 items-center">
-                <span
-                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                  onClick={() => {
-                    setMethod("PUT");
-                    setValue("id", item.id);
-                  }}
-                >
-                  <EditIcon />
-                </span>
-
-                <span
-                  className="text-lg text-danger cursor-pointer active:opacity-50"
-                  onClick={() => handleRemove(item.id)}
-                >
-                  <DeleteIcon />
-                </span>
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-
-      <form
-        method={method}
-        action="http://localhost:3333/products/"
-        onSubmit={handleSubmit(onSubmit, onError)}
-        encType="multipart/form-data"
-        className="flex flex-col items-center gap-2 py-5 px-10"
-      >
-        <div className="flex gap-14 justify-center items-center mt-16">
-          <div className="flex flex-col gap-2">
-            <Input
-              type="text"
-              label="Nome"
-              maxLength={100}
-              isRequired={method === "POST" ? true : false}
-              isClearable
-              className="w-[250px]"
-              {...register("name")}
-              isInvalid={errors?.name && true}
-              color={errors?.name ? "danger" : "default"}
-              errorMessage={errors?.name && errors.name.message}
-            />
-
-            <Input
-              type="text"
-              label="Preço"
-              startContent={
-                <div className="pointer-events-none flex items-center">
-                  <span className="text-default-400 text-small">R$</span>
-                </div>
-              }
-              isRequired={method === "POST" ? true : false}
-              className="w-[250px]"
-              {...register("price")}
-              isInvalid={errors?.price && true}
-              color={errors?.price ? "danger" : "default"}
-              errorMessage={errors?.price && errors?.price?.message}
-            />
-
-            <input
-              type="file"
-              name="file"
-              onChange={(e) => setValue("file", e.target.files)}
-            />
-
-            <label>
-              <input
-                id="black_friday"
-                type="checkbox"
-                {...register("black_friday")}
-              />
-              Black friday
-            </label>
-
-            <label>
-              <input
-                id="highlight"
-                type="checkbox"
-                {...register("highlight")}
-              />
-              Destaque
-            </label>
-
-            <label>
-              <input
-                id="black_friday_offer"
-                type="checkbox"
-                {...register("black_friday_offer")}
-              />
-              Oferta Black Friday
-            </label>
-
-            <Input
-              id="discount"
-              type="number"
-              label="Desconto"
-              className="w-[250px]"
-              startContent={
-                <div className="pointer-events-none flex items-center">
-                  <span className="text-default-400 text-small">%</span>
-                </div>
-              }
-              {...register("discount")}
-              isInvalid={errors?.discount && true}
-              color={errors?.discount ? "danger" : "default"}
-              errorMessage={errors?.discount && errors?.discount?.message}
-            />
-
-            <Input
-              id="description"
-              type="text"
-              label="Descrição"
-              isRequired={method === "POST" ? true : false}
-              className="w-[250px]"
-              {...register("description")}
-              isInvalid={errors?.description && true}
-              color={errors?.description ? "danger" : "default"}
-              errorMessage={errors?.description && errors?.description?.message}
-            />
-
-            <Select
-              label="Cor"
-              isRequired={method === "POST" ? true : false}
-              className="w-[250px]"
-              {...register("color_id")}
+            <TableBody
+              isLoading={isLoading}
+              loadingContent={<Spinner label="Loading..." />}
+              //emptyContent={"Produto não encontrado"}
+              items={items}
             >
-              {colors.map((color) => (
-                <SelectItem
-                  key={color.id}
-                  value={color.id}
-                  {...register("color_id")}
-                >
-                  {color.name}
-                </SelectItem>
-              ))}
-            </Select>
-          </div>
-          <div className="flex flex-col gap-2">
-            <Select label="Armazenamento" {...register("storage_id")}>
-              {storages.map((storage) => (
-                <SelectItem
-                  key={storage.id}
-                  value={storage.id}
-                  {...register("storage_id")}
-                >
-                  {storage.capacity}
-                </SelectItem>
-              ))}
-            </Select>
+              {(item) => (
+                <TableRow key="1">
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{currencyFormat(item.price)}</TableCell>
+                  <TableCell>
+                    {item.black_friday ? (
+                      <BsCheckCircleFill className="text-green-500 w-5 h-5" />
+                    ) : (
+                      <BsXCircleFill className="text-red-500 w-5 h-5" />
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {item.discount ? (
+                      <span>{item.discount}%</span>
+                    ) : (
+                      <BsXCircleFill className="text-red-500 w-5 h-5" />
+                    )}
+                  </TableCell>
+                  <TableCell>{item.average_score}</TableCell>
+                  <TableCell title={item.description}>
+                    {item.description ? item.description.substring(0, 100) : ""}
+                  </TableCell>
+                  <TableCell>{item.ean}</TableCell>
+                  <TableCell>
+                    {item.highlight ? (
+                      <BsCheckCircleFill className="text-green-500 w-5 h-5" />
+                    ) : (
+                      <BsXCircleFill className="text-red-500 w-5 h-5" />
+                    )}
+                  </TableCell>
+                  <TableCell className="flex gap-2 items-center">
+                    <span
+                      className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                      onClick={() => {
+                        setMethod("PUT");
+                        setValue("id", item.id);
+                      }}
+                    >
+                      <EditIcon />
+                    </span>
 
-            <Select
-              label="Categoria"
-              isRequired={method === "POST" ? true : false}
-              {...register("categorie_id")}
-            >
-              {categories.map((categorie) => (
-                <SelectItem
-                  key={categorie.id}
-                  value={categorie.id}
-                  {...register("categorie_id")}
-                >
-                  {categorie.name}
-                </SelectItem>
-              ))}
-            </Select>
+                    <span
+                      className="text-lg text-danger cursor-pointer active:opacity-50"
+                      onClick={() => handleRemove(item.id)}
+                    >
+                      <DeleteIcon />
+                    </span>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
 
-            <Input
-              id="ean"
-              type="text"
-              label="EAN"
-              maxLength={13}
-              isRequired={method === "POST" ? true : false}
-              className="w-[250px]"
-              {...register("ean")}
-              isInvalid={errors?.ean && true}
-              color={errors?.ean ? "danger" : "default"}
-              errorMessage={errors?.ean && errors?.ean?.message}
-            />
-
-            <Select
-              label="Status do produto"
-              isRequired={method === "POST" ? true : false}
-              {...register("status")}
-            >
-              {estoque.map((estoque) => (
-                <SelectItem key={estoque} value={estoque}>
-                  {estoque}
-                </SelectItem>
-              ))}
-            </Select>
-
-            {method === "POST" && (
-              <>
+          <form
+            method={method}
+            action="http://localhost:3333/products/"
+            onSubmit={handleSubmit(onSubmit, onError)}
+            encType="multipart/form-data"
+            className="flex flex-col items-center gap-2 py-5 px-10"
+          >
+            <div className="flex gap-14 justify-center items-center mt-16">
+              <div className="flex flex-col gap-2">
                 <Input
-                  id="purchase_price"
-                  type="number"
+                  type="text"
+                  label="Nome"
+                  maxLength={100}
+                  isRequired={method === "POST" ? true : false}
+                  isClearable
+                  className="w-[250px]"
+                  {...register("name")}
+                  isInvalid={errors?.name && true}
+                  color={errors?.name ? "danger" : "default"}
+                  errorMessage={errors?.name && errors.name.message}
+                />
+
+                <Input
+                  type="text"
+                  label="Preço"
                   startContent={
                     <div className="pointer-events-none flex items-center">
                       <span className="text-default-400 text-small">R$</span>
                     </div>
                   }
-                  label="Preço de compra"
-                  className="w-[250px]"
-                  {...register("purchase_price")}
                   isRequired={method === "POST" ? true : false}
-                  isInvalid={errors.purchase_price && true}
-                  color={errors?.purchase_price ? "danger" : "default"}
-                  errorMessage={
-                    errors?.purchase_price && errors?.purchase_price?.message
-                  }
-                />
-              </>
-            )}
-
-            {method === "POST" && (
-              <>
-                <Input
-                  id="expiry_date"
-                  type="text"
-                  label="Data de expiração"
-                  placeholder="__/__/____"
                   className="w-[250px]"
-                  {...registerWithMask("expiry_date", ["99/99/9999"], {
-                    required: true,
-                  })}
-                  isInvalid={errors?.expiry_date && true}
-                  color={errors?.expiry_date ? "danger" : "default"}
-                  errorMessage={
-                    errors?.expiry_date && errors?.expiry_date?.message
-                  }
+                  {...register("price")}
+                  isInvalid={errors?.price && true}
+                  color={errors?.price ? "danger" : "default"}
+                  errorMessage={errors?.price && errors?.price?.message}
                 />
-              </>
-            )}
 
-            {method === "POST" && (
-              <>
+                <input
+                  type="file"
+                  name="file"
+                  onChange={(e) => setValue("file", e.target.files)}
+                />
+
+                <label>
+                  <input
+                    id="black_friday"
+                    type="checkbox"
+                    {...register("black_friday")}
+                  />
+                  Black friday
+                </label>
+
+                <label>
+                  <input
+                    id="highlight"
+                    type="checkbox"
+                    {...register("highlight")}
+                  />
+                  Destaque
+                </label>
+
+                <label>
+                  <input
+                    id="black_friday_offer"
+                    type="checkbox"
+                    {...register("black_friday_offer")}
+                  />
+                  Oferta Black Friday
+                </label>
+
                 <Input
+                  id="discount"
                   type="number"
-                  label="Quantidade"
+                  label="Desconto"
                   className="w-[250px]"
-                  isRequired={method === "POST" ? true : false}
-                  {...register("quantity")}
-                  isInvalid={errors?.quantity && true}
-                  color={errors?.quantity ? "danger" : "default"}
-                  errorMessage={errors?.quantity && errors?.quantity?.message}
+                  startContent={
+                    <div className="pointer-events-none flex items-center">
+                      <span className="text-default-400 text-small">%</span>
+                    </div>
+                  }
+                  {...register("discount")}
+                  isInvalid={errors?.discount && true}
+                  color={errors?.discount ? "danger" : "default"}
+                  errorMessage={errors?.discount && errors?.discount?.message}
                 />
-              </>
-            )}
-          </div>
-        </div>
-        <Button
-          type="submit"
-          isLoading={isSubmitting}
-          color="primary"
-          className="mt-10"
-        >
-          ENVIAR
-        </Button>
-      </form>
 
+                <Input
+                  id="description"
+                  type="text"
+                  label="Descrição"
+                  isRequired={method === "POST" ? true : false}
+                  className="w-[250px]"
+                  {...register("description")}
+                  isInvalid={errors?.description && true}
+                  color={errors?.description ? "danger" : "default"}
+                  errorMessage={
+                    errors?.description && errors?.description?.message
+                  }
+                />
+
+                <Select
+                  label="Cor"
+                  isRequired={method === "POST" ? true : false}
+                  className="w-[250px]"
+                  {...register("color_id")}
+                >
+                  {colors.map((color) => (
+                    <SelectItem
+                      key={color.id}
+                      value={color.id}
+                      {...register("color_id")}
+                    >
+                      {color.name}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Select label="Armazenamento" {...register("storage_id")}>
+                  {storages.map((storage) => (
+                    <SelectItem
+                      key={storage.id}
+                      value={storage.id}
+                      {...register("storage_id")}
+                    >
+                      {storage.capacity}
+                    </SelectItem>
+                  ))}
+                </Select>
+
+                <Select
+                  label="Categoria"
+                  isRequired={method === "POST" ? true : false}
+                  {...register("categorie_id")}
+                >
+                  {categories.map((categorie) => (
+                    <SelectItem
+                      key={categorie.id}
+                      value={categorie.id}
+                      {...register("categorie_id")}
+                    >
+                      {categorie.name}
+                    </SelectItem>
+                  ))}
+                </Select>
+
+                <Input
+                  id="ean"
+                  type="text"
+                  label="EAN"
+                  maxLength={13}
+                  isRequired={method === "POST" ? true : false}
+                  className="w-[250px]"
+                  {...register("ean")}
+                  isInvalid={errors?.ean && true}
+                  color={errors?.ean ? "danger" : "default"}
+                  errorMessage={errors?.ean && errors?.ean?.message}
+                />
+
+                <Select
+                  label="Status do produto"
+                  isRequired={method === "POST" ? true : false}
+                  {...register("status")}
+                >
+                  {estoque.map((estoque) => (
+                    <SelectItem key={estoque} value={estoque}>
+                      {estoque}
+                    </SelectItem>
+                  ))}
+                </Select>
+
+                {method === "POST" && (
+                  <>
+                    <Input
+                      id="purchase_price"
+                      type="number"
+                      startContent={
+                        <div className="pointer-events-none flex items-center">
+                          <span className="text-default-400 text-small">
+                            R$
+                          </span>
+                        </div>
+                      }
+                      label="Preço de compra"
+                      className="w-[250px]"
+                      {...register("purchase_price")}
+                      isRequired={method === "POST" ? true : false}
+                      isInvalid={errors.purchase_price && true}
+                      color={errors?.purchase_price ? "danger" : "default"}
+                      errorMessage={
+                        errors?.purchase_price &&
+                        errors?.purchase_price?.message
+                      }
+                    />
+                  </>
+                )}
+
+                {method === "POST" && (
+                  <>
+                    <Input
+                      id="expiry_date"
+                      type="text"
+                      label="Data de expiração"
+                      placeholder="__/__/____"
+                      className="w-[250px]"
+                      {...registerWithMask("expiry_date", ["99/99/9999"], {
+                        required: true,
+                      })}
+                      isInvalid={errors?.expiry_date && true}
+                      color={errors?.expiry_date ? "danger" : "default"}
+                      errorMessage={
+                        errors?.expiry_date && errors?.expiry_date?.message
+                      }
+                    />
+                  </>
+                )}
+
+                {method === "POST" && (
+                  <>
+                    <Input
+                      type="number"
+                      label="Quantidade"
+                      className="w-[250px]"
+                      isRequired={method === "POST" ? true : false}
+                      {...register("quantity")}
+                      isInvalid={errors?.quantity && true}
+                      color={errors?.quantity ? "danger" : "default"}
+                      errorMessage={
+                        errors?.quantity && errors?.quantity?.message
+                      }
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+            <Button
+              type="submit"
+              isLoading={isSubmitting}
+              color="primary"
+              className="mt-10"
+            >
+              ENVIAR
+            </Button>
+          </form>
+        </div>
+      </section>
       <Modal
         isOpen={isModalOpen}
         onOpenChange={() => setIsModalOpen(false)}
@@ -741,6 +753,6 @@ export default function Products() {
           )}
         </ModalContent>
       </Modal>
-    </section>
+    </>
   );
 }

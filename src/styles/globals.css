@@ -2,28 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-.swiper {
-  @apply z-0
+.swiper .swiper-pagination {
+  @apply mt-[1.875rem] relative celularmedio:mt-[1.2rem];
 }
 
-.swiper .swiper-slide {
-  @apply flex justify-center
+.carouselProducts .swiper-pagination .swiper-pagination-bullet {
+  @apply w-[1.25rem] h-[0.75rem] rounded-full bg-[#9e9e9ede] cursor-pointer transition-all duration-1000 opacity-100 celularmedio:w-[0.6rem] celularmedio:h-[0.5rem] celularmedio:mb-4;
 }
 
-.swiper .swiper-wrapper {
-  @apply z-0
+.swiper-pagination .swiper-pagination-bullet {
+  @apply w-[5rem] h-[0.75rem] rounded-none bg-[#9e9e9ede] cursor-pointer transition-all duration-1000 opacity-100 celularmedio:w-[3rem] celularmedio:h-[0.5rem];
 }
-
- .swiper .swiper-pagination {
-   @apply mt-[1.875rem] relative celular:mt-[1.2rem]
-  }
-
- .swiper-pagination .swiper-pagination-bullet {
-    @apply w-[6.25rem] h-[0.75rem] rounded-none bg-[#9e9e9ede] cursor-pointer transition-all duration-1000 opacity-100 celular:w-[3rem] celular:h-[0.5rem]
-  }
 
 .swiper-pagination .swiper-pagination-bullet-active {
-  @apply bg-[#313131]
+  @apply bg-[#313131];
+}
+
+.carouselProducts .swiper-pagination-bullet-active {
+  @apply bg-[#313131];
 }
 
 .text-stroke {
@@ -32,16 +28,16 @@
 }
 
 .carousel1.swiper {
-  @apply w-full
+  @apply w-full;
 }
 
 .carousel2.swiper {
-  @apply max-w-[1450px] py-0 px-10 tablet:px-0
+  @apply max-w-[1450px] py-0 px-10 tablet:px-0 tabletgrande:px-0;
 }
 
 .scrollbar {
   @apply block overflow-y-scroll
-  /* aqui tava block */
+  /* aqui tava block */;
 }
 
 @layer utilities {

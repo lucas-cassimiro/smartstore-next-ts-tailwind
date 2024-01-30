@@ -12,7 +12,9 @@ import { ProductsData } from "@/interfaces/ProductsData";
 import "swiper/swiper-bundle.css";
 
 async function getBlackFridayOfferProducts() {
-  const request = await fetch("http://localhost:3333/blackfriday");
+  const request = await fetch(
+    "https://smartshop-api-foy4.onrender.com/blackfriday"
+  );
   return await request.json();
 }
 
@@ -59,7 +61,7 @@ export default function BlackFridayCarousel() {
       },
       1350: {
         slidesPerView: 4,
-        spaceBetween: 10,
+        spaceBetween: 1,
         pagination: false,
       },
     },
@@ -77,8 +79,8 @@ export default function BlackFridayCarousel() {
   return (
     <Slider settings={settings}>
       {data.map((data) => (
-        <SwiperSlide key={data.name}>
-          <CardProducts product={data} />
+        <SwiperSlide key={data.name} className="carouselProducts">
+          <CardProducts product={data} imageSize="large"/>
         </SwiperSlide>
       ))}
     </Slider>

@@ -11,7 +11,7 @@ import { ProductsData } from "@/interfaces/ProductsData";
 import "swiper/swiper-bundle.css";
 
 async function getNewsProducts() {
-  const request = await fetch("http://localhost:3333/news/");
+  const request = await fetch("https://smartshop-api-foy4.onrender.com/news/");
   return await request.json();
 }
 
@@ -25,20 +25,24 @@ export default function NewsCarousel() {
     pagination: { clickable: true },
     breakpoints: {
       320: {
-        spaceBetween: 15,
+        spaceBetween: 1,
         slidesPerView: 2,
       },
       420: {
-        spaceBetween: 20,
+        spaceBetween: 1,
         slidesPerView: 2,
       },
       421: {
-        spaceBetween: 40,
+        spaceBetween: 1,
         slidesPerView: 2,
       },
       700: {
         slidesPerView: 2,
+        spaceBetween: 10,
+      },
+      768: {
         spaceBetween: 41,
+        slidesPerView: 2,
       },
       990: {
         pagination: true,

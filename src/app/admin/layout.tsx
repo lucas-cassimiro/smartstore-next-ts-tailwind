@@ -61,11 +61,9 @@ export default function AdminLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className} flex justify-center gap-20 py-8 `}>
-       
-          <LayoutAdmin navLinks={navLinks} />
-          {children}
-        
+      <body className={`${inter.className}`}>
+        <LayoutAdmin navLinks={navLinks} />
+        {children}
       </body>
     </html>
   );

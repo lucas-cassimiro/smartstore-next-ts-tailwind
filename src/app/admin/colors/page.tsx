@@ -12,6 +12,11 @@ import {
   TableRow,
   Input,
   Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "@nextui-org/react";
 
 import { MessageResponseData } from "@/interfaces/MessageResponseData";
@@ -47,11 +52,10 @@ export default function Colors() {
 
   const [method, setMethod] = useState<string>("POST");
 
-  const [errorMessage, setErrorMessage] = useState<MessageResponseData | null>(
-    null
-  );
-  const [successMessage, setSuccessMessage] =
+  const [messageResponse, setMessageResponse] =
     useState<MessageResponseData | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const {
     handleSubmit,
@@ -95,14 +99,15 @@ export default function Colors() {
 
       if (!request.ok) {
         const errorResponse = await request.json();
-        setErrorMessage(errorResponse);
+        setMessageResponse(errorResponse);
+        setIsModalOpen(true);
         throw new Error(errorResponse.message);
       }
 
       const response = await request.json();
-      setSuccessMessage(response);
+      setMessageResponse(response);
 
-      setErrorMessage(null);
+      setIsModalOpen(true);
 
       reset();
     } catch (error) {
@@ -117,106 +122,134 @@ export default function Colors() {
     try {
       //setProducts((prevData) => prevData.filter((item) => item.id !== id));
 
-      const response = await fetch(`http://localhost:3333/colors/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://smartshop-api-foy4.onrender.com/colors/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const responseData = await response.json();
-      //setMessageResponse(responseData);
-      //setIsModalOpen(true);
+      setMessageResponse(responseData);
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Error during fetch:", error);
     }
   };
 
   return (
-    <section className="px-10 w-[70%]">
-      <h1 className="text-center mb-5 text-2xl font-semibold">
-        Tabela de cores
-      </h1>
+    <>
+      <section className="w-[70%] m-auto">
+        <h1 className="text-center mb-5 text-2xl font-semibold">
+          Tabela de Cores
+        </h1>
 
-      <Table
-        aria-label="Example table with custom cells, pagination and sorting"
-        isHeaderSticky
-        classNames={{
-          wrapper: "max-h-[382px]",
-        }}
-      >
-        <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>NOME</TableColumn>
-          <TableColumn>AÇÕES</TableColumn>
-        </TableHeader>
-
-        <TableBody
-          //isLoading={isLoading}
-          loadingContent={<Spinner label="Loading..." />}
+        <Table
+          aria-label="Example table with custom cells, pagination and sorting"
+          isHeaderSticky
+          classNames={{
+            wrapper: "max-h-[382px]",
+          }}
         >
-          {colors.map((color) => (
-            <TableRow key={color.id}>
-              <TableCell>{color.id}</TableCell>
-              <TableCell>{color.name}</TableCell>
-              <TableCell className="flex gap-2 items-center">
-                <span
-                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                  onClick={() => {
-                    setMethod("PUT");
-                    setValue("id", color.id);
-                  }}
-                >
-                  <EditIcon />
-                </span>
+          <TableHeader>
+            <TableColumn>ID</TableColumn>
+            <TableColumn>NOME</TableColumn>
+            <TableColumn>AÇÕES</TableColumn>
+          </TableHeader>
 
-                <span
-                  className="text-lg text-danger cursor-pointer active:opacity-50"
-                  onClick={() => handleRemove(color.id)}
-                >
-                  <DeleteIcon />
-                </span>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <form
-        onSubmit={handleSubmit(onSubmit, onError)}
-        className="flex flex-col items-center gap-5 mt-16"
+          <TableBody
+            //isLoading={isLoading}
+            loadingContent={<Spinner label="Loading..." />}
+          >
+            {colors.map((color) => (
+              <TableRow key={color.id}>
+                <TableCell>{color.id}</TableCell>
+                <TableCell>{color.name}</TableCell>
+                <TableCell className="flex gap-2 items-center">
+                  <span
+                    className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                    onClick={() => {
+                      setMethod("PUT");
+                      setValue("id", color.id);
+                    }}
+                  >
+                    <EditIcon />
+                  </span>
+
+                  <span
+                    className="text-lg text-danger cursor-pointer active:opacity-50"
+                    onClick={() => handleRemove(color.id)}
+                  >
+                    <DeleteIcon />
+                  </span>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <form
+          onSubmit={handleSubmit(onSubmit, onError)}
+          className="flex flex-col items-center gap-5 mt-16"
+        >
+          {method === "PUT" && (
+            <>
+              <Input
+                type="number"
+                label="ID"
+                isRequired
+                className="w-[250px]"
+                {...register("id")}
+                isInvalid={errors?.id && true}
+                color={errors?.id ? "danger" : "default"}
+                errorMessage={errors?.id && errors?.id.message}
+              />
+            </>
+          )}
+
+          <Input
+            type="text"
+            label="Nome"
+            maxLength={100}
+            isRequired={method === "POST" ? true : false}
+            isClearable
+            className="w-[250px]"
+            {...register("name")}
+            isInvalid={errors?.name && true}
+            color={errors?.name ? "danger" : "default"}
+            errorMessage={errors?.name && errors.name.message}
+          />
+
+          <Button type="submit" color="primary" isLoading={isSubmitting}>
+            ENVIAR
+          </Button>
+        </form>
+      </section>
+      <Modal
+        isOpen={isModalOpen}
+        onOpenChange={() => setIsModalOpen(false)}
+        backdrop="blur"
       >
-        {method === "PUT" && (
-          <>
-            <Input
-              type="number"
-              label="ID"
-              isRequired
-              className="w-[250px]"
-              {...register("id")}
-              isInvalid={errors?.id && true}
-              color={errors?.id ? "danger" : "default"}
-              errorMessage={errors?.id && errors?.id.message}
-            />
-          </>
-        )}
-
-        <Input
-          type="text"
-          label="Nome"
-          maxLength={100}
-          isRequired={method === "POST" ? true : false}
-          isClearable
-          className="w-[250px]"
-          {...register("name")}
-          isInvalid={errors?.name && true}
-          color={errors?.name ? "danger" : "default"}
-          errorMessage={errors?.name && errors.name.message}
-        />
-
-        <Button type="submit" color="primary" isLoading={isSubmitting}>
-          ENVIAR
-        </Button>
-      </form>
-    </section>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 uppercase">
+                Cadastro de produto
+              </ModalHeader>
+              <ModalBody>
+                <span>{messageResponse?.message}</span>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="success" onPress={onClose} className="uppercase">
+                  Ok
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
   );
 }

@@ -214,7 +214,7 @@ export default function RegisterFrame() {
         date_birth: formattedDate,
       };
 
-      const url = "http://localhost:3333/users/";
+      const url = "https://smartshop-api-foy4.onrender.com/users/";
 
       const request = await fetch(url, {
         method: "POST",
@@ -262,7 +262,7 @@ export default function RegisterFrame() {
       className="h-[700px] max-w-[550px]"
     >
       {(onClose) => (
-        <>
+        <div className="overflow-y-auto scrollbar scrollbar-medium">
           <ModalHeader className="flex flex-col gap-1 text-white">
             CADASTRO
           </ModalHeader>
@@ -421,7 +421,7 @@ export default function RegisterFrame() {
               </ModalFooter>
             </form>
           </ModalBody>
-        </>
+        </div>
       )}
     </ModalContent>
   );

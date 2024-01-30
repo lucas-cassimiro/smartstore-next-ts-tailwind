@@ -37,7 +37,7 @@ export default function Navigation({ navLinks }: NavigationProps) {
           </li>
         );
       })}
-      <div className="hidden tablet:flex justify-between w-full items-center py-0 px-8 celular:px-3">
+      <div className="hidden tablet:flex justify-between w-full items-center py-0 px-[0.5rem] celularmedio:px-[0.5rem]">
         <div className="hidden tablet:flex items-center gap-2 text-base celular:text-sm">
           <Location />
         </div>

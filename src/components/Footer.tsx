@@ -11,31 +11,31 @@ import { GrFormNext } from "react-icons/gr";
 
 export default function Footer() {
   return (
-    <footer className="py-8 w-full bg-[#dcdcdc] max-h-[27rem] ">
-      <div className="max-w-[1450px] flex justify-between m-auto">
-        <ul className="flex flex-col gap-[2.1875rem] text-black">
+    <footer className="py-8 w-full bg-[#dcdcdc] h-[19rem] desktopequeno:h-[20rem] tabletgrande:h-[21rem] tablet:h-[24rem] px-2">
+      <div className="max-w-[1450px] flex justify-between m-auto celularmedio:mb-4">
+        <ul className="flex flex-col gap-[2.1875rem] text-black tablet:gap-2">
           <li className="border-b-[1px] w-[10.8125rem] ml-[1.875rem]">
-            <a href="#" className="text-2xl font-semibold ">
+            <a href="#" className="text-2xl font-semibold tablet:text-xl">
               Nossas lojas
             </a>
           </li>
           <li className="w-[10.8125rem] ml-[1.875rem]">
-            <a href="#" className="text-2xl font-semibold ">
+            <a href="#" className="text-2xl font-semibold tablet:text-xl">
               Suporte
             </a>
           </li>
           <li className="w-[10.8125rem] ml-[1.875rem]">
-            <a href="#" className="text-2xl font-semibold ">
+            <a href="#" className="text-2xl font-semibold tablet:text-xl">
               Minha conta
             </a>
           </li>
           <li className="w-[10.8125rem] ml-[1.875rem]">
-            <a href="#" className="text-2xl font-semibold ">
+            <a href="#" className="text-2xl font-semibold tablet:text-xl">
               Serviços
             </a>
           </li>
           <li className="hidden w-[10.8125rem] ml-[1.875rem] tabletgrande:flex items-center justify-between">
-            <a href="#" className="text-2xl font-semibold ">
+            <a href="#" className="text-2xl font-semibold tablet:text-xl">
               Institucional
             </a>
             <GrFormNext size="1.5rem" />
@@ -91,12 +91,16 @@ export default function Footer() {
         </ul>
 
         <div className="flex flex-col h-[6.25rem] text-black">
-          <h2 className="font-semibold text-2xl mb-4">Sac 4002-8922</h2>
-          <span className="mb-1">Segunda a sexta das 08h às 20h</span>
-          <span>Sábados das 08h às 19h</span>
-          <div className="hidden desktopequeno:flex flex-col mt-4 gap-1">
+          <h2 className="font-semibold text-2xl mb-4 tablet:text-xl">
+            Sac 4002-8922
+          </h2>
+          <span className="mb-1 tablet:w-[150px]">
+            Segunda a sexta das 08h às 20h
+          </span>
+          <span className="tablet:w-[150px]">Sábados das 08h às 19h</span>
+          <div className="hidden desktopequeno:flex flex-col mt-4 gap-1 tablet:hidden">
             <h2>Redes sociais</h2>
-            <div className="flex">
+            <div className="flex ">
               <Image
                 src={LogoFacebook}
                 alt="Logo do Facebook"
@@ -160,6 +164,39 @@ export default function Footer() {
             priority={true}
           />
         </div>
+      </div>
+
+      <div className="hidden tablet:flex flex-col items-center">
+        <h2 className="text-[1.125rem] mb-4 font-bold">Redes sociais</h2>
+        <div className="flex">
+          <Image
+            src={LogoFacebook}
+            alt="Logo do Facebook"
+            className="w-[2.1875rem] h-[2.1875rem] rounded-lg mb-4 ml-2"
+          />
+          <Image
+            src={LogoInstagram}
+            alt="Logo do Instagram"
+            className="w-[2.1875rem] h-[2.1875rem] rounded-lg mb-4 ml-2"
+          />
+          <Image
+            src={LogoTwitter}
+            alt="Logo do Twitter"
+            className="w-[2.1875rem] h-[2.1875rem] rounded-lg mb-4 ml-2"
+          />
+          <Image
+            src={LogoTiktok}
+            alt="Logo do Tiktok"
+            className="w-[2.1875rem] h-[2.1875rem] rounded-lg mb-4 ml-2"
+          />
+        </div>
+        <h3 className="text-[1.125rem] mb-4 font-bold">App Smart fidelidade</h3>
+        <Image
+          src={IconBaixeAqui}
+          alt="Ícone do Baixe Aqui"
+          priority={true}
+          className="w-[150px]"
+        />
       </div>
     </footer>
   );

@@ -70,10 +70,7 @@ export default function Cart() {
               <>
                 <div className="flex items-center gap-2 overflow-y-auto scrollbar scrollbar-medium relative flex-wrap justify-between h-[500px]">
                   {cart.map((cart) => (
-                    <div
-                      key={cart.id}
-                      className="flex justify-between w-full"
-                    >
+                    <div key={cart.id} className="flex justify-between w-full">
                       <div
                         key={cart.id}
                         className="flex w-full items-start gap-2"
@@ -92,10 +89,10 @@ export default function Cart() {
                           </span>
                           {cart.black_friday && (
                             <div className="flex gap-2">
-                              <p className="py-[0.3rem] px-3 bg-[#d93a1e] text-white font-semibold rounded-[4px] text-xs">
+                              <p className="py-[0.3rem] px-3 bg-[#d93a1e] text-white font-semibold rounded-[4px] text-xs min-w-[54.89px]">
                                 -{cart.discount}%
                               </p>
-                              <p className="bg-[#313131] rounded-[4px] py-[0.3rem] px-3 text-white font-semibold text-xs">
+                              <p className="bg-[#313131] rounded-[4px] py-[0.3rem] px-3 text-white font-semibold text-xs min-w-[94.6px]">
                                 Black Friday
                               </p>
                             </div>

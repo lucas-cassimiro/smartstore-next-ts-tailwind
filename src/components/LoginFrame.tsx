@@ -170,13 +170,16 @@ export default function LoginFrame() {
                         className="text-white"
                         defaultSelected
                       >
-                        <span className="text-white">Lembrar-me</span>
+                        <span className="text-white celularmedio:hidden">
+                          Lembrar-me
+                        </span>
                       </Switch>
                       <Link
                         color="primary"
                         href="#"
                         size="sm"
                         onClick={() => setRegisterFrame(!registerFrame)}
+                        className="celularmedio:text-xs"
                       >
                         Não possui uma conta? Inscrever-se
                       </Link>
@@ -186,17 +189,17 @@ export default function LoginFrame() {
                         <Image
                           src={Google}
                           alt="Logo do Google"
-                          className="w-10 h-10"
+                          className="w-10 h-10 celularpequeno:w-7 celularpequeno:h-7 cursor-pointer"
                         />
                         <Image
                           src={Facebook}
                           alt="Logo do Facebook"
-                          className="w-10 h-10"
+                          className="w-10 h-10 celularpequeno:w-7 celularpequeno:h-7 cursor-pointer"
                         />
                         <Image
                           src={Apple}
                           alt="Logo da Apple"
-                          className="w-10 h-10"
+                          className="w-10 h-10 celularpequeno:w-7 celularpequeno:h-7 cursor-pointer"
                         />
                       </div>
                       <ModalFooter className="px-0">
@@ -204,6 +207,7 @@ export default function LoginFrame() {
                           color="danger"
                           variant="flat"
                           onPress={handleCloseModal}
+                          className="celularpequeno:hidden"
                         >
                           Fechar
                         </Button>

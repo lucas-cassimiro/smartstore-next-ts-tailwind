@@ -16,14 +16,15 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       flex: {
-        "2": "0 1 250px"
+        "2": "0 1 250px",
       },
       screens: {
+        desktopequeno: { max: "1250px" },
         tabletgrande: { max: "990px" },
         tablet: { max: "768px" },
-        celular: { max: "520px" },
+        celulargrande: { max: "600px" },
+        celularmedio: { max: "520px" },
         celularpequeno: { max: "410px" },
-        desktopequeno: { max: "1250px" },
       },
     },
   },

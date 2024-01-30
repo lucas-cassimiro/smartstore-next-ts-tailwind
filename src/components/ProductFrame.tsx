@@ -21,38 +21,47 @@ export default function ProductFrame({ products }: CardProductsProps) {
           key={product.id}
         >
           <div className="flex justify-around">
-            <Image
-              className="w-[17.5rem] h-[17rem] object-contain"
-              src={`http://localhost:3333/tmp/uploads/${product.image}`}
-              alt="Imagem do produto"
-              quality={80}
-              priority={true}
-              width={350}
-              height={350}
-            />
+            <div>
+              <Image
+                className="w-[17.5rem] h-[17rem] object-contain"
+                src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${product.image}`}
+                alt="Imagem do produto"
+                quality={80}
+                priority={true}
+                width={350}
+                height={350}
+              />
+              <div className="max-w-[300px] tabletgrande:w-[200px]">
+                <span className="text-sm tabletgrande:hidden">
+                  {product.description}
+                </span>
+              </div>
+            </div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-2xl font-bold">{product.name}</h1>
+              <h1 className="text-2xl font-bold tabletgrande:text-xl">
+                {product.name}
+              </h1>
               <div className="flex gap-2 items-center">
                 {product.black_friday && (
-                  <p className="py-[0.375rem] px-5 bg-[#d93a1e] text-white font-semibold rounded-[4px]">
+                  <p className="py-[0.375rem] px-5 bg-[#d93a1e] text-white font-semibold rounded-[4px] tabletgrande:text-sm">
                     -{product.discount}%
                   </p>
                 )}
                 {product.black_friday && (
-                  <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-5 text-white font-semibold">
+                  <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-5 text-white font-semibold tabletgrande:text-xs tabletgrande:px-3">
                     Black Friday
                   </p>
                 )}
                 <HalfRating star={product.average_score} />
               </div>
               {product.black_friday && (
-                <p className="text-[0.75rem] line-through">
+                <p className="text-[0.75rem] line-through tabletgrande:text-[0.6rem]">
                   {currencyFormat(product.price)}
                 </p>
               )}
               {product.black_friday && (
                 <section className="flex items-end gap-2">
-                  <p className="font-semibold text-2xl">
+                  <p className="font-semibold text-2xl tabletgrande:text-[0.6rem]">
                     {currencyFormat(
                       (product.price * (100 - product.discount)) / 100
                     )}
@@ -60,10 +69,24 @@ export default function ProductFrame({ products }: CardProductsProps) {
                   <span>no PIX</span>
                 </section>
               )}
-              <span className="text-[#878787] text-[13px]">Você economiza (-10%)</span>
+
+              {product.black_friday && (
+                <span className="text-[#878787] text-[13px]">
+                  Você economiza: -R${" "}
+                  {((product.price * product.discount) / 100).toLocaleString(
+                    "pt-BR",
+                    {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }
+                  )}{" "}
+                  (-{product.discount}%)
+                </span>
+              )}
+
               {!product.black_friday && (
                 <section className="flex items-end gap-2">
-                  <p className="font-semibold text-2xl gap-2">
+                  <p className="font-semibold text-2xl gap-2 tabletgrande:text-lg">
                     {currencyFormat(product.price)}
                   </p>
 
@@ -71,7 +94,7 @@ export default function ProductFrame({ products }: CardProductsProps) {
                 </section>
               )}
               {!product.black_friday && (
-                <p className="text-[0.9rem] text-black min-w-[7.6875rem]">
+                <p className="text-[0.9rem] text-black min-w-[7.6875rem] tabletgrande:text-[0.8rem]">
                   Ou <strong>12x</strong> de{" "}
                   <strong>{currencyFormat(product.price / 12)}</strong>
                 </p>
@@ -87,7 +110,7 @@ export default function ProductFrame({ products }: CardProductsProps) {
                   </strong>
                 </p>
               )}
-              <span className="bg-[#efefef] py-2 px-3 text-sm">
+              <span className="bg-[#efefef] py-2 px-3 text-sm tabletgrande:text-xs">
                 Ou em <strong>21x</strong> de{" "}
                 <strong>
                   {currencyFormat(
@@ -96,7 +119,7 @@ export default function ProductFrame({ products }: CardProductsProps) {
                   no cartão Bradesco
                 </strong>
               </span>
-              <span className="bg-[#efefef] py-2 px-3 text-sm">
+              <span className="bg-[#efefef] py-2 px-3 text-sm tabletgrande:text-xs">
                 Ou em <strong>21x</strong> de{" "}
                 <strong>
                   {currencyFormat(
@@ -105,7 +128,7 @@ export default function ProductFrame({ products }: CardProductsProps) {
                   no cartão Itaú
                 </strong>
               </span>
-              <span className="text-sm">Calcular o prazo de entrega</span>
+              {/* <span className="text-sm">Calcular o prazo de entrega</span>
               <div className="flex gap-2">
                 <input
                   placeholder="Insira seu CEP"
@@ -114,11 +137,11 @@ export default function ProductFrame({ products }: CardProductsProps) {
                 <button className="p-4 bg-black text-white text-sm rounded-[3px]">
                   Calcular
                 </button>
-              </div>
-              <div className="flex items-center gap-1 cursor-pointer w-[172px]">
+              </div> */}
+              {/* <div className="flex items-center gap-1 cursor-pointer w-[172px]">
                 <FaLocationDot />
                 <span className="text-sm">Use minha localização</span>
-              </div>
+              </div> */}
               <ButtonAddToCart products={product} />
             </div>
           </div>

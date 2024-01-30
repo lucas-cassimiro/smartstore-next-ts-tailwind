@@ -9,6 +9,11 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Pagination,
   Select,
   SelectItem,
@@ -36,6 +41,7 @@ import { StocksData } from "@/interfaces/StocksData";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MessageResponseData } from "@/interfaces/MessageResponseData";
 
 const updateStockSchema = z.object({
   product_id: z.coerce.number().min(1, "Campo obrigatório."),
@@ -47,19 +53,15 @@ const updateStockSchema = z.object({
 
 type updateStockFormData = z.infer<typeof updateStockSchema>;
 
-type MessageResponse = {
-  message: string;
-};
-
 export default function Stocks() {
   const [stocks, setStocks] = useState<StocksData[]>([]);
 
-  const [errorMessage, setErrorMessage] = useState<MessageResponse | null>(
-    null
-  );
-  const [successMessage, setSuccessMessage] = useState<MessageResponse | null>(
-    null
-  );
+  console.log(stocks);
+
+  const [messageResponse, setMessageResponse] =
+    useState<MessageResponseData | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const {
     handleSubmit,
@@ -114,7 +116,7 @@ export default function Stocks() {
     data: updateStockFormData
   ) => {
     try {
-      const url = `http://localhost:3333/stocks/${data.product_id}`;
+      const url = `https://smartshop-api-foy4.onrender.com/stocks/${data.product_id}`;
 
       const requestData: Record<string, any> = {};
 
@@ -141,14 +143,15 @@ export default function Stocks() {
 
       if (!request.ok) {
         const errorResponse = await request.json();
-        setErrorMessage(errorResponse);
+        setMessageResponse(errorResponse);
+        setIsModalOpen(true);
         throw new Error(errorResponse.message);
       }
 
       const response = await request.json();
-      setSuccessMessage(response);
+      setMessageResponse(response);
 
-      setErrorMessage(null);
+      setIsModalOpen(true);
 
       reset();
     } catch (error) {
@@ -177,22 +180,16 @@ export default function Stocks() {
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
+            label="Pesquisar"
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by name..."
-            startContent={<SearchIcon />}
+            placeholder="Procurar por nome..."
+            startContent={
+              <SearchIcon className="text-black/50 mb-0.5 pointer-events-none flex-shrink-0" />
+            }
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
           />
-          <div className="flex gap-3">
-            <Button
-              color="primary"
-              endContent={<PlusIcon />}
-              //onClick={() => changeMethod(post)}
-            >
-              Adicionar Novo
-            </Button>
-          </div>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
@@ -255,116 +252,147 @@ export default function Stocks() {
   }, [page, pages, setPage, onPreviousPage, onNextPage]);
 
   return (
-    <section className="px-10 w-[70%]">
-      <h1 className="text-center mb-5 text-2xl font-semibold">
-        Tabela de estoque
-      </h1>
+    <>
+      <section className="w-[70%] m-auto">
+        <h1 className="text-center mb-5 text-2xl font-semibold">
+          Tabela de Estoque
+        </h1>
 
-      <Table
-        aria-label="Example table with custom cells, pagination and sorting"
-        isHeaderSticky
-        bottomContent={bottomContent}
-        bottomContentPlacement="outside"
-        classNames={{
-          wrapper: "max-h-[382px]",
-        }}
-        topContent={topContent}
-        topContentPlacement="outside"
-      >
-        <TableHeader>
-          <TableColumn>ID DO PRODUTO</TableColumn>
-          <TableColumn>STATUS</TableColumn>
-          <TableColumn>PREÇO DE COMPRA</TableColumn>
-          <TableColumn>DATA DE EXPIRAÇÃO</TableColumn>
-          <TableColumn>CRIADO EM</TableColumn>
-          <TableColumn>ATUALIZADO EM</TableColumn>
-          <TableColumn>QUANTIDADE</TableColumn>
-        </TableHeader>
-
-        <TableBody
-          isLoading={isLoading}
-          loadingContent={<Spinner label="Loading..." />}
-          //emptyContent={"Produto não encontrado"}
-          items={items}
+        <Table
+          aria-label="Example table with custom cells, pagination and sorting"
+          isHeaderSticky
+          bottomContent={bottomContent}
+          bottomContentPlacement="outside"
+          classNames={{
+            wrapper: "max-h-[382px]",
+          }}
+          topContent={topContent}
+          topContentPlacement="outside"
         >
-          {(item) => (
-            <TableRow key="1">
-              <TableCell>{item.product_id}</TableCell>
-              <TableCell>{item.status}</TableCell>
-              <TableCell>{currencyFormat(item.purchase_price)}</TableCell>
-              <TableCell>
-                {moment(item.expiry_date).add(1, "days").format("DD/MM/YYYY")}
-              </TableCell>
-              <TableCell>
-                {moment(item.created_at).add(1, "days").format("DD/MM/YYYY")}
-              </TableCell>
-              <TableCell>
-                {" "}
-                {moment(item.updated_at).add(1, "days").format("DD/MM/YYYY")}
-              </TableCell>
-              <TableCell>{item.quantity}</TableCell>
-            </TableRow>
+          <TableHeader>
+            <TableColumn>ID DO PRODUTO</TableColumn>
+            <TableColumn>NOME DO PRODUTO</TableColumn>
+            <TableColumn>STATUS</TableColumn>
+            <TableColumn>PREÇO DE COMPRA</TableColumn>
+            <TableColumn>DATA DE EXPIRAÇÃO</TableColumn>
+            <TableColumn>CRIADO EM</TableColumn>
+            <TableColumn>ATUALIZADO EM</TableColumn>
+            <TableColumn>QUANTIDADE</TableColumn>
+          </TableHeader>
+
+          <TableBody
+            isLoading={isLoading}
+            loadingContent={<Spinner label="Loading..." />}
+            //emptyContent={"Produto não encontrado"}
+            items={items}
+          >
+            {(item) => (
+              <TableRow key="1">
+                <TableCell>{item.products.id}</TableCell>
+                <TableCell>{item.products.name}</TableCell>
+                <TableCell>{item.status}</TableCell>
+                <TableCell>{currencyFormat(item.purchase_price)}</TableCell>
+                <TableCell>
+                  {item.expiry_date ? (
+                    moment(item.expiry_date).add(1, "days").format("DD/MM/YYYY")
+                  ) : (
+                    <BsXCircleFill className="text-red-500 w-5 h-5" />
+                  )}
+                </TableCell>
+                <TableCell>
+                  {moment(item.created_at).add(1, "days").format("DD/MM/YYYY")}
+                </TableCell>
+                <TableCell>
+                  {" "}
+                  {moment(item.updated_at).add(1, "days").format("DD/MM/YYYY")}
+                </TableCell>
+                <TableCell>{item.quantity}</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col justify-center items-center gap-3 mt-16 mb-10"
+        >
+          <Input
+            type="number"
+            label="ID do Produto"
+            isRequired
+            className="w-[250px]"
+            {...register("product_id")}
+            isInvalid={errors?.product_id && true}
+            color={errors?.product_id ? "danger" : "default"}
+            errorMessage={errors?.product_id && errors?.product_id.message}
+          />
+
+          <Select
+            label="Status do produto"
+            {...register("status")}
+            className="w-[250px]"
+          >
+            {estoque.map((estoque: any) => (
+              <SelectItem key={estoque} value={estoque} {...register("status")}>
+                {estoque}
+              </SelectItem>
+            ))}
+          </Select>
+
+          <Input
+            id="purchase_price"
+            type="number"
+            label="Preço de compra"
+            className="w-[250px]"
+            {...register("purchase_price")}
+          />
+
+          <Input
+            id="expiry_date"
+            type="text"
+            label="Data de expiração"
+            className="w-[250px]"
+            {...register("expiry_date")}
+          />
+
+          <Input
+            type="number"
+            label="Quantidade"
+            className="w-[250px]"
+            {...register("quantity")}
+          />
+          <Button
+            type="submit"
+            isLoading={isSubmitting}
+            color="primary"
+            className="self-center mt-5"
+          >
+            ENVIAR
+          </Button>
+        </form>
+      </section>
+      <Modal
+        isOpen={isModalOpen}
+        onOpenChange={() => setIsModalOpen(false)}
+        backdrop="blur"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 uppercase">
+                Cadastro de produto
+              </ModalHeader>
+              <ModalBody>
+                <span>{messageResponse?.message}</span>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="success" onPress={onClose} className="uppercase">
+                  Ok
+                </Button>
+              </ModalFooter>
+            </>
           )}
-        </TableBody>
-      </Table>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-center items-center gap-3 mt-16"
-      >
-        <Input
-          type="number"
-          label="ID do Produto"
-          isRequired
-          className="w-[250px]"
-          {...register("product_id")}
-          isInvalid={errors?.product_id && true}
-          color={errors?.product_id ? "danger" : "default"}
-          errorMessage={errors?.product_id && errors?.product_id.message}
-        />
-
-        <Select
-          label="Status do produto"
-          {...register("status")}
-          className="w-[250px]"
-        >
-          {estoque.map((estoque: any) => (
-            <SelectItem key={estoque} value={estoque} {...register("status")}>
-              {estoque}
-            </SelectItem>
-          ))}
-        </Select>
-
-        <Input
-          id="purchase_price"
-          type="number"
-          label="Preço de compra"
-          className="w-[250px]"
-          {...register("purchase_price")}
-        />
-
-        <Input
-          id="expiry_date"
-          type="text"
-          label="Data de expiração"
-          className="w-[250px]"
-          {...register("expiry_date")}
-        />
-
-        <Input
-          type="number"
-          label="Quantidade"
-          className="w-[250px]"
-          {...register("quantity")}
-        />
-        <Button
-          type="submit"
-          isLoading={isSubmitting}
-          color="primary"
-          className="self-center mt-5"
-        >
-          ENVIAR
-        </Button>
-      </form>
-    </section>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }

@@ -48,7 +48,7 @@ export default function LayoutProvider({
 
   return (
     <html lang="en">
-      <body className={`${inter.className}   `}>
+      <body className={`${inter.className}`}>
         <ProviderCart>
           <ProviderAuth>
             <Header navLinks={navLinks} />

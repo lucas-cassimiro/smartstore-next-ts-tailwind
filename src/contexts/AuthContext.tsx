@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { "smartstore.token": token } = parseCookies();
 
     if (token) {
-      fetch("http://localhost:3333/users/profile", {
+      fetch("https://smartshop-api-foy4.onrender.com/users/profile", {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function signIn({ email, password_hash }: FormData) {
     try {
-      const url = "http://localhost:3333/users/login";
+      const url = "https://smartshop-api-foy4.onrender.com/users/login";
       const request = await fetch(url, {
         method: "POST",
         headers: {

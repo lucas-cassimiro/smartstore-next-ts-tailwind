@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 
 async function getOrder(id: number){
-  const request = await fetch(`http://localhost:3001/pedidos/${id}`);
+  const request = await fetch(`https://smartshop-api-foy4.onrender.com/pedidos/${id}`);
   return await request.json();
 
 }

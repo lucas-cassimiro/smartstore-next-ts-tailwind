@@ -19,7 +19,7 @@ export default function Slider({ settings, children }: SliderProps) {
     <Swiper
       modules={[Navigation, Pagination, A11y]}
       {...settings}
-      className="swiper carousel2"
+      className="swiper carousel2 carouselProducts"
     >
       {children}
       <SliderButton />

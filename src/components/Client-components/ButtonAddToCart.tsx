@@ -17,7 +17,7 @@ export default function ButtonAddToCart({ products }: ProductProps) {
   return (
     <button
       type="button"
-      className="bg-[#4aa4ee] transition-all hover:bg-[#3286ca] p-4 rounded-[2px] font-medium"
+      className="bg-[#4aa4ee] transition-all hover:bg-[#3286ca] p-4 rounded-[2px] font-medium tabletgrande:w-[150px] tabletgrande:text-[10px] "
       onClick={() => {
         addProductIntoCart(products), onDismiss();
       }}

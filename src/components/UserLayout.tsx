@@ -30,7 +30,7 @@ export default function UserLayout({ navLinks }: NavLinkProps) {
   return (
     <section>
       <div className="flex flex-col flex-wrap gap-4 mb-5 tabletgrande:hidden">
-        <Breadcrumbs variant="solid">
+        <Breadcrumbs variant="solid" className="min-w-[311px]">
           <BreadcrumbItem href="/">Home</BreadcrumbItem>
           {navLinks.map((link) => {
             const isActive = pathname.startsWith(link.href);
@@ -48,9 +48,11 @@ export default function UserLayout({ navLinks }: NavLinkProps) {
           })}
         </Breadcrumbs>
       </div>
-      <div className="flex flex-col gap-6 w-[300px] min-w-[200px] mb-10">
-        <div className="border-b-[1px] border-black flex tablet:border-b-0">
-          <span className="font-semibold text-lg mb-5 tablet:mb-1">Minha conta</span>
+      <div className="flex flex-col gap-6 w-[300px] mb-10 tabletgrande:w-[230px]">
+        <div className="border-b-[0.5px] border-[#878787] flex tablet:border-b-0 min-w-[150px]">
+          <span className="font-semibold text-lg mb-5 tablet:mb-1">
+            Minha conta
+          </span>
         </div>
         {menuNavLinks.map((link) => {
           const isActive = pathname.endsWith(link.href);
@@ -59,16 +61,14 @@ export default function UserLayout({ navLinks }: NavLinkProps) {
               key={link.name}
               className={`${
                 isActive ? "font-semibold" : "border-none"
-              } list-none `}
+              } list-none hover:underline`}
             >
               <Link
                 href={link.href}
                 className="text-black text-lg flex items-center justify-between"
               >
-                <span className="hover:border-b-2 border-black">
-                  {link.name}
-                </span>
-                <GrFormNext className="tablet:hidden"/>
+                <span>{link.name}</span>
+                <GrFormNext className="tablet:hidden text-[#878787]" />
               </Link>
             </li>
           );

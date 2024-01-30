@@ -30,12 +30,12 @@ export default function NewsProducts({ product }: any) {
     >
       <div
         style={jejugothic.style}
-        className="flex flex-col items-center text-white h-[28.125rem] cursor-pointer bg-black"
+        className="flex flex-col items-center text-white h-[28.125rem] cursor-pointer bg-black tabletgrande:h-[23rem] celularmedio:h-[18rem]"
       >
-        <div className="flex items-center justify-center w-[25rem] h-[21.875rem]">
+        <div className="flex items-center justify-center w-[25rem] h-[21.875rem] tabletgrande:h-[16rem] celularmedio:h-[14rem]">
           <Image
-            className="w-[16.5rem] h-[14.625rem] object-contain"
-            src={`http://localhost:3333/tmp/uploads/${product.image}`}
+            className="w-[16.5rem] h-[14.625rem] celularmedio:w-[8rem] celularmedio:h-[6rem] desktopequeno:w-[12.5rem] desktopequeno:h-[10.625rem] tabletgrande:w-[10rem] tabletgrande:h-[8rem]"
+            src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${product.image}`}
             alt="Imagem do produto"
             quality={80}
             priority={true}
@@ -43,10 +43,12 @@ export default function NewsProducts({ product }: any) {
             height={350}
           />
         </div>
-        <h2 className="text-[1.875rem] font-normal text-white">
+        <h2 className="text-[1.875rem] font-normal text-white tabletgrande:text-[1.5rem] desktopequeno:text-[1.6rem] celularmedio:text-sm">
           {product.name}
         </h2>
-        <p className={`${inter.className} text-xl font-light text-white`}>
+        <p
+          className={`${inter.className} text-xl font-light text-white desktopequeno:text-lg celulargrande:text-base celularmedio:text-xs`}
+        >
           A partir de{" "}
           <span className="text-[#93c1fd]">
             {currencyFormat(product.price)}

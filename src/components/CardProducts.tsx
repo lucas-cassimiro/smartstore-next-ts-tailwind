@@ -10,18 +10,22 @@ import HalfRating from "@/lib/HalfRating";
 
 interface CardProductsProps {
   product: ProductsData;
+  imageSize: string;
 }
 
-export default function CardProducts({ product }: CardProductsProps) {
+export default function CardProducts({
+  product,
+  imageSize,
+}: CardProductsProps) {
   return (
-    <div className="flex justify-center ml-[1rem]">
-      {/* className="flex max-w-full w-[1092px] flex-wrap" */}
-      <Link
-        href={`/produtos/${product.id}`}
-        className="flex flex-col"
-      >
+    <div className="flex justify-center ml-[1rem] mb-12">
+      <Link href={`/produtos/${product.id}`} className="flex flex-col gap-2">
         <Image
-          className="w-[9.375rem] h-[11.875rem] object-contain"
+          className={`${
+            imageSize === "large"
+              ? "w-[8.375rem] h-[10.875rem] tabletgrande:w-[7.375rem] tabletgrande:h-[9.875rem]"
+              : "w-[6.375rem] h-[8.875rem] "
+          } object-contain`}
           src={`http://localhost:3333/tmp/uploads/${product.image}`}
           alt="Imagem do produto"
           quality={100}
@@ -32,12 +36,12 @@ export default function CardProducts({ product }: CardProductsProps) {
 
         <div className="">
           {product.black_friday && (
-            <p className="py-[0.375rem] px-2 bg-[#d93a1e] text-white font-semibold rounded-[4px] float-left mr-[6px]">
+            <p className="py-[0.375rem] px-2 bg-[#d93a1e] text-white font-semibold rounded-[4px] float-left mr-[6px] celularpequeno:text-xs">
               -{product.discount}%
             </p>
           )}
           {product.black_friday && (
-            <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-2 text-white font-semibold float-left mr-[6px]">
+            <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-2 text-white font-semibold float-left mr-[6px] celularpequeno:text-xs">
               Black Friday
             </p>
           )}

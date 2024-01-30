@@ -6,11 +6,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { GrFormNext } from "react-icons/gr";
 import { FaTimes } from "react-icons/fa";
 
-import { RadioGroup, Radio } from "@nextui-org/react";
-
-import ButtonFilterPrice from "./ButtonFilter/ButtonFilterPrice";
-import ButtonFilterCapacity from "./ButtonFilter/ButtonFilterCapacity";
-import ButtonFilterColor from "./ButtonFilter/ButtonFilterColor";
+import { RadioGroup, Radio, Checkbox } from "@nextui-org/react";
 
 export default function ButtonFilterMobile() {
   const [filter, setFilter] = useState<boolean>(false);
@@ -30,7 +26,7 @@ export default function ButtonFilterMobile() {
   return (
     <>
       <button
-        className="hidden  tabletgrande:flex rounded-sm border-2 w-40 py-2 px-[16px] border-black text-center "
+        className="hidden tabletgrande:flex rounded-sm border-[1px] py-2 px-[12px] border-[#c0c0c0] text-center h-[37.6px] w-[125.6px] text-xs"
         onClick={showFilterOpen}
       >
         Filtrar / ordenar
@@ -100,7 +96,40 @@ export default function ButtonFilterMobile() {
                   <h4 className="font-bold text-lg">Preço</h4>
                 </div>
 
-                <ButtonFilterPrice />
+                <label className="cursor-pointer">
+                  <Checkbox type="checkbox" name="preco" value="0-1000" />
+                  R$ 0 - R$1000
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox type="checkbox" name="preco" value="1001 - 2000" />
+                  R$ 1.001 - R$ 2.000
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox type="checkbox" name="preco" value="2001 - 3000" />
+                  R$ 2.001 - R$ 3.000
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox type="checkbox" name="preco" value="3001-4000" />
+                  R$ 3.001 - R$ 4.000
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox type="checkbox" name="preco" value="4001-5000" />
+                  R$ 4.001 - R$ 5.000
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox type="checkbox" name="preco" value="5001-6000" />
+                  R$ 5.001 - R$ 6.000
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox
+                    type="checkbox"
+                    name="preco"
+                    value="6001-7000"
+                    //   onChange={handleChangePrice}
+                    className="mb-3"
+                  />
+                  R$ 6.001 - R$ 7.000
+                </label>
               </div>
             </div>
           </div>
@@ -128,7 +157,32 @@ export default function ButtonFilterMobile() {
                   <h4 className="font-bold text-lg">Armazenamento</h4>
                 </div>
 
-                <ButtonFilterCapacity />
+                <label className="cursor-pointer">
+                  <Checkbox type="checkbox" name="armazenamento" value="64" />
+                  64 GB
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox type="checkbox" name="armazenamento" value="128" />
+                  128 GB
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox type="checkbox" name="armazenamento" value="256" />
+                  256 GB
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox type="checkbox" name="armazenamento" value="512" />
+                  512 GB
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox
+                    type="checkbox"
+                    name="armazenamento"
+                    value="1024"
+                    //  onChange={handleChangeStorage}
+                    className="mb-3"
+                  />
+                  1 TB
+                </label>
               </div>
             </div>
           </div>
@@ -153,7 +207,52 @@ export default function ButtonFilterMobile() {
                   <h4 className="font-bold text-lg">Cor</h4>
                 </div>
 
-                <ButtonFilterColor />
+                <label className="cursor-pointer">
+                  <Checkbox
+                    type="checkbox"
+                    name="cor"
+                    value="azul"
+                    //  onChange={handleChangeColor}
+                  />
+                  Azul
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox
+                    type="checkbox"
+                    name="cor"
+                    value="branco"
+                    // onChange={handleChangeColor}
+                  />
+                  Branco
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox
+                    type="checkbox"
+                    name="cor"
+                    value="preto"
+                    // onChange={handleChangeColor}
+                  />
+                  Preto
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox
+                    type="checkbox"
+                    name="cor"
+                    value="roxo"
+                    //  onChange={handleChangeColor}
+                  />
+                  Roxo
+                </label>
+                <label className="cursor-pointer">
+                  <Checkbox
+                    type="checkbox"
+                    name="cor"
+                    value="dourado"
+                    //  onChange={handleChangeColor}
+                    className="mb-5"
+                  />
+                  Dourado
+                </label>
               </div>
             </div>
           </div>

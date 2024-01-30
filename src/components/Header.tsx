@@ -40,21 +40,21 @@ export default function Header({ navLinks }: NavLinkProps) {
     <>
       <div className="w-full bg-[#3877c9]">
         <div className="flex items-center flex-row-reverse relative w-full max-w-[1450px] h-[2.125rem] tablet:flex-row tablet:justify-around tablet:px-0 tablet:py-4 m-auto">
-          <p className="m-auto text-[0.8rem] text-white tablet:m-0 celular:text-[0.65rem] celularpequeno:text-[0.5rem]">
+          <p className="m-auto text-[0.8rem] text-white tablet:m-0 celularmedio:text-[0.7rem] celularpequeno:text-[0.55rem]">
             A melhor franquia de smartphones do
             <span className="ml-1 text-[#FAFF00]">Brasil</span>
           </p>
 
           <a
             href="#"
-            className="absolute text-[0.9rem] font-semibold text-white tablet:relative celular:text-[0.75rem] celularpequeno:text-[0.5rem]"
+            className="absolute text-[0.9rem] font-semibold text-white tablet:relative celular:text-[0.75rem] celularmedio:text-[0.7rem] celularpequeno:text-[0.55rem]"
           >
             SEJA UM REVENDEDOR
           </a>
         </div>
       </div>
       <header className="flex flex-col items-center w-full bg-[#313131]">
-        <div className="w-full max-w-[1450px]">
+        <div className="w-full max-w-[1450px] px-[0.5rem]">
           <div className="flex items-center w-full justify-between  relative  h-[3.5625rem] celular:px-3">
             <div className="tablet:hidden flex items-center gap-2 absolute">
               <Location />

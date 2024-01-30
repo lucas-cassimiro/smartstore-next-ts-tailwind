@@ -1,25 +1,19 @@
 "use client";
 
 import { ProductsData } from "@/interfaces/ProductsData";
+import { getBlackfridayProducts } from "@/services/api";
 import { Button, Card, CardHeader } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
-async function getAllProducts() {
-  const response = await fetch(
-    "https://smartshop-api-foy4.onrender.com/products/"
-  );
-  return await response.json();
-}
+import Image from "next/image";
 
 export default function BlackFridayOffer() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [products, setProducts] = useState<ProductsData[]>([]);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const fetchData = async () => {
-      const allProducts = await getAllProducts();
-      setProducts(allProducts);
+      const data = await getBlackfridayProducts();
+      setProducts(data);
     };
 
     fetchData();
@@ -49,7 +43,7 @@ export default function BlackFridayOffer() {
   }
 
   return (
-    <div className="flex flex-col gap-5  w-[1075px]">
+    <div className="flex flex-col gap-5 w-[1075px] m-auto">
       <span className="text-lg font-semibold">
         Selecione o(s) produto(s) que deseja colocar como Oferta Black Friday:
       </span>
@@ -61,12 +55,12 @@ export default function BlackFridayOffer() {
             className="py-4 w-60 h-64 flex flex-col justify-between mb-5"
           >
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-              {/* <Image
+              <Image
                 src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${product.image}`}
                 alt="Imagem do produto"
                 width={50}
                 height={50}
-              /> */}
+              />
               <h4 className="font-bold text-large">{product.name}</h4>
             </CardHeader>
 

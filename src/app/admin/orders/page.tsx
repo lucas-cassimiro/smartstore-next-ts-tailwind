@@ -63,7 +63,7 @@ export default function Orders() {
     }
 
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const topContent = useMemo(() => {
@@ -72,9 +72,12 @@ export default function Orders() {
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
+            label="Pesquisar"
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by name..."
-            startContent={<SearchIcon />}
+            placeholder="Procurar por nome..."
+            startContent={
+              <SearchIcon className="text-black/50 mb-0.5 pointer-events-none flex-shrink-0" />
+            }
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
@@ -107,7 +110,13 @@ export default function Orders() {
         </div>
       </div>
     );
-  }, [filterValue, onSearchChange, orders.length, onRowsPerPageChange, onClear]);
+  }, [
+    filterValue,
+    onSearchChange,
+    orders.length,
+    onRowsPerPageChange,
+    onClear,
+  ]);
 
   const bottomContent = useMemo(() => {
     return (
@@ -144,52 +153,57 @@ export default function Orders() {
   }, [page, pages, setPage, onPreviousPage, onNextPage]);
 
   return (
-    <Table
-      aria-label="Example table with custom cells, pagination and sorting"
-      isHeaderSticky
-      bottomContent={bottomContent}
-      bottomContentPlacement="outside"
-      classNames={{
-        wrapper: "max-h-[382px]",
-      }}
-      topContent={topContent}
-      topContentPlacement="outside"
-    >
-      <TableHeader>
-        <TableColumn>ID</TableColumn>
-        <TableColumn>ID DO CLIENTE</TableColumn>
-        <TableColumn>PRODUTO</TableColumn>
-        <TableColumn>PREÇO UNITÁRIO</TableColumn>
-        <TableColumn>DESCONTO</TableColumn>
-        <TableColumn>PREÇO TOTAL</TableColumn>
-        <TableColumn>QUANTIDADE DO PRODUTO</TableColumn>
-        <TableColumn>VALOR TOTAL DA COMPRA</TableColumn>
-      </TableHeader>
-
-      <TableBody
-        isLoading={isLoading}
-        loadingContent={<Spinner label="Loading..." />}
+    <section className="w-[70%] m-auto">
+      <h1 className="text-center mb-5 text-2xl font-semibold">
+        Tabela de Pedidos
+      </h1>
+      <Table
+        aria-label="Example table with custom cells, pagination and sorting"
+        isHeaderSticky
+        bottomContent={bottomContent}
+        bottomContentPlacement="outside"
+        classNames={{
+          wrapper: "max-h-[382px]",
+        }}
+        topContent={topContent}
+        topContentPlacement="outside"
       >
-        {orders.map((order) => (
-          <TableRow key="1">
-            <TableCell>{order.id}</TableCell>
-            <TableCell>{order.orders.user_id}</TableCell>
-            <TableCell>{order.products.name}</TableCell>
-            <TableCell>{currencyFormat(order.unit_price)}</TableCell>
-            <TableCell>
-              {" "}
-              {order.discount ? (
-                <span>{order.discount}%</span>
-              ) : (
-                <BsXCircleFill className="text-red-500 w-5 h-5" />
-              )}
-            </TableCell>
-            <TableCell>{currencyFormat(order.total_price)}</TableCell>
-            <TableCell>{order.quantity}</TableCell>
-            <TableCell>{currencyFormat(order.orders.total_amount)}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        <TableHeader>
+          <TableColumn>ID</TableColumn>
+          <TableColumn>ID DO CLIENTE</TableColumn>
+          <TableColumn>PRODUTO</TableColumn>
+          <TableColumn>PREÇO UNITÁRIO</TableColumn>
+          <TableColumn>DESCONTO</TableColumn>
+          <TableColumn>PREÇO TOTAL</TableColumn>
+          <TableColumn>QUANTIDADE DO PRODUTO</TableColumn>
+          <TableColumn>VALOR TOTAL DA COMPRA</TableColumn>
+        </TableHeader>
+
+        <TableBody
+          isLoading={isLoading}
+          loadingContent={<Spinner label="Loading..." />}
+        >
+          {orders.map((order) => (
+            <TableRow key="1">
+              <TableCell>{order.id}</TableCell>
+              <TableCell>{order.orders.user_id}</TableCell>
+              <TableCell>{order.products.name}</TableCell>
+              <TableCell>{currencyFormat(order.unit_price)}</TableCell>
+              <TableCell>
+                {" "}
+                {order.discount ? (
+                  <span>{order.discount}%</span>
+                ) : (
+                  <BsXCircleFill className="text-red-500 w-5 h-5" />
+                )}
+              </TableCell>
+              <TableCell>{currencyFormat(order.total_price)}</TableCell>
+              <TableCell>{order.quantity}</TableCell>
+              <TableCell>{currencyFormat(order.orders.total_amount)}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </section>
   );
 }

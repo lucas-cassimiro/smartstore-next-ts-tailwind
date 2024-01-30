@@ -2,6 +2,7 @@
 
 import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
+
 import {
   Button,
   Input,
@@ -12,6 +13,7 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
+
 import { useState, useEffect, useCallback } from "react";
 
 import { z } from "zod";
@@ -128,8 +130,6 @@ export default function CadastrarEndereco() {
   );
 
   useEffect(() => {
-    //setValue("address.cep", cepMask);
-
     if (zipCode.length !== 8) return;
 
     handleFetchAddress(zipCode);
@@ -141,7 +141,7 @@ export default function CadastrarEndereco() {
     try {
       data.user_id = user?.id || 0;
 
-      const url = `http://localhost:3333/address/`;
+      const url = `https://smartshop-api-foy4.onrender.com/address/`;
 
       const request = await fetch(url, {
         method: "POST",
@@ -152,9 +152,8 @@ export default function CadastrarEndereco() {
       });
       if (!request.ok) {
         const errorResponse = await request.json();
-
         setMessageResponse(errorResponse);
-
+        setIsModalOpen(true);
         throw new Error(errorResponse.message);
       }
 
@@ -182,117 +181,183 @@ export default function CadastrarEndereco() {
         <div className="m-auto flex flex-col">
           <h1 className="text-3xl font-bold mb-12">Novo endereço</h1>
           <form
-            className="flex flex-col gap-5 w-[700px] mb-7"
+            className="flex flex-col w-[700px] mb-7"
             onSubmit={handleSubmit(handleFormSubmit, onError)}
           >
-            <Input
-              isRequired
-              label="CEP"
-              className="max-w-[112px]"
-              maxLength={9}
+            <label htmlFor="postalcode" className="text-sm text-[#878787] mb-1">
+              CEP*
+            </label>
+            <input
+              id="postalcode"
+              className={`${
+                errors.cep ? "bg-[#FEE7EF]" : ""
+              } max-w-[112px] border bg-[#EFEFEF4D] border-[#c0c0c0]  h-12 py-3 px-4 mb-3`}
+              maxLength={8}
               {...register("cep")}
-              isClearable
-              isInvalid={errors?.cep && true}
-              color={errors?.cep ? "danger" : "default"}
-              errorMessage={errors?.cep && errors?.cep.message}
             />
+
+            {errors?.cep && (
+              <span className="text-[#F31260] text-sm mb-5">
+                {errors?.cep.message}
+              </span>
+            )}
+
             <a
               href="https://buscacepinter.correios.com.br/app/endereco/index.php"
               target="_blank"
-              className="underline text-xs"
+              className="underline text-sm mb-5"
             >
               Não sei meu CEP
             </a>
 
-            <Input
+            <label htmlFor="endereco" className="text-sm text-[#878787] mb-1">
+              Endereço*
+            </label>
+            <input
               type="text"
-              isRequired
-              label="Endereço"
+              id="endereco"
               disabled={!isCepFilled}
-              className="max-w-[26.5rem]"
+              className={`${
+                errors.street_address ? "bg-[#FEE7EF]" : ""
+              } max-w-[26.5rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
               {...register("street_address")}
-              isClearable
-              isInvalid={errors?.street_address && true}
-              color={errors?.street_address ? "danger" : "default"}
-              errorMessage={
-                errors?.street_address && errors?.street_address.message
-              }
             />
 
+            {errors?.street_address && (
+              <span className="text-[#F31260] text-sm mb-5">
+                {errors?.street_address.message}
+              </span>
+            )}
+
             <div className="flex gap-3">
-              <div className="flex flex-col">
-                <Input
+              <div className="flex flex-col mb-3">
+                <label htmlFor="number" className="text-sm text-[#878787] mb-1">
+                  Número*
+                </label>
+                <input
                   type="number"
-                  label="Número"
-                  isRequired
+                  id="number"
                   disabled={!isCepFilled}
-                  className="w-[80px]"
+                  className={`${
+                    errors.number_address ? "bg-[#FEE7EF]" : ""
+                  } w-[80px] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4`}
                   {...register("number_address")}
-                  isClearable
-                  isInvalid={errors?.number_address && true}
-                  color={errors?.number_address ? "danger" : "default"}
-                  errorMessage={
-                    errors?.number_address && errors?.number_address.message
-                  }
+                />
+
+                {errors?.number_address && (
+                  <span className="text-[#F31260] text-sm mb-5 w-[70px]">
+                    {errors?.number_address.message}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex flex-col mb-3">
+                <label
+                  htmlFor="complement"
+                  className="text-sm text-[#878787] mb-1"
+                >
+                  Complemento
+                </label>
+                <input
+                  type="text"
+                  id="complement"
+                  disabled={!isCepFilled}
+                  className={`${
+                    errors.complement ? "bg-[#FEE7EF]" : ""
+                  } w-[330px] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4`}
+                  {...register("complement")}
                 />
               </div>
 
-              <Input
-                type="text"
-                label="Complemento"
-                disabled={!isCepFilled}
-                className="w-[330px]"
-                {...register("complement")}
-              />
+              {errors?.complement && (
+                <span className="text-[#F31260] text-sm mb-5">
+                  {errors?.complement.message}
+                </span>
+              )}
             </div>
-            <Input
+
+            <label
+              htmlFor="neighborhood"
+              className="text-sm text-[#878787] mb-1"
+            >
+              Bairro*
+            </label>
+            <input
               type="text"
-              label="Bairro"
-              isRequired
-              className="max-w-[26.5rem]"
+              id="neighborhood"
+              className={`${
+                errors.neighborhood ? "bg-[#FEE7EF]" : ""
+              } max-w-[26.5rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
               disabled
               {...register("neighborhood")}
-              isClearable
-              isInvalid={errors?.neighborhood && true}
-              color={errors?.neighborhood ? "danger" : "default"}
-              errorMessage={
-                errors?.neighborhood && errors?.neighborhood.message
-              }
             />
+
+            {errors?.neighborhood && (
+              <span className="text-[#F31260] text-sm mb-5">
+                {errors?.neighborhood.message}
+              </span>
+            )}
 
             <div className="flex gap-3">
-              <Input
-                type="text"
-                isRequired
-                label="Cidade"
-                disabled
-                className="w-[310px]"
-                {...register("city")}
-                isClearable
-                isInvalid={errors?.city && true}
-                color={errors?.city ? "danger" : "default"}
-                errorMessage={errors?.city && errors?.city.message}
-              />
+              <div className="flex flex-col mb-3">
+                <label htmlFor="city" className="text-sm text-[#878787] mb-1">
+                  Cidade*
+                </label>
+                <input
+                  type="text"
+                  id="city"
+                  disabled
+                  className={`${
+                    errors.city ? "bg-[#FEE7EF]" : ""
+                  } w-[310px] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4`}
+                  {...register("city")}
+                />
 
-              <Input
-                className="w-[100px]"
-                label="Estado"
-                isRequired
-                disabled
-                {...register("state")}
-              />
+                {errors?.city && (
+                  <span className="text-[#F31260] text-sm mb-5">
+                    {errors?.city.message}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex flex-col mb-3">
+                <label htmlFor="state" className="text-sm text-[#878787] mb-1">
+                  Estado*
+                </label>
+                <input
+                  className={`${
+                    errors.state ? "bg-[#FEE7EF]" : ""
+                  } w-[100px] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4`}
+                  id="state"
+                  disabled
+                  {...register("state")}
+                />
+              </div>
+
+              {errors?.state && (
+                <span className="text-[#F31260] text-sm mb-5">
+                  {errors?.state.message}
+                </span>
+              )}
             </div>
-            <Input
+
+            <label htmlFor="recipient" className="text-sm text-[#878787] mb-1">
+              Destinatário*
+            </label>
+            <input
               type="text"
-              isRequired
-              label="Destinatário"
-              className="max-w-[26.5rem]"
+              id="recipient"
+              className={`${
+                errors.recipient ? "bg-[#FEE7EF]" : ""
+              } max-w-[26.5rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
               {...register("recipient")}
-              isClearable
-              isInvalid={errors?.recipient && true}
-              color={errors?.recipient ? "danger" : "default"}
-              errorMessage={errors?.recipient && errors?.recipient.message}
             />
+
+            {errors?.recipient && (
+              <span className="text-[#F31260] text-sm mb-5">
+                {errors?.recipient.message}
+              </span>
+            )}
 
             <div className="flex gap-2">
               <Button
