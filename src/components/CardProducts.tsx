@@ -23,7 +23,7 @@ export default function CardProducts({
         <Image
           className={`${
             imageSize === "large"
-              ? "w-[8.375rem] h-[10.875rem] tabletgrande:w-[7.375rem] tabletgrande:h-[9.875rem]"
+              ? "w-[8.375rem] h-[10.875rem] tabletgrande:w-[7.375rem] tabletgrande:h-[9.875rem] celularmedio:w-[6.375rem] celularmedio:h-[8.875rem]"
               : "w-[6.375rem] h-[8.875rem] "
           } object-contain`}
           src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${product.image}`}
