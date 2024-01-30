@@ -1,7 +1,6 @@
 "use client";
 
 import { ProductsData } from "@/interfaces/ProductsData";
-import { BsFillCartPlusFill } from "react-icons/bs";
 
 import { useCart } from "@/hooks/useCart";
 import useModal from "@/hooks/useModal";
@@ -17,7 +16,7 @@ export default function ButtonAddToCart({ products }: ProductProps) {
   return (
     <button
       type="button"
-      className="bg-[#4aa4ee] transition-all hover:bg-[#3286ca] p-4 rounded-[2px] font-medium tabletgrande:w-[150px] tabletgrande:text-[10px] "
+      className="bg-[#4aa4ee] transition-all hover:bg-[#3286ca] p-4 rounded-[2px] font-medium tabletgrande:text-sm tablet:text-xs tablet:font-medium"
       onClick={() => {
         addProductIntoCart(products), onDismiss();
       }}
