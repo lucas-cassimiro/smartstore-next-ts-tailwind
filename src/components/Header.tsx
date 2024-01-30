@@ -71,8 +71,6 @@ export default function Header({ navLinks }: NavLinkProps) {
             </h1>
 
             <div className="flex gap-3">
-              {/* <Logado /> */}
-
               <Cart />
 
               <IsAuthenticated />
