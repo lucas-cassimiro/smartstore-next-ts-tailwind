@@ -1,6 +1,5 @@
 "use client";
 
-//import Link from "next/link";
 import Image from "next/image";
 
 import React from "react";
@@ -11,12 +10,10 @@ import Apple from "../assets/apple.png";
 
 import { FaUserAlt } from "react-icons/fa";
 
-import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { useState, useContext } from "react";
 
-import { NavLink } from "@/Providers/LayoutProvider";
-import { useAuth } from "@/hooks/useAuth";
 import { AuthContext } from "@/contexts/AuthContext";
 
 import { z } from "zod";
@@ -29,7 +26,6 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Checkbox,
   Input,
   Link,
   Switch,
@@ -102,7 +98,7 @@ export default function LoginFrame() {
       <button onClick={onOpen} className="relative flex items-center">
         <div className="flex flex-col items-center">
           <FaUserAlt className="text-white celular:w-4 celular:h-4 w-6 h-5" />
-          <span className="text-white celular:text-sm text-sm">Login</span>
+          <span className="text-white celular:text-sm text-sm tablet:hidden">Login</span>
         </div>
       </button>
 
