@@ -10,12 +10,12 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
 
   const { isAuthenticated, isLoading } = useAuth();
 
-useEffect(() => {
-  if (!isAuthenticated && !isLoading) {
-    router.push("/");
-  }
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [isAuthenticated, isLoading]);
+  useEffect(() => {
+    if (!isAuthenticated && !isLoading) {
+      router.push("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, isLoading]);
 
   return <>{children}</>;
 };
