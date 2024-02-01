@@ -1,18 +1,22 @@
 export async function getProducts() {
-  const request = await fetch(
+  const response = await fetch(
     "https://smartshop-api-foy4.onrender.com/products"
   );
-  return await request.json();
+  return await response.json();
 }
 
 export async function getStocks() {
-  const request = await fetch("https://smartshop-api-foy4.onrender.com/stocks");
-  return await request.json();
+  const response = await fetch(
+    "https://smartshop-api-foy4.onrender.com/stocks"
+  );
+  return await response.json();
 }
 
 export async function getOrders() {
-  const request = await fetch("https://smartshop-api-foy4.onrender.com/orders");
-  return await request.json();
+  const response = await fetch(
+    "https://smartshop-api-foy4.onrender.com/orders"
+  );
+  return await response.json();
 }
 
 export async function getColors() {
@@ -20,8 +24,7 @@ export async function getColors() {
     `https://smartshop-api-foy4.onrender.com/colors`
   );
 
-  const data = await response.json();
-  return data;
+  return await response.json();
 }
 
 export async function getStorages() {
@@ -29,8 +32,7 @@ export async function getStorages() {
     `https://smartshop-api-foy4.onrender.com/storages`
   );
 
-  const data = await response.json();
-  return data;
+  return await response.json();
 }
 
 export async function getCategories() {
@@ -38,13 +40,29 @@ export async function getCategories() {
     `https://smartshop-api-foy4.onrender.com/categories`
   );
 
-  const data = await response.json();
-  return data;
+  return await response.json();
 }
 
 export async function getBlackfridayProducts() {
   const response = await fetch(
     "https://smartshop-api-foy4.onrender.com/products/blackfriday"
   );
+  return await response.json();
+}
+
+export async function getBlackFridayOfferProducts() {
+  const response = await fetch(
+    "https://smartshop-api-foy4.onrender.com/blackfriday"
+  );
+  return await response.json();
+}
+
+export async function getNewsProducts() {
+  const response = await fetch("https://smartshop-api-foy4.onrender.com/news/");
+  return await response.json();
+}
+
+export async function getAddress(cep: string) {
+  const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
   return await response.json();
 }
