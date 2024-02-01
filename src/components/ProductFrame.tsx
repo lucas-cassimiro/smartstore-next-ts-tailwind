@@ -3,10 +3,8 @@ import { ProductsData } from "@/interfaces/ProductsData";
 import currencyFormat from "@/helpers/currencyFormat";
 
 import Image from "next/image";
-import ButtonAddToCart from "./Client-components/ButtonAddToCart";
+import ButtonAddToCart from "./Buttons/ButtonAddToCart";
 import HalfRating from "@/lib/HalfRating";
-
-import { FaLocationDot } from "react-icons/fa6";
 
 interface CardProductsProps {
   products: ProductsData[];
