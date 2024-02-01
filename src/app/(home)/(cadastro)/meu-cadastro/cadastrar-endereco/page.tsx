@@ -5,13 +5,11 @@ import { useAuth } from "@/hooks/useAuth";
 
 import {
   Button,
-  Input,
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  useDisclosure,
 } from "@nextui-org/react";
 
 import { useState, useEffect, useCallback } from "react";
@@ -81,7 +79,6 @@ export default function CadastrarEndereco() {
   const router = useRouter();
 
   const {
-    getValues,
     setValue,
     watch,
     handleSubmit,
