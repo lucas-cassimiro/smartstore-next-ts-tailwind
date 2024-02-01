@@ -1,8 +1,6 @@
 import Image from "next/image";
 
 import currencyFormat from "@/helpers/currencyFormat";
-
-import ButtonAddToCart from "./Client-components/ButtonAddToCart";
 import { ProductsData } from "@/interfaces/ProductsData";
 import Link from "next/link";
 
@@ -19,7 +17,7 @@ export default function CardProducts({
 }: CardProductsProps) {
   return (
     <div className="flex justify-center ml-[1rem] mb-12">
-      <Link href={`/produtos/${product.id}`} className="flex flex-col gap-2">
+      <Link href={`/products/${product.id}`} className="flex flex-col gap-2">
         <Image
           className={`${
             imageSize === "large"
