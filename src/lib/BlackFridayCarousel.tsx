@@ -10,13 +10,7 @@ import CardProducts from "@/components/CardProducts";
 import { ProductsData } from "@/interfaces/ProductsData";
 
 import "swiper/swiper-bundle.css";
-
-async function getBlackFridayOfferProducts() {
-  const request = await fetch(
-    "https://smartshop-api-foy4.onrender.com/blackfriday"
-  );
-  return await request.json();
-}
+import { getBlackFridayOfferProducts } from "@/services/api";
 
 export default function BlackFridayCarousel() {
   const [data, setData] = useState<ProductsData[]>([]);
