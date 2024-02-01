@@ -4,16 +4,12 @@ import React, { useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
 
 import Slider, { SliderSettings } from "./Slider";
-import NewsProducts from "@/components/NewsProducts";
+import NewsProducts from "@/components/HighlightProducts";
 
 import { ProductsData } from "@/interfaces/ProductsData";
 
 import "swiper/swiper-bundle.css";
-
-async function getNewsProducts() {
-  const request = await fetch("https://smartshop-api-foy4.onrender.com/news/");
-  return await request.json();
-}
+import { getNewsProducts } from "@/services/api";
 
 export default function NewsCarousel() {
   const [data, setData] = useState<ProductsData[]>([]);
