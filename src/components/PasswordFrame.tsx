@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { Input, Button } from "@nextui-org/react";
 
 export default function PasswordFrame() {
