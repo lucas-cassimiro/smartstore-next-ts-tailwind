@@ -1,24 +1,13 @@
 import { NavLink } from "../Providers/LayoutProvider";
-import Navigation from "./Client-components/Navigation";
+import Navigation from "./Navigation";
 import Link from "next/link";
-
-import Image from "next/image";
 
 import { Lobster } from "next/font/google";
 
-import IconCart from "../assets/icon-cart.png";
-import IconLogin from "../assets/login.png";
+import Location from "./Location";
+import Cart from "./Cart";
 
-import Location from "./Client-components/Location";
-import Cart from "./Client-components/Cart";
-import Logado from "./Logado";
-
-import { FaUserAlt } from "react-icons/fa";
-
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useAuth } from "@/hooks/useAuth";
-
-import IsAuthenticated from "./isAuthenticated";
+import Authenticated from "./Authenticated";
 
 interface NavLinkProps {
   navLinks: NavLink[];
@@ -73,7 +62,7 @@ export default function Header({ navLinks }: NavLinkProps) {
             <div className="flex gap-3">
               <Cart />
 
-              <IsAuthenticated />
+              <Authenticated />
             </div>
           </div>
         </div>
