@@ -4,13 +4,11 @@ import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
 import {
   Button,
-  Input,
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  useDisclosure,
 } from "@nextui-org/react";
 
 import { useForm, SubmitErrorHandler, SubmitHandler } from "react-hook-form";
@@ -18,9 +16,7 @@ import { useForm, SubmitErrorHandler, SubmitHandler } from "react-hook-form";
 import { useEffect, useState } from "react";
 import moment from "moment";
 
-import Router, { useRouter } from "next/navigation";
-
-import InputMask from "react-input-mask";
+import { useRouter } from "next/navigation";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -92,7 +88,6 @@ export default function AlterarDados() {
   const {
     handleSubmit,
     register,
-    getValues,
     setError,
     reset,
     setValue,
