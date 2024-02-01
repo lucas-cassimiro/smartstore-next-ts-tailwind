@@ -127,13 +127,6 @@ export default function MeuCadastro() {
                           className="cursor-pointer text-[#878787]"
                         />
                       </div>
-                      <Link
-                        href="/meu-cadastro/cadastrar-endereco"
-                        className="underline text-sm text-black cursor-pointer"
-                        onClick={() => updateAddress(add)}
-                      >
-                        Alterar dados
-                      </Link>
                     </div>
                   ))}
                 </RadioGroup>
