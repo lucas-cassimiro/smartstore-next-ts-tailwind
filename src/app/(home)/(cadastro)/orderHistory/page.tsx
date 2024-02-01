@@ -4,10 +4,11 @@ import { AuthGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 
-async function getOrder(id: number){
-  const request = await fetch(`https://smartshop-api-foy4.onrender.com/pedidos/${id}`);
-  return await request.json();
-
+async function getOrder(id: number) {
+  const response = await fetch(
+    `https://smartshop-api-foy4.onrender.com/pedidos/${id}`
+  );
+  return await response.json();
 }
 
 export default function OrderHistory() {
@@ -17,15 +18,13 @@ export default function OrderHistory() {
   const id = user?.id;
 
   useEffect(() => {
-   async function fetchData() {
+    async function fetchData() {
       const data = await getOrder(id!);
       setData(data);
-   }
+    }
 
-   fetchData()
-  }, [id])
-
-  console.log(data);
+    fetchData();
+  }, [id]);
 
   return (
     <AuthGuard>
