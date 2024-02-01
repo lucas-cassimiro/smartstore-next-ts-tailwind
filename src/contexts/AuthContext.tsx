@@ -4,7 +4,6 @@ import {
   createContext,
   Dispatch,
   SetStateAction,
-  useContext,
   useState,
   useEffect,
   useCallback,
@@ -52,7 +51,9 @@ type AuthContextType = {
 export const AuthContext = createContext({} as AuthContextType);
 
 async function getAddress(userId: number) {
-  const request = await fetch(`http://localhost:3333/address/${userId}`);
+  const request = await fetch(
+    `https://smartshop-api-foy4.onrender.com/address/${userId}`
+  );
   return await request.json();
 }
 
@@ -81,7 +82,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
-          //setErrorMessage("Erro ao buscar dados do usuário");
         })
         .finally(() => {
           setIsLoading(false);
