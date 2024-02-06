@@ -15,11 +15,11 @@ export default function ProductFrame({ products }: CardProductsProps) {
     <div className="w-full h-full flex justify-center items-center mt-40 tablet:mt-0">
       {products.map((product) => (
         <section
-          className="flex flex-col bg-white h-[800px] w-[800px] p-6 rounded-md gap-4 tabletgrande:w-[500px] tabletgrande:h-[500px] celulargrande:w-[300px] celulargrande:p-4"
+          className="flex flex-col bg-white h-[800px] w-[800px] p-6 rounded-md gap-4 tabletgrande:w-[500px] tabletgrande:h-[500px] celulargrande:p-4"
           key={product.id}
         >
           <div className="flex justify-around">
-            <div className="tabletgrande:w-[130px] celulargrande:w-[80px]">
+            <div className="tabletgrande:w-[130px] celulargrande:w-[100px]">
               <Image
                 className="w-[13rem] h-[14rem] object-contain tabletgrande:w-[8.5rem] tabletgrande:h-[9rem] celulargrande:w-[5rem] celulargrande:h-[6rem]"
                 src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${product.image}`}
@@ -42,18 +42,25 @@ export default function ProductFrame({ products }: CardProductsProps) {
 
               <div className="flex gap-2 items-center">
                 <div className="flex gap-1 celulargrande:block">
+                  <div className="flex gap-2 items-center">
+                    {product.black_friday && (
+                      <p className="py-[0.375rem] px-5 bg-[#d93a1e] text-white font-semibold rounded-[4px] tabletgrande:text-xs tabletgrande:py-[0.2rem] tabletgrande:px-2 celulargrande:w-[45px]">
+                        -{product.discount}%
+                      </p>
+                    )}
+                    <div className="hidden celulargrande:block">
+                      <HalfRating star={product.average_score} />
+                    </div>
+                  </div>
                   {product.black_friday && (
-                    <p className="py-[0.375rem] px-5 bg-[#d93a1e] text-white font-semibold rounded-[4px] tabletgrande:text-xs tabletgrande:py-[0.2rem] tabletgrande:px-2 celulargrande:w-[45px]">
-                      -{product.discount}%
-                    </p>
-                  )}
-                  {product.black_friday && (
-                    <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-5 text-white font-semibold tabletgrande:text-xs tabletgrande:py-[0.2rem] tabletgrande:px-2 min-w-[87px]">
+                    <p className="bg-[#313131] text-base rounded-[4px] py-[0.375rem] px-5 text-white font-semibold tabletgrande:text-xs tabletgrande:py-[0.2rem] tabletgrande:px-2 min-w-[87px] celulargrande:w-[87px]">
                       Black Friday
                     </p>
                   )}
                 </div>
-                <HalfRating star={product.average_score} />
+                <div className="celulargrande:hidden">
+                  <HalfRating star={product.average_score} />
+                </div>
               </div>
 
               {product.black_friday && (
