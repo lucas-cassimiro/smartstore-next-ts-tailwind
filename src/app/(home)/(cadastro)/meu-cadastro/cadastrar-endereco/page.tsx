@@ -79,6 +79,7 @@ export default function CadastrarEndereco() {
   const router = useRouter();
 
   const {
+    getValues,
     setValue,
     watch,
     handleSubmit,
@@ -174,11 +175,13 @@ export default function CadastrarEndereco() {
 
   return (
     <AuthGuard>
-      <div className="flex flex-col w-[983px] py-14">
-        <div className="m-auto flex flex-col">
-          <h1 className="text-3xl font-bold mb-12">Novo endereço</h1>
+      <div className="flex flex-col w-full py-14 tabletgrande:py-5">
+        <div className="m-auto flex flex-col max-w-[764px] min-w-[200px] tablet:m-0">
+          <h1 className="text-3xl font-bold mb-12 tabletgrande:text-lg">
+            Novo endereço
+          </h1>
           <form
-            className="flex flex-col w-[700px] mb-7"
+            className="flex flex-col mb-7"
             onSubmit={handleSubmit(handleFormSubmit, onError)}
           >
             <label htmlFor="postalcode" className="text-sm text-[#878787] mb-1">
@@ -216,7 +219,7 @@ export default function CadastrarEndereco() {
               disabled={!isCepFilled}
               className={`${
                 errors.street_address ? "bg-[#FEE7EF]" : ""
-              } max-w-[26.5rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
+              } max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
               {...register("street_address")}
             />
 
@@ -226,7 +229,7 @@ export default function CadastrarEndereco() {
               </span>
             )}
 
-            <div className="flex gap-3">
+            <div className="flex gap-3 min-w-[250px] w-full">
               <div className="flex flex-col mb-3">
                 <label htmlFor="number" className="text-sm text-[#878787] mb-1">
                   Número*
@@ -248,7 +251,7 @@ export default function CadastrarEndereco() {
                 )}
               </div>
 
-              <div className="flex flex-col mb-3">
+              <div className="flex flex-col mb-3 w-full min-w-[150px]">
                 <label
                   htmlFor="complement"
                   className="text-sm text-[#878787] mb-1"
@@ -261,7 +264,7 @@ export default function CadastrarEndereco() {
                   disabled={!isCepFilled}
                   className={`${
                     errors.complement ? "bg-[#FEE7EF]" : ""
-                  } w-[330px] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4`}
+                  } max-w-[330px] min-w-[9rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4`}
                   {...register("complement")}
                 />
               </div>
@@ -284,7 +287,7 @@ export default function CadastrarEndereco() {
               id="neighborhood"
               className={`${
                 errors.neighborhood ? "bg-[#FEE7EF]" : ""
-              } max-w-[26.5rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
+              } max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
               disabled
               {...register("neighborhood")}
             />
@@ -295,8 +298,8 @@ export default function CadastrarEndereco() {
               </span>
             )}
 
-            <div className="flex gap-3">
-              <div className="flex flex-col mb-3">
+            <div className="flex gap-3 min-w-[250px] w-full">
+              <div className="flex flex-col mb-3 w-[310px] min-w-[150px]">
                 <label htmlFor="city" className="text-sm text-[#878787] mb-1">
                   Cidade*
                 </label>
@@ -306,7 +309,7 @@ export default function CadastrarEndereco() {
                   disabled
                   className={`${
                     errors.city ? "bg-[#FEE7EF]" : ""
-                  } w-[310px] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4`}
+                  } max-w-[330px] min-w-[9rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4`}
                   {...register("city")}
                 />
 
@@ -346,7 +349,7 @@ export default function CadastrarEndereco() {
               id="recipient"
               className={`${
                 errors.recipient ? "bg-[#FEE7EF]" : ""
-              } max-w-[26.5rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
+              } max-w-[26.5rem] min-w-[15rem] border bg-[#EFEFEF4D] border-[#c0c0c0] h-12 py-3 px-4 mb-3`}
               {...register("recipient")}
             />
 
