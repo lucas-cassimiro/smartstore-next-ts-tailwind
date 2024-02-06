@@ -16,7 +16,7 @@ export default function Logged() {
     <div>
       <div className="flex items-center flex-col" onClick={showIsLog}>
         <FaUserCircle className="text-white h-6 w-6 cursor-pointer" />
-        <span className="text-white text-sm cursor-pointer">
+        <span className="text-white text-sm cursor-pointer tablet:hidden">
           {user?.first_name}
         </span>
       </div>
