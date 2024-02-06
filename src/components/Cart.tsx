@@ -7,16 +7,14 @@ import { useCart } from "@/hooks/useCart";
 import currencyFormat from "@/helpers/currencyFormat";
 
 import { FaTimes } from "react-icons/fa";
-import { FaShoppingCart } from "react-icons/fa";
-
-import ButtonDecrementToCart from "./Buttons/ButtonDecrementToCart";
-import ButtonIncrementToCart from "./Buttons/ButtonIncrementToCart";
-import ButtonRemoveFromCart from "./Buttons/ButtonRemoveFromCart";
-
+import ButtonDecrementToCart from "../components/Buttons/ButtonDecrementToCart";
+import ButtonIncrementToCart from "../components/Buttons/ButtonIncrementToCart";
+import ButtonRemoveFromCart from "../components/Buttons/ButtonRemoveFromCart";
 import ConfirmOrder from "./ConfirmOrder";
 import { EmptyCart } from "./EmptyCart";
-
 import Link from "next/link";
+
+import { FaShoppingCart } from "react-icons/fa";
 
 export default function Cart() {
   const { cart, cartOpen, setCartOpen } = useCart();
@@ -37,7 +35,9 @@ export default function Cart() {
               </span>
             )}
           </div>
-          <span className="text-white celular:text-sm text-sm tablet:hidden">Cart</span>
+          <span className="text-white celular:text-sm text-sm tablet:hidden">
+            Cart
+          </span>
         </div>
       </button>
 
@@ -73,7 +73,7 @@ export default function Cart() {
                     <div key={cart.id} className="flex justify-between w-full">
                       <div
                         key={cart.id}
-                        className="flex w-full items-start gap-2"
+                        className="flex w-full items-start gap-2 celulargrande:w-[4rem] celulargrande:h-[5rem]"
                       >
                         <Image
                           src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${cart.image}`}
