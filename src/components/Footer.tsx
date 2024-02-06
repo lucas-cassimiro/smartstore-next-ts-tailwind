@@ -11,31 +11,46 @@ import { GrFormNext } from "react-icons/gr";
 
 export default function Footer() {
   return (
-    <footer className="py-8 w-full bg-[#dcdcdc] h-[19rem] desktopequeno:h-[20rem] tabletgrande:h-[21rem] tablet:h-[24rem] px-2">
+    <footer className="py-8 w-full bg-[#dcdcdc] h-full">
       <div className="max-w-[1450px] flex justify-between m-auto celularmedio:mb-4">
-        <ul className="flex flex-col gap-[2.1875rem] text-black tablet:gap-2">
+        <ul className="flex flex-col gap-[2.1875rem] text-black tablet:gap-2 celularpequeno:w-[170px]">
           <li className="border-b-[1px] w-[10.8125rem] ml-[1.875rem]">
-            <a href="#" className="text-2xl font-semibold tablet:text-xl">
+            <a
+              href="#"
+              className="text-2xl font-semibold tablet:text-xl celulargrande:text-lg"
+            >
               Nossas lojas
             </a>
           </li>
           <li className="w-[10.8125rem] ml-[1.875rem]">
-            <a href="#" className="text-2xl font-semibold tablet:text-xl">
+            <a
+              href="#"
+              className="text-2xl font-semibold tablet:text-xl celulargrande:text-lg"
+            >
               Suporte
             </a>
           </li>
           <li className="w-[10.8125rem] ml-[1.875rem]">
-            <a href="#" className="text-2xl font-semibold tablet:text-xl">
+            <a
+              href="#"
+              className="text-2xl font-semibold tablet:text-xl celulargrande:text-lg"
+            >
               Minha conta
             </a>
           </li>
           <li className="w-[10.8125rem] ml-[1.875rem]">
-            <a href="#" className="text-2xl font-semibold tablet:text-xl">
+            <a
+              href="#"
+              className="text-2xl font-semibold tablet:text-xl celulargrande:text-lg"
+            >
               Serviços
             </a>
           </li>
-          <li className="hidden w-[10.8125rem] ml-[1.875rem] tabletgrande:flex items-center justify-between">
-            <a href="#" className="text-2xl font-semibold tablet:text-xl">
+          <li className="hidden w-[10.8125rem] ml-[1.875rem] tabletgrande:flex items-center gap-6">
+            <a
+              href="#"
+              className="text-2xl font-semibold tablet:text-xl celulargrande:text-lg"
+            >
               Institucional
             </a>
             <GrFormNext size="1.5rem" />
@@ -91,7 +106,7 @@ export default function Footer() {
         </ul>
 
         <div className="flex flex-col h-[6.25rem] text-black">
-          <h2 className="font-semibold text-2xl mb-4 tablet:text-xl">
+          <h2 className="font-semibold text-2xl mb-4 tablet:text-xl celulargrande:text-lg">
             Sac 4002-8922
           </h2>
           <span className="mb-1 tablet:w-[150px]">
