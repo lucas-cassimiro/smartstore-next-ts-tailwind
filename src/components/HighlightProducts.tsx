@@ -41,11 +41,11 @@ export default function HighlightProducts({ product }: any) {
             height={350}
           />
         </div>
-        <h2 className="text-[1.875rem] font-normal text-white tabletgrande:text-[1.5rem] desktopequeno:text-[1.6rem] celularmedio:text-sm">
+        <h2 className="text-[1.875rem] font-normal text-white tabletgrande:text-[1.5rem] desktopequeno:text-[1.6rem] celularmedio:text-sm celularpequeno:text-[13px]">
           {product.name}
         </h2>
         <p
-          className={`${inter.className} text-xl font-light text-white desktopequeno:text-lg celulargrande:text-base celularmedio:text-xs`}
+          className={`${inter.className} text-xl font-light text-white desktopequeno:text-lg celulargrande:text-base celularmedio:text-xs celularpequeno:text-[11px]`}
         >
           A partir de{" "}
           <span className="text-[#93c1fd]">
