@@ -16,7 +16,7 @@ export default function CardProducts({
   imageSize,
 }: CardProductsProps) {
   return (
-    <div className="flex justify-center ml-[1rem] mb-12">
+    <div className="flex justify-center ml-[1.6rem] mb-12">
       <Link href={`/products/${product.id}`} className="flex flex-col gap-2">
         <Image
           className={`${
