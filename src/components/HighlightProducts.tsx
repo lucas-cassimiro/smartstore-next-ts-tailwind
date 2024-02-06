@@ -30,7 +30,7 @@ export default function HighlightProducts({ product }: any) {
         style={jejugothic.style}
         className="flex flex-col items-center text-white h-[28.125rem] cursor-pointer bg-black tabletgrande:h-[23rem] celularmedio:h-[18rem]"
       >
-        <div className="flex items-center justify-center w-[25rem] h-[21.875rem] tabletgrande:h-[16rem] celularmedio:h-[14rem]">
+        <div className="flex items-center justify-center h-[21.875rem] tabletgrande:h-[16rem] celularmedio:h-[14rem]">
           <Image
             className="w-[16.5rem] h-[14.625rem] celularmedio:w-[6rem] celularmedio:h-[6rem] desktopequeno:w-[12.5rem] desktopequeno:h-[10.625rem] tabletgrande:w-[10rem] tabletgrande:h-[8rem] object-contain"
             src={`https://smartshop-api-foy4.onrender.com/tmp/uploads/${product.image}`}
