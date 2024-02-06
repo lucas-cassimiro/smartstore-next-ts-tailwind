@@ -28,10 +28,6 @@ export default function MeuCadastro() {
     }
   };
 
-  const updateAddress = (address: any) => {
-    console.log(address);
-  };
-
   return (
     <AuthGuard>
       <div className="flex flex-col w-full py-14 tabletgrande:py-2 tabletgrande:w-full tabletgrande:px-10 tablet:px-0 px-5 min-w-[250px]">
