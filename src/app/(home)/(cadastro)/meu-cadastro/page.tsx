@@ -52,7 +52,7 @@ export default function MeuCadastro() {
               <ul className="flex flex-col gap-7">
                 <li className="flex justify-between border-b-1 border-[#e5e5e5]">
                   <p className="text-[#878787] text-sm">E-mail</p>
-                  <span className="mb-3 text-sm ">{user?.email}</span>
+                  <span className="mb-3 text-sm w-[50%]">{user?.email}</span>
                 </li>
                 <li className="flex justify-between border-b-1 border-[#e5e5e5]">
                   <p className="text-[#878787] text-sm">CPF</p>
