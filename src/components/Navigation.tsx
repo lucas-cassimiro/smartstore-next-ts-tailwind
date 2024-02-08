@@ -10,9 +10,6 @@ import { FaBars, FaTimes } from "react-icons/fa";
 
 import Location from "./Location";
 
-import { Inter } from "next/font/google";
-
-
 interface NavigationProps {
   navLinks: NavLink[];
 }

@@ -59,6 +59,8 @@ async function getAddress(userId: number) {
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  console.log(user);
+
   const [address, setAddress] = useState<Address[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);

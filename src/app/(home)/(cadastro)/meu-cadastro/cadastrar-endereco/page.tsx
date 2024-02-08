@@ -22,13 +22,12 @@ import { MessageResponseData } from "@/interfaces/MessageResponseData";
 import { useRouter } from "next/navigation";
 
 const schemaForm = z.object({
-  user_id: z.coerce.number(),
   cep: z
     .string()
     .nonempty("Campo obrigatório.")
     .min(8, "Por favor, informe um CEP válido."),
   street_address: z.string().nonempty("Campo obrigatório."),
-  number_address: z.string().nonempty("Campo obrigatório."),
+  number_address: z.coerce.number().min(1, "Campo obrigatório."),
   complement: z.string(),
   neighborhood: z
     .string()
@@ -42,19 +41,17 @@ const schemaForm = z.object({
     .string()
     .nonempty("Campo obrigatório.")
     .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos."),
-  recipient: z
-    .string()
-    .min(1, "Campo obrigatório.")
-    .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos.")
-    .refine(
-      (data) => {
-        const names = data.split(" ");
-        return names.length === 2;
-      },
-      {
-        message: "Por favor, digite o nome completo.",
-      }
-    ),
+  recipient: z.string().min(1, "Campo obrigatório."),
+  // .regex(/^[\p{L}\s]+$/u, "Somente letras são permitidos.")
+  // .refine(
+  //   (data) => {
+  //     const names = data.split(" ");
+  //     return names.length === 2;
+  //   },
+  //   {
+  //     message: "Por favor, digite o nome completo.",
+  //   }
+  // ),
 });
 
 type FormProps = z.infer<typeof schemaForm>;
@@ -91,10 +88,9 @@ export default function CadastrarEndereco() {
     mode: "onBlur",
     resolver: zodResolver(schemaForm),
     defaultValues: {
-      user_id: user?.id || 0,
       cep: "",
       street_address: "",
-      number_address: "",
+      number_address: 0,
       complement: "",
       neighborhood: "",
       city: "",
@@ -133,13 +129,11 @@ export default function CadastrarEndereco() {
     handleFetchAddress(zipCode);
   }, [handleFetchAddress, zipCode]);
 
-  const handleFormSubmit: SubmitHandler<FormProps> = async (
+  const onSubmit: SubmitHandler<FormProps> = async (
     data: FormProps
   ) => {
     try {
-      data.user_id = user?.id || 0;
-
-      const url = `https://smartshop-api-foy4.onrender.com/address/`;
+      const url = `https://smartshop-api-foy4.onrender.com/address/${user?.id}`;
 
       const request = await fetch(url, {
         method: "POST",
@@ -148,6 +142,7 @@ export default function CadastrarEndereco() {
         },
         body: JSON.stringify(data),
       });
+
       if (!request.ok) {
         const errorResponse = await request.json();
         setMessageResponse(errorResponse);
@@ -182,7 +177,7 @@ export default function CadastrarEndereco() {
           </h1>
           <form
             className="flex flex-col mb-7"
-            onSubmit={handleSubmit(handleFormSubmit, onError)}
+            onSubmit={handleSubmit(onSubmit, onError)}
           >
             <label htmlFor="postalcode" className="text-sm text-[#878787] mb-1">
               CEP*

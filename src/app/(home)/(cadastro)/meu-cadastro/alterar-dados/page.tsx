@@ -115,7 +115,7 @@ export default function AlterarDados() {
     const { date_birth, repeatNewPassword, ...postData } = data;
 
     try {
-      const url = `http://https://smartshop-api-foy4.onrender.com/usuarios/${user?.id}`;
+      const url = `https://smartshop-api-foy4.onrender.com/users/${user?.id}`;
       const request = await fetch(url, {
         method: "PUT",
         headers: {

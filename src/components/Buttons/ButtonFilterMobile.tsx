@@ -38,7 +38,7 @@ export default function ButtonFilterMobile({
   return (
     <>
       <button
-        className="hidden tabletgrande:flex rounded-sm border-[1px] py-2 px-[12px] border-[#c0c0c0] text-center h-[37.6px] w-[125.6px] text-xs"
+        className="hidden tabletgrande:flex rounded-sm border-[1px]  border-[#c0c0c0] py-2 px-5 h-[37.6px] w-[125.6px] text-xs"
         onClick={showFilterOpen}
       >
         Filtrar / ordenar

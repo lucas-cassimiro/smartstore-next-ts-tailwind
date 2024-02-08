@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import LayoutAdmin from "@/components/AdminLayout";
 
 import "../../styles/globals.css";
-import { AuthGuardAdmin } from "@/components/AuthGuardAdmin";
+import ProviderAuth from "@/Providers/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -62,8 +62,10 @@ export default function AdminLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <LayoutAdmin navLinks={navLinks} />
-        {children}
+        <ProviderAuth>
+          <LayoutAdmin navLinks={navLinks} />
+          {children}
+        </ProviderAuth>
       </body>
     </html>
   );

@@ -10,9 +10,6 @@ import {
 } from "@/services/api";
 import {
   Button,
-  Dropdown,
-  DropdownMenu,
-  DropdownTrigger,
   Input,
   Pagination,
   Select,
@@ -29,7 +26,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Tooltip,
 } from "@nextui-org/react";
 
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
@@ -37,14 +33,13 @@ import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { DeleteIcon } from "@/svg/DeleteIcon";
 import { EditIcon } from "@/svg/EditIcon";
 import { SearchIcon } from "@/svg/SearchIcon";
-import { ChevronDownIcon } from "@/svg/ChevronDownIcon";
 import { PlusIcon } from "@/svg/PlusIcon";
 
 import useTable from "@/hooks/useFormTableLogic";
 import currencyFormat from "@/helpers/currencyFormat";
 
 import { SubmitHandler, useForm, SubmitErrorHandler } from "react-hook-form";
-import { ZodObject, ZodRawShape, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ProductsData } from "@/interfaces/ProductsData";
@@ -56,8 +51,8 @@ import { MessageResponseData } from "@/interfaces/MessageResponseData";
 
 import { useHookFormMask } from "use-mask-input";
 
-import { CameraIcon } from "@/svg/CameraIcon";
 import moment from "moment";
+import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 
 type ProductSchema = {
   id?: number;
@@ -392,7 +387,7 @@ export default function Products() {
   }, [items.length, page, pages, hasSearchFilter]);
 
   return (
-    <>
+    <AdminRouteGuard>
       <section>
         <div className="w-[70%] m-auto">
           <h1 className="text-center mb-5 text-2xl font-semibold">
@@ -753,6 +748,6 @@ export default function Products() {
           )}
         </ModalContent>
       </Modal>
-    </>
+    </AdminRouteGuard>
   );
 }
