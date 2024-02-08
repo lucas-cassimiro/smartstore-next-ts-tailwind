@@ -46,7 +46,7 @@ export default function Logged() {
               Sair
             </span>
           </div>
-          <div className="flex flex-col gap-3 p-6 max-w-[155px]">
+          <div className="flex flex-col gap-3 p-6 max-w-[255px]">
             <Link
               href="/meu-cadastro"
               onClick={showIsLog}
